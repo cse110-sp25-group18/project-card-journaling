@@ -1,6 +1,11 @@
 name: lint-commits
 
-on: [push, pull_request]
+on: 
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+  push:
+    brances: [main]
 
 jobs:
   commitlint:
