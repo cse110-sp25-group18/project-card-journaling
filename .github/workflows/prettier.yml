@@ -27,14 +27,12 @@ jobs:
       - name: Check for JS files
         id: check_js
         run: |
-          count=$(find . -type f -name "*.js" | wc -l)
-          echo "Found $count .js files"
-          if [ "$count" -eq 0 ]; then
-            echo "skip=true" >> $GITHUB_OUTPUT
+          FILES=$(find . -name '*.js' ! -path "./node_modules/*")
+          if [ -n "$FILES" ]; then
+            echo "run_prettier=true" >> $GITHUB_OUTPUT
           else
-            echo "skip=false" >> $GITHUB_OUTPUT
-          fi
- 
+            echo "run_prettier=false" >> $GITHUB_OUTPUT
+          fi 
       - name: Install Prettier
         run: npm install prettier --save-dev
  
