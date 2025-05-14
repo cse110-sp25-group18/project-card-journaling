@@ -24,11 +24,19 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '14'
- 
+      - name: Check for JS files
+        id: check_js
+        run: |
+          FILES=$(find . -name '*.js' ! -path "./node_modules/*")
+          if [ -n "$FILES" ]; then
+            echo "run_prettier=true" >> $GITHUB_OUTPUT
+          else
+            echo "run_prettier=false" >> $GITHUB_OUTPUT
+          fi 
       - name: Install Prettier
         run: npm install prettier --save-dev
  
       - name: Run Prettier
         uses: creyD/prettier_action@v4.3
         with:
-          prettier_options: "--write **/*.js"
+          prettier_options: "--write **/*.js **/.*.js"
