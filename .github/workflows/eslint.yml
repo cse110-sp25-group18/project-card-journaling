@@ -3,7 +3,9 @@ name: ESLint
 # workflow is triggered on PRs to main
 on:
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
+      - daniel/eslint-cicd
 
 jobs:
   eslint:
