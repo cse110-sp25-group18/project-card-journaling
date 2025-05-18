@@ -1,5 +1,6 @@
 name: ESLint
 
+# workflow is triggered on PRs to main
 on:
   pull_request:
     branches: [ "main" ]
@@ -12,16 +13,22 @@ jobs:
       contents: read
       security-events: write
       actions: read
+
+    # sequential steps that make up this job
     steps:
+    
+      # checks out your repository code to the runner
       - name: Checkout code
         uses: actions/checkout@v4
 
+       # installs ESLint, ESLint stylistic plugin, and SARIF formatter on runner
       - name: Install ESLint
         run: |
           npm install eslint@^9.0.0
           npm install @stylistic/eslint-plugin@^4.2.0
           npm install @microsoft/eslint-formatter-sarif@3.1.0
 
+      # runs ESLint on runner, 
       - name: Run ESLint
         env:
           SARIF_ESLINT_IGNORE_SUPPRESSED: "true"
@@ -32,6 +39,7 @@ jobs:
           --output-file eslint-results.sarif
         continue-on-error: true
 
+      # sends results back to GitHub
       - name: Upload analysis results to GitHub
         uses: github/codeql-action/upload-sarif@v3
         with:
