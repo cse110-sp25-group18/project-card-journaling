@@ -15,10 +15,19 @@ export default defineConfig([
     },
     extends: ["js/recommended"],
     rules: {
-      curly: "error",
+      // require curly braces for all control statements (if, else, for, while, etc.)
+      curly: "error", 
+
+      // always require semicolons at the end of statements
       "@stylistic/semi": ["error", "always"],
+
+      // enforce consistent brace style for blocks
       "@stylistic/brace-style": "error",
+
+      // enforce consistent indentation (2 spaces, with switch cases indented once)
       "@stylistic/indent": ["error", 2, { "SwitchCase": 1 }],
+
+      // limit the number of statements per line to improve readability
       "@stylistic/max-statements-per-line": ["error", { "max": 1 }]
     }
   }
