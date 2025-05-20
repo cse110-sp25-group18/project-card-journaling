@@ -19,15 +19,15 @@
         <div class="top-bar">
             <div class="app-name">App Name</div>
             <div>
-                <button>New Prompt</button>
-                <button>Edit Prompt</button>
+                <button id="newPromptBtn">New Prompt</button>
+                <button id="editPromptBtn">Edit Prompt</button>
             </div>
         </div>
 
-        <div class="prompt-box">Prompt</div>
+       <div class="prompt-box" id="promptBox">Prompt</div>
 
         <div class="content-row">
-            <div class="card-input">User Card Input</div>
+            <div class="card-input" id="cardInput" contenteditable="true">User Card Input</div>
             <div class="sidebar">
                 <strong>Motivational Text</strong>
                 <p></p>
@@ -39,9 +39,12 @@
         </div>
 
         <div class="button-row">
-            <button>Delete</button>
-            <button>Submit</button>
+                <button id="deleteBtn">Delete</button>
+                <button id="submitBtn">Submit</button>
         </div>
+
     </main>
+
+    <script src="../script/create-card.js"></script>     
 </body>
 </html>
