@@ -50,4 +50,4 @@ function initPromptEditor() {
 document.addEventListener('DOMContentLoaded', initPromptEditor);
 
 // Export functions for potential use in other scripts
-export { initPromptEditor, makePromptEditable }; 
+module.exports = { initPromptEditor, makePromptEditable }; 
