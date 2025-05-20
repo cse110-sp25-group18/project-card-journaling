@@ -10,6 +10,7 @@ body {
     margin: 0;
     font-family:Verdana, Tahoma, sans-serif;
     background-image: url('../images/general-background.png');
+    background-position: center;
 }
 nav {
     display: flex;
