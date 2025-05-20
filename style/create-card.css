@@ -24,6 +24,7 @@ main {
 
 .content-row {
     display: flex;
+    flex-direction: row;
     flex: 1;
     gap: 2rem;
 }
@@ -32,11 +33,9 @@ main {
     aspect-ratio: 4 / 3;
 
     width: 100%;            /* Start by filling container width */
-    min-width: 30rem;       /* Don't go below this */
     max-width: 40rem;       /* Don't go above this */
-
     flex: 0 1 auto;         /* Let it shrink/grow based on content & container */
-    
+
     border: 1px solid #000;
     display: flex;
     justify-content: center;
@@ -45,7 +44,9 @@ main {
 }
 
 .sidebar {
-    flex: 1;
+    flex: 0 1 auto;
+    min-width: 10vw;
+    width: 100%;
 }
 
 .sidebar .box {
@@ -81,4 +82,9 @@ button {
     margin: 0.5rem 0;
     border-bottom: 1px solid #000;
     width: 100%;
+}
+@media (max-width: 900px){
+    .content-row {
+        flex-direction: column;
+    }
 }
