@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="../style/general.css">
     <link rel="stylesheet" href="../style/create-card.css">
     <link rel="stylesheet" href="../style/card.css">
+    <script type="module" src="../script/promptGen.js"></script>
+    <script type="module" src="../script/promptEdit.js"></script>
 </head>
 <body>
     <nav>
@@ -20,15 +22,16 @@
         <div class="top-bar">
             <div class="app-name">App Name</div>
             <div>
-                <button>New Prompt</button>
-                <button>Edit Prompt</button>
+                <button id="newPromptBtn">New Prompt</button>
+                <button id="editPromptBtn">Edit Prompt</button>
             </div>
         </div>
 
         <div class="prompt-box">Prompt</div>
 
         <div class="content-row">
-            <div class="card-input">Loading card...</div>
+            <div class="card-input" contenteditable="true">Loading card...</div>
+
             <div class="sidebar">
                 <strong>Motivational Text</strong>
                 <p></p>
