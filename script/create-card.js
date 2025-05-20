@@ -32,15 +32,15 @@ document.addEventListener("DOMContentLoaded", async () => {
   const container = document.querySelector(".card-input");
   container.innerHTML = "";
   container.appendChild(clone);
-  const card = container.querySelector(".card");
-  const front = card.querySelector(".card-front");
-  const back = card.querySelector(".card-back");
-  front.addEventListener("click", () => {
-    card.classList.add("flipped");
+  const card = container.querySelector('.card');
+  const front = card.querySelector('.card-front');
+  const back = card.querySelector('.card-back');
+  front.addEventListener('click', () => {
+    card.classList.add('flipped');
   });
-  back.addEventListener("click", (e) => {
-    if (!e.target.closest("textarea")) {
-      card.classList.remove("flipped");
+  back.addEventListener('click', (e) => {
+    if (!e.target.closest('textarea')) {
+      card.classList.remove('flipped');
     }
   });
   console.log("Card added!");
