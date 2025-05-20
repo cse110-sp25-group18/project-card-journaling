@@ -23,7 +23,7 @@ const prompts = [
   "Describe something beautiful you saw recently.",
   "What's a skill you'd like to develop?",
   "What advice would you give to your younger self?",
-  "What are you looking forward to in the coming months?"
+  "What are you looking forward to in the coming months?",
 ];
 
 /**
@@ -39,14 +39,14 @@ function getRandomPrompt() {
  * Updates the prompt box with a randomly selected prompt
  */
 function updatePromptBox() {
-  const promptBox = document.querySelector('.prompt-box');
+  const promptBox = document.querySelector(".prompt-box");
   if (promptBox) {
     // Don't update if currently in edit mode
-    if (promptBox.getAttribute('contenteditable') === 'true') {
-      console.log('Prompt is currently being edited. Not updating.');
+    if (promptBox.getAttribute("contenteditable") === "true") {
+      console.log("Prompt is currently being edited. Not updating.");
       return;
     }
-    
+
     promptBox.textContent = getRandomPrompt();
   }
 }
@@ -55,19 +55,19 @@ function updatePromptBox() {
  * Initialize the prompt generator functionality
  */
 function initPromptGenerator() {
-  const newPromptButton = document.getElementById('newPromptBtn');
-  
+  const newPromptButton = document.getElementById("newPromptBtn");
+
   if (newPromptButton) {
     // Add event listener to the "New Prompt" button
-    newPromptButton.addEventListener('click', updatePromptBox);
-    
+    newPromptButton.addEventListener("click", updatePromptBox);
+
     // Optionally, set an initial random prompt when the page loads
     updatePromptBox();
   }
 }
 
 // Initialize when the DOM is fully loaded
-document.addEventListener('DOMContentLoaded', initPromptGenerator);
+document.addEventListener("DOMContentLoaded", initPromptGenerator);
 
 // Export functions for potential use in other scripts
 module.exports = { getRandomPrompt, updatePromptBox, initPromptGenerator }; 
