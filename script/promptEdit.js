@@ -26,17 +26,6 @@ function makePromptEditable() {
       editPromptBtn.textContent = 'Save Prompt';
     }
   });
-  
-  // Add a visual indicator for editing mode with CSS
-  const style = document.createElement('style');
-  style.textContent = `
-    .prompt-box.editing {
-      background-color: #fffbd6;
-      border: 1px solid #ffd700;
-      padding: 10px;
-    }
-  `;
-  document.head.appendChild(style);
 }
 
 /**

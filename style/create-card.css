@@ -76,3 +76,10 @@ button {
     border-bottom: 1px solid #000;
     width: 100%;
 }
+
+/* Style for editing mode */
+.prompt-box.editing {
+    background-color: #fffbd6;
+    border: 1px solid #ffd700;
+    padding: 10px;
+}
