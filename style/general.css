@@ -18,7 +18,7 @@ nav {
     left: 0;
     height: 100vh;           /* Full height */
     width: 10%;              /* Set width */
-    min-width: 132px;            
+    min-width: 132px;
     background-color: #f0f0f0;
     padding: 1em;
 }
@@ -33,6 +33,7 @@ nav a {
     /* Set size of each box */
     width: 100%;
     height: 8%;
+    min-height: 3rem;
 
     /* Style of each box */
     font-size: 100%;
