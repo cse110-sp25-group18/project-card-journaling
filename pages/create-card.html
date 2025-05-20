@@ -5,6 +5,7 @@
     <title>Card Journaling</title>
     <link rel="stylesheet" href="../style/general.css">
     <link rel="stylesheet" href="../style/create-card.css">
+    <link rel="stylesheet" href="../style/card.css">
     <script type="module" src="../script/promptGen.js"></script>
     <script type="module" src="../script/promptEdit.js"></script>
 </head>
@@ -29,7 +30,8 @@
         <div class="prompt-box">Prompt</div>
 
         <div class="content-row">
-            <div class="card-input" contenteditable="true">User Card Input</div>
+            <div class="card-input" contenteditable="true">Loading card...</div>
+
             <div class="sidebar">
                 <strong>Motivational Text</strong>
                 <p></p>
@@ -45,5 +47,6 @@
             <button>Submit</button>
         </div>
     </main>
+    <script type="module" src="../script/create-card.js"></script>
 </body>
 </html>
