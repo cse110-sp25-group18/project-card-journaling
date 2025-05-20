@@ -25,4 +25,3 @@ function saveJournalEntry(entryData) {
     return false;
   }
 }
-
