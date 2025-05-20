@@ -1,20 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Shuffle Recap</title>
-    <link rel="stylesheet" href="/style/general.css">
+  <meta charset="UTF-8" />
+  <title>Shuffle Recap</title>
+  <link rel="stylesheet" href="/style/general.css" />
+  <link rel="stylesheet" href="/style/recap.css" />
 </head>
 <body>
-    <nav>
-        <a href="../index.html">Home</a>
-        <a href="create-card.html">Create Card</a>
-        <a href="past-entries.html">Past Entries</a>
-        <a href="recap.html">Shuffle Recap</a>
-        <a href="settings.html">Settings</a>
-    </nav>
-    <main>
-        <h1>Recap</h1>
-    </main>
+  <nav>
+    <a href="../index.html">Home</a>
+    <a href="create-card.html">Create Card</a>
+    <a href="past-entries.html">Past Entries</a>
+    <a href="recap.html">Shuffle Recap</a>
+    <a href="settings.html">Settings</a>
+  </nav>
+
+  <main>
+    <h1>Recap</h1>
+
+    <!-- add shuffle button -->
+    <div class="recap-controls">
+      <button id="shuffleBtn">Shuffle Entry</button>
+    </div>
+
+    <!-- add button to allow to revisit past entries -->
+    <div id="recapDisplay" class="recap-display">
+      <p>Click shuffle to revisit past entry</p>
+    </div>
+  </main>
+
+  <script src="/script/recap.js"></script>
 </body>
-</html> 
+</html>
