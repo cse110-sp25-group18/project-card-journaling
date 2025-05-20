@@ -70,4 +70,4 @@ function initPromptGenerator() {
 document.addEventListener("DOMContentLoaded", initPromptGenerator);
 
 // Export functions for potential use in other scripts
-module.exports = { getRandomPrompt, updatePromptBox, initPromptGenerator }; 
+module.exports = { getRandomPrompt, updatePromptBox, initPromptGenerator };

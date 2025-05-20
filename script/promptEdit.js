@@ -6,24 +6,24 @@
  * Makes the prompt box editable when the edit button is clicked
  */
 function makePromptEditable() {
-  const promptBox = document.querySelector('.prompt-box');
-  const editPromptBtn = document.getElementById('editPromptBtn');
-  
+  const promptBox = document.querySelector(".prompt-box");
+  const editPromptBtn = document.getElementById("editPromptBtn");
+
   if (!promptBox || !editPromptBtn) return;
-  
+
   // Toggle between edit and save modes
-  editPromptBtn.addEventListener('click', () => {
-    if (promptBox.getAttribute('contenteditable') === 'true') {
+  editPromptBtn.addEventListener("click", () => {
+    if (promptBox.getAttribute("contenteditable") === "true") {
       // Save mode - make not editable
-      promptBox.setAttribute('contenteditable', 'false');
-      promptBox.classList.remove('editing');
-      editPromptBtn.textContent = 'Edit Prompt';
+      promptBox.setAttribute("contenteditable", "false");
+      promptBox.classList.remove("editing");
+      editPromptBtn.textContent = "Edit Prompt";
     } else {
       // Edit mode - make editable
-      promptBox.setAttribute('contenteditable', 'true');
-      promptBox.classList.add('editing');
+      promptBox.setAttribute("contenteditable", "true");
+      promptBox.classList.add("editing");
       promptBox.focus();
-      editPromptBtn.textContent = 'Save Prompt';
+      editPromptBtn.textContent = "Save Prompt";
     }
   });
 }
@@ -36,7 +36,7 @@ function initPromptEditor() {
 }
 
 // Initialize when the DOM is fully loaded
-document.addEventListener('DOMContentLoaded', initPromptEditor);
+document.addEventListener("DOMContentLoaded", initPromptEditor);
 
 // Export functions for potential use in other scripts
-module.exports = { initPromptEditor, makePromptEditable }; 
+module.exports = { initPromptEditor, makePromptEditable };
