@@ -1,10 +1,17 @@
 {
+  "type": "module",
+  "scripts": {
+    "test": "jest --testEnvironment=jsdom"
+  },
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
-    "@eslint/js": "^9.27.0",
     "@stylistic/eslint-plugin": "^4.2.0",
-    "eslint": "^9.27.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
     "prettier": "^3.5.3"
+  },
+  "dependencies": {
+    "eslint": "^9.27.0"
   }
 }
