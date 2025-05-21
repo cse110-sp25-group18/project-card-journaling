@@ -1,6 +1,6 @@
+/* eslint-env jest */
 /**
  * Unit tests for journal card submission functionality
- * eslint-env jest
  */
 
 describe('Journal Card Submission Tests', () => {
