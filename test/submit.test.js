@@ -15,7 +15,7 @@ beforeEach(() => {
     }),
     clear: jest.fn(() => {
       mockStorage = {};
-    })
+    }),
   };
 
   // Create a simple HTML environment for testing
@@ -44,15 +44,15 @@ test("saveJournalEntry should store data in localStorage", () => {
     id: 12345,
     prompt: "Test Prompt",
     response: "Test Response",
-    date: "2025-05-20T10:00:00.000Z"
+    date: "2025-05-20T10:00:00.000Z",
   };
-  
+
   const result = saveJournalEntry(testEntry);
-  
+
   // Check results
   expect(result).toBe(true);
   expect(localStorage.setItem).toHaveBeenCalled();
-  
+
   // Verify stored data
   const savedData = JSON.parse(mockStorage["journalEntries"]);
   expect(savedData).toBeInstanceOf(Array);
@@ -64,17 +64,16 @@ test("saveJournalEntry should store data in localStorage", () => {
 test("Submit button should save journal entry when clicked", () => {
   // Set up the event handler
   handleSubmitCard();
-  
+
   // Trigger the click event
   document.getElementById("submitBtn").click();
-  
+
   // Check if alert was called (success message)
   expect(alert).toHaveBeenCalledWith("Your journal entry has been saved!");
-  
+
   // Check if localStorage was updated
   expect(localStorage.setItem).toHaveBeenCalled();
-  
+
   // Check textarea was cleared
   expect(document.getElementById("response").value).toBe("");
 });
-
