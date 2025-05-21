@@ -20,9 +20,9 @@ jobs:
 
       - name: Install ESLint
         run: |
-          npm install eslint@^9.0.0
-          npm install @stylistic/eslint-plugin@^4.2.0
-          npm install @microsoft/eslint-formatter-sarif@3.1.0
+          npm install eslint
+          npm install @stylistic/eslint-plugin
+          npm install @microsoft/eslint-formatter-sarif
 
       - name: Run ESLint
         env:
