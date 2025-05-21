@@ -1,7 +1,7 @@
 {
   "type": "module",
   "scripts": {
-    "test": "jest"
+    "test": "jest --testEnvironment=jsdom"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
