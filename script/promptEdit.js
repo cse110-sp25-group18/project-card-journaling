@@ -9,7 +9,9 @@ function makePromptEditable() {
   const promptBox = document.querySelector(".prompt-box");
   const editPromptBtn = document.getElementById("editPromptBtn");
 
-  if (!promptBox || !editPromptBtn) return;
+  if (!promptBox || !editPromptBtn) {
+    return;
+  }
 
   // Toggle between edit and save modes
   editPromptBtn.addEventListener("click", () => {
@@ -39,4 +41,4 @@ function initPromptEditor() {
 document.addEventListener("DOMContentLoaded", initPromptEditor);
 
 // Export functions for potential use in other scripts
-module.exports = { initPromptEditor, makePromptEditable };
+export { initPromptEditor, makePromptEditable };
