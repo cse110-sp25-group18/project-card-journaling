@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="../style/create-card.css">
     <link rel="stylesheet" href="../style/card.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <script type="module" src="../script/promptGen.js"></script>
+    <script type="module" src="../script/promptEdit.js"></script>
 </head>
 <body>
     <nav>
@@ -35,14 +37,14 @@
         <div class="prompt-bar">
             <div class="prompt-box">Example Prompt: What moment from this week made you feel truly seen or understood - no matter how small</div>
             <div class="prompt-buttons">
-                <button>New Prompt</button>
-                <button>Edit Prompt</button>
+                <button id="newPromptBtn">New Prompt</button>
+                <button id="editPromptBtn">Edit Prompt</button>
             </div>
         </div>
-        <!-- <div class="prompt-box">Prompt</div> -->
 
         <div class="content-row">
-            <div class="card-input">Loading card...</div>
+            <div class="card-input" contenteditable="true">Loading card...</div>
+
             <div class="sidebar">
                 <strong>Motivational Text</strong>
                 <p></p>
@@ -54,10 +56,11 @@
         </div>
 
         <div class="button-row">
-            <button>Delete</button>
-            <button>Submit</button>
+            <button id="deleteBtn">Delete</button>
+            <button id="submitBtn">Submit</button>
         </div>
     </main>
     <script type="module" src="../script/create-card.js"></script>
+    <script type="module" src="../script/promptSubmit.js"></script>
 </body>
 </html>
