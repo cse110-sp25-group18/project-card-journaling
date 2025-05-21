@@ -34,7 +34,9 @@ function saveJournalEntry(entryData) {
 function handleSubmitCard() {
   const submitBtn = document.getElementById("submitBtn");
 
-  if (!submitBtn) return;
+  if (!submitBtn) {
+    return;
+  }
   submitBtn.addEventListener("click", () => {
     // Get the card elements
     const card = document.querySelector(".card");

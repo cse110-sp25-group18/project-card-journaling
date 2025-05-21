@@ -1,10 +1,14 @@
 import { saveJournalEntry, handleSubmitCard } from "../script/promptSubmit.js";
 import { test, expect, jest, beforeEach, afterEach } from "@jest/globals";
 
+// Add a comment to tell ESLint that these globals are okay to use
+/* global document, alert, localStorage */
+
 let mockStorage = {};
 
 beforeEach(() => {
-  global.localStorage = {
+  // Create a mock localStorage
+  window.localStorage = {
     getItem: jest.fn((key) => mockStorage[key] || null),
     setItem: jest.fn((key, value) => {
       mockStorage[key] = value;
@@ -22,7 +26,8 @@ beforeEach(() => {
     </div>
     <button id="submitBtn">Submit</button>
   `;
-  global.alert = jest.fn();
+  // Mock alert function
+  window.alert = jest.fn();
 
   mockStorage = {};
 });
