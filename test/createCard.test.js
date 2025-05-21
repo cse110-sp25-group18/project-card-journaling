@@ -27,7 +27,7 @@ beforeEach(() => {
             </article>
           </template>
         `),
-    })
+    }),
   );
 });
 
@@ -40,8 +40,12 @@ it("renders the card into the DOM with correct data", async () => {
 
   const card = document.querySelector(".card");
   expect(card).toBeTruthy();
-  expect(card.querySelector(".prompt").textContent).toBe("What inspired you today?");
-  expect(card.querySelector(".date").getAttribute("datetime")).toBe("2025-05-19");
+  expect(card.querySelector(".prompt").textContent).toBe(
+    "What inspired you today?",
+  );
+  expect(card.querySelector(".date").getAttribute("datetime")).toBe(
+    "2025-05-19",
+  );
   expect(card.querySelector("img").alt).toBe("Placeholder image");
   expect(card.querySelector("img").src).toMatch(/placeholder/);
 });
@@ -72,7 +76,6 @@ it("flips the card on front click and unflips on back click (not textarea)", asy
   back.click();
   expect(card.classList.contains("flipped")).toBe(false);
 });
-
 
 /**
  * @jest-environment jsdom
