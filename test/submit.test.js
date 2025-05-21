@@ -1,8 +1,6 @@
 import { saveJournalEntry, handleSubmitCard } from "../script/promptSubmit.js";
 import { test, expect, jest, beforeEach, afterEach } from "@jest/globals";
 
-// Add a comment to tell ESLint that these globals are okay to use
-/* global document, alert, localStorage */
 
 let mockStorage = {};
 
