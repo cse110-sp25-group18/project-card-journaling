@@ -9,7 +9,7 @@
  */
 function saveJournalEntry(entryData) {
   try {
-    // Get existing entries or initialize an 
+    // Get existing entries or initialize an
     const existingEntries = JSON.parse(
       localStorage.getItem("journalEntries") || "[]",
     );
@@ -94,8 +94,4 @@ function initSubmitHandler() {
 document.addEventListener("DOMContentLoaded", initSubmitHandler);
 
 // Export functions for potential use in other scripts
-export { 
-  initSubmitHandler, 
-  handleSubmitCard, 
-  saveJournalEntry 
-};
+export { initSubmitHandler, handleSubmitCard, saveJournalEntry };
