@@ -37,44 +37,48 @@ afterEach(() => {
 
 beforeAll(() => {
   // Load your script once before all tests
-  require('../script/create-card.js');
+  require("../script/create-card.js");
 });
 
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-it('renders the card into the DOM with correct data', async () => {
-  document.dispatchEvent(new Event('DOMContentLoaded'));
+it("renders the card into the DOM with correct data", async () => {
+  document.dispatchEvent(new Event("DOMContentLoaded"));
   await wait(10);
 
-  const card = document.querySelector('.card');
+  const card = document.querySelector(".card");
   expect(card).toBeTruthy();
-  expect(card.querySelector('.prompt').textContent).toBe('What inspired you today?');
-  expect(card.querySelector('.date').getAttribute('datetime')).toBe('2025-05-19');
-  expect(card.querySelector('img').alt).toBe('Placeholder image');
-  expect(card.querySelector('img').src).toMatch(/placeholder/);
+  expect(card.querySelector(".prompt").textContent).toBe(
+    "What inspired you today?",
+  );
+  expect(card.querySelector(".date").getAttribute("datetime")).toBe(
+    "2025-05-19",
+  );
+  expect(card.querySelector("img").alt).toBe("Placeholder image");
+  expect(card.querySelector("img").src).toMatch(/placeholder/);
 });
 
-it('flips the card on front click and unflips on back click (not textarea)', async () => {
-  document.dispatchEvent(new Event('DOMContentLoaded'));
+it("flips the card on front click and unflips on back click (not textarea)", async () => {
+  document.dispatchEvent(new Event("DOMContentLoaded"));
   await wait(10);
 
-  const card = document.querySelector('.card');
-  const front = card.querySelector('.card-front');
-  const back = card.querySelector('.card-back');
-  const textarea = back.querySelector('textarea');
+  const card = document.querySelector(".card");
+  const front = card.querySelector(".card-front");
+  const back = card.querySelector(".card-back");
+  const textarea = back.querySelector("textarea");
 
   // Initially not flipped
-  expect(card.classList.contains('flipped')).toBe(false);
+  expect(card.classList.contains("flipped")).toBe(false);
 
   // Simulate front click
   front.click();
-  expect(card.classList.contains('flipped')).toBe(true);
+  expect(card.classList.contains("flipped")).toBe(true);
 
   // Simulate textarea click — should stay flipped
   textarea.click();
-  expect(card.classList.contains('flipped')).toBe(true);
+  expect(card.classList.contains("flipped")).toBe(true);
 
   // Simulate back click (not on textarea) — should unflip
   back.click();
-  expect(card.classList.contains('flipped')).toBe(false);
+  expect(card.classList.contains("flipped")).toBe(false);
 });
