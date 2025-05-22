@@ -50,3 +50,11 @@ nav a {
 nav a:hover {
     background-color: #e6e6e6;
 }
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 90%;
+    margin-left: 10%;
+    text-align: center;
+}
