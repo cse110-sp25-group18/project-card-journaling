@@ -1,5 +1,5 @@
 /* eslint-env jest */
-/* global beforeEach, afterEach, beforeAll, it, expect, jest, global */
+/* global beforeEach, afterEach, require, beforeAll, it, expect, jest, global */
 
 /**
  * @jest-environment jsdom
