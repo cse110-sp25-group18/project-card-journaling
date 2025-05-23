@@ -68,3 +68,5 @@ function getEntries(){
         return null;
     }    
 }
+
+export { populateEntries, getEntries }
