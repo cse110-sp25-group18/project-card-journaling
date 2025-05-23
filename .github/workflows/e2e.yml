@@ -4,10 +4,8 @@
 name: End-to-End Testing
 
 on:
-  # pull_request:
-  #   branches: [ "main" ]
-  push:
-    branches: [ "daniel/e2e-testing" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   build:
