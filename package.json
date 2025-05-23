@@ -1,7 +1,9 @@
 {
   "type": "module",
   "scripts": {
-    "test": "jest"
+    "test": "jest --selectProjects unit",
+    "test-unit": "jest --selectProjects unit",
+    "test-e2e": "jest --selectProjects e2e"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
