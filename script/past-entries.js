@@ -1,23 +1,32 @@
 document.addEventListener("DOMContentLoaded", async () => {
     console.log("DOM ready, starting to load past entries...");
 
+    const response = await fetch("../templates/past-entries-template.html");
+    const html = await response.text();
+
+    // Load the HTML template
+    populateEntries(html);
+
+});
+
+/**
+ * Pulls information from local storage and populates past entry cards.
+ * If no past entries exist, displays no entries to webpage.
+ * @param {string} html - html tags in string form
+ * @returns
+ */
+function populateEntries(html) {
     // get container where cards will live
     const entriesContainer = document.querySelector(".entries-container");
-    let entries = localStorage.getItem('journalEntries')
+    let entries = getEntries();
 
-    if(entries){
-        entries = JSON.parse(entries);
-    }
-    else{
+    if(!entries) {
         // if no entries, display no entries
         const noEntries = document.createElement('h1');
         noEntries.classList.add('no-entries');
         entriesContainer.appendChild(noEntries);
         return;
-    }
-    // Load the HTML template
-    const response = await fetch("../templates/past-entries-template.html");
-    const html = await response.text();
+    }    
 
     // Parse the HTML into a template element
     const temp = document.createElement("div");
@@ -42,5 +51,20 @@ document.addEventListener("DOMContentLoaded", async () => {
         cardContainer.appendChild(clone);
         entriesContainer.appendChild(cardContainer);
     });
+}
 
-});
+/**
+ * Gets all past entries from local storage
+ * @returns {JSON|null} an array if past entries exist, null otherwise
+ */
+function getEntries(){
+    let entries = localStorage.getItem('journalEntries')
+
+    if(entries){
+        return JSON.parse(entries);
+    }
+    else{
+        // if no entries, display no entries
+        return null;
+    }    
+}
