@@ -5,6 +5,7 @@
   <title>Past Entries</title>
   <link rel="stylesheet" href="../style/general.css" />
   <link rel="stylesheet" href="../style/past-entries.css" />
+  <link rel="stylesheet" href="../style/card.css"/>
 </head>
 <body>
   <nav>
@@ -21,29 +22,12 @@
     <div class="search-bar">
       <input type="text" id="searchInput" placeholder="Search entries..." />
     </div>
-
-    <!-- show past entry 1 -->
+    
     <div id="entriesContainer" class="entries-container">
-      <!-- Sample entry -->
-      <div class="entry-card">
-        <p class="entry-text">Past entry 1</p>
-        <div class="entry-controls">
-          <button class="favorite-btn">Favorite</button>
-          <button class="delete-btn">Delete</button>
-        </div>
-      </div>
-
-      <!-- show past entry 2 -->
-      <div class="entry-card">
-        <p class="entry-text">Past entry 2</p>
-        <div class="entry-controls">
-          <button class="favorite-btn">Favorite</button>
-          <button class="delete-btn">Delete</button>
-        </div>
-      </div>
     </div>
+
   </main>
 
-  <script src="/script/past-entries.js"></script>
+  <script type="module" src="../script/past-entries.js"></script>
 </body>
 </html>
