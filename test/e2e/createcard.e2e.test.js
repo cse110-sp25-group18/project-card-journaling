@@ -1,9 +1,10 @@
 describe("Test basic user flow from Create Card page", () => {
   beforeAll(async () => {
-    await page.goto(
-      "https://cse110-sp25-group18.github.io/project-card-journaling/pages/create-card.html",
-    );
-    page.waitForSelector(".card", { visible: true });
+    await page.goto('https://cse110-sp25-group18.github.io/project-card-journaling/pages/create-card.html');
+
+    page.waitForSelector('.card', {visible: true});
+    await page.waitForSelector(".card-front", { visible: true });
+    await page.waitForSelector(".card-back", { visible: true });
   });
 
   it("Test correct page load", async () => {
