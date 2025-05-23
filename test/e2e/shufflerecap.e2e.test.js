@@ -20,7 +20,7 @@ describe('Test basic user flow from Shuffle Recap page', () => {
     expect(navButtons.includes('Settings')).toBe(true);
 
     // recap controls
-    const shuffleBtn = page.$('#shuffleBtn');
+    const shuffleBtn = await page.$('#shuffleBtn');
 
     expect(shuffleBtn).not.toBe(null);
   });
