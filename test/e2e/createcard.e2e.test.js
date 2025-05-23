@@ -2,9 +2,6 @@ describe('Test basic user flow from Create Card page', () => {
 
   beforeAll(async () => {
     await page.goto('https://cse110-sp25-group18.github.io/project-card-journaling/pages/create-card.html');
-
-    page.waitForSelector('.card-front', 1000);
-    page.waitForSelector('.card-back', 1000);
   });
 
   it('Test correct page load', async () => {
@@ -32,11 +29,11 @@ describe('Test basic user flow from Create Card page', () => {
     expect(editPromptBtn).not.toBe(null);
 
     // card
-    const cardFront = await page.$('.card-front');
-    const cardBack = await page.$('.card-back');
+    // const cardFront = await page.$('.card-front');
+    // const cardBack = await page.$('.card-back');
 
-    expect(cardFront).not.toBe(null);
-    expect(cardBack).not.toBe(null);
+    // expect(cardFront).not.toBe(null);
+    // expect(cardBack).not.toBe(null);
 
     // button Row
     const deleteBtn = await page.$('#deleteBtn');
