@@ -1,3 +1,5 @@
+/* global describe, beforeAll, page, it, expect */
+
 describe("Test basic user flow from Create Card page", () => {
   beforeAll(async () => {
     await page.goto(
