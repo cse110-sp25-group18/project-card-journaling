@@ -1,36 +1,37 @@
-describe('Test basic user flow from homepage', () => {
-
+describe("Test basic user flow from homepage", () => {
   beforeAll(async () => {
-    await page.goto('https://cse110-sp25-group18.github.io/project-card-journaling/');
+    await page.goto(
+      "https://cse110-sp25-group18.github.io/project-card-journaling/",
+    );
   });
 
-  it('Check that buttons loaded', async () => {
-    console.log('Checking that nav buttons loaded...');
+  it("Check that buttons loaded", async () => {
+    console.log("Checking that nav buttons loaded...");
 
-    const navButtons = await page.$$eval('nav a', (buttons) => {
+    const navButtons = await page.$$eval("nav a", (buttons) => {
       return buttons.map((button) => {
         return button.textContent.trim();
       });
     });
 
     expect(navButtons.length).toBe(5);
-    expect(navButtons.includes('Home')).toBe(true);
-    expect(navButtons.includes('Create Card')).toBe(true);
-    expect(navButtons.includes('Past Entries')).toBe(true);
-    expect(navButtons.includes('Shuffle Recap')).toBe(true);
-    expect(navButtons.includes('Settings')).toBe(true);
+    expect(navButtons.includes("Home")).toBe(true);
+    expect(navButtons.includes("Create Card")).toBe(true);
+    expect(navButtons.includes("Past Entries")).toBe(true);
+    expect(navButtons.includes("Shuffle Recap")).toBe(true);
+    expect(navButtons.includes("Settings")).toBe(true);
 
-    console.log('Checking that journal entry buttons loaded...')
+    console.log("Checking that journal entry buttons loaded...");
 
-    const homeButtons = await page.$$eval('.home-buttons button', (buttons) => {
+    const homeButtons = await page.$$eval(".home-buttons button", (buttons) => {
       return buttons.map((button) => {
         return button.textContent.trim();
       });
     });
 
     expect(homeButtons.length).toBe(2);
-    expect(homeButtons.includes('📝 Create a new journal entry?'));
-    expect(homeButtons.includes('📔 View past journal entries?'));
+    expect(homeButtons.includes("📝 Create a new journal entry?"));
+    expect(homeButtons.includes("📔 View past journal entries?"));
   });
 
   it.skip(`Testing 'new journal entry' button`, async () => {

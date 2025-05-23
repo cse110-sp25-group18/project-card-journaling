@@ -1,4 +1,7 @@
-import { saveJournalEntry, handleSubmitCard } from "../../script/promptSubmit.js";
+import {
+  saveJournalEntry,
+  handleSubmitCard,
+} from "../../script/promptSubmit.js";
 import { test, expect, jest, beforeEach, afterEach } from "@jest/globals";
 
 let mockStorage = {};
