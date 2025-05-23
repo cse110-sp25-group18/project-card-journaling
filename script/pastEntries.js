@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let cards = [];
 
 
-   //Load and display entries from localStorage
+  //Load and display entries from localStorage
 
   function loadEntries() {
     // Clear container

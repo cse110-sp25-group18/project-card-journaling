@@ -3,47 +3,47 @@ import { CardModel } from './cardModel.js';
 export class Card {
 
     constructor(options = {}) {
-        // Card configuration
-        this.flippable = options.flippable ?? true;
-        this.editable = options.editable ?? true;
-        this.containerSelector = options.containerSelector || '.card-input';
+    // Card configuration
+    this.flippable = options.flippable ?? true;
+    this.editable = options.editable ?? true;
+    this.containerSelector = options.containerSelector || '.card-input';
         
-        // Create a CardModel instance from data or use defaults
+    // Create a CardModel instance from data or use defaults
         this.model = options.model || new CardModel(options.data || {
-            prompt: options.prompt || null, // Will be filled by promptGen if null
-            response: options.response || "",
-            date: options.date || new Date().toISOString().split('T')[0],
-            image: options.image || "https://via.placeholder.com/300x100", 
-            alt: options.alt || "Journal card image"
-        });
+    prompt: options.prompt || null, // Will be filled by promptGen if null
+    response: options.response || "",
+    date: options.date || new Date().toISOString().split('T')[0],
+    image: options.image || "https://via.placeholder.com/300x100", 
+    alt: options.alt || "Journal card image"
+    });
         
-        // References to DOM elements (filled during rendering)
-        this.elements = {};
+    // References to DOM elements (filled during rendering)
+    this.elements = {};
         
-        // Bound event handlers (for easy removal if needed)
-        this.eventHandlers = {
-            flip: this.handleFlip.bind(this),
-            unflip: this.handleUnflip.bind(this),
-            submit: this.handleSubmit.bind(this)
-        };
-    }
+    // Bound event handlers (for easy removal if needed)
+    this.eventHandlers = {
+    flip: this.handleFlip.bind(this),
+    unflip: this.handleUnflip.bind(this),
+    submit: this.handleSubmit.bind(this)
+    };
+}
     
-    async loadTemplate() {
-        try {
-            const response = await fetch('../templates/card-template.html');
-            if (!response.ok) {
-                throw new Error(`Failed to load template: ${response.status}`);
-            }
-            
-            const html = await response.text();
-            const temp = document.createElement('div');
-            temp.innerHTML = html.trim();
-            return temp.querySelector('template').content.cloneNode(true);
-        } catch (error) {
-            console.error('Error loading card template:', error);
-            throw error;
+async loadTemplate() {
+    try {
+        const response = await fetch('../templates/card-template.html');
+        if (!response.ok) {
+            throw new Error(`Failed to load template: ${response.status}`);
         }
+            
+        const html = await response.text();
+        const temp = document.createElement('div');
+        temp.innerHTML = html.trim();
+        return temp.querySelector('template').content.cloneNode(true);
+    } catch (error) {
+        console.error('Error loading card template:', error);
+        throw error;
     }
+}
     
     prepareContainer() {
         const container = document.querySelector(this.containerSelector);
@@ -57,7 +57,7 @@ export class Card {
     populateContent(card) {
         // Set the prompt text
         const promptEl = card.querySelector('.prompt');
-        if (promptEl) promptEl.textContent = this.model.prompt;
+        if (promptEl) {promptEl.textContent = this.model.prompt};
         
         // Format and set the date
         const dateEl = card.querySelector('.date');
@@ -111,7 +111,7 @@ export class Card {
     }
     
     connectSubmitButton(buttonId = 'submitBtn') {
-        if (!this.editable) return;
+        if (!this.editable) {return};
         
         const submitBtn = document.getElementById(buttonId);
         if (submitBtn) {
@@ -122,7 +122,7 @@ export class Card {
     
     handleSubmit() {
         const textarea = this.elements.textarea;
-        if (!textarea) return;
+        if (!textarea) {return};
         
         const response = textarea.value.trim();
         if (!response) {
@@ -227,7 +227,7 @@ export class Card {
     
     connectNewPromptButton(buttonId = 'newPromptBtn') {
         const newPromptBtn = document.getElementById(buttonId);
-        if (!newPromptBtn) return;
+        if (!newPromptBtn) {return};
         
         this.eventHandlers.newPrompt = async () => {
             try {
