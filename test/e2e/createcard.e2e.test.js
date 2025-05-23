@@ -29,9 +29,11 @@ describe('Test basic user flow from Create Card page', () => {
     expect(editPromptBtn).not.toBe(null);
 
     // card
-    const card = await page.$('.card');
+    const cardFront = await page.$('.card-front');
+    const cardBack = await page.$('.card-back');
 
-    expect(card).not.toBe(null);
+    expect(cardFront).not.toBe(null);
+    expect(cardBack).not.toBe(null);
 
     // button Row
     const deleteBtn = await page.$('#deleteBtn');
