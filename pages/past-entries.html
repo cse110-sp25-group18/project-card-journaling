@@ -32,27 +32,95 @@
         <input type="text" id="searchInput" placeholder="Search entries..." />
       </div>
 
-      <!-- show past entry 1 -->
-      <div id="entriesContainer" class="entries-container">
-        <!-- Sample entry -->
-        <div class="entry-card">
-          <p class="entry-text">Past entry 1</p>
-          <div class="entry-controls">
-            <button class="favorite-btn">Favorite</button>
-            <button class="delete-btn">Delete</button>
-          </div>
+    <!-- show past entry 1 -->
+    <!-- <div id="entriesContainer" class="entries-container"> -->
+      <!-- Sample entry -->
+      <!-- <div class="entry-card">
+        <p class="entry-text">Past entry 1</p>
+        <div class="entry-controls">
+          <button class="favorite-btn">Favorite</button>
+          <button class="delete-btn">Delete</button>
         </div>
+      </div> -->
 
-        <!-- show past entry 2 -->
-        <div class="entry-card">
-          <p class="entry-text">Past entry 2</p>
-          <div class="entry-controls">
-            <button class="favorite-btn">Favorite</button>
-            <button class="delete-btn">Delete</button>
-          </div>
+      <!-- show past entry 2 -->
+      <!-- <div class="entry-card">
+        <p class="entry-text">Past entry 2</p>
+        <div class="entry-controls">
+          <button class="favorite-btn">Favorite</button>
+          <button class="delete-btn">Delete</button>
         </div>
       </div>
-    </main>
-  <script src="/script/past-entries.js"></script>
+    </div> -->
+  </main>
+
+  <!-- <script src="../script/past-entries.js"></script> -->
+  <script>
+    const monthYearElement = document.getElementById('month-year');
+    const datesElement = document.getElementById('dates');
+    const prevButtonElement = document.getElementById('prev-button');
+    const nextButtonElement = document.getElementById('next-button');
+
+    let currentDate = new Date();
+
+    const updateCalendar = () => {
+      const currentYear = currentDate.getFullYear();
+      const currentMonth = currentDate.getMonth();
+      const firstDay = new Date(currentYear, currentMonth, 1);
+      const lastDay = new Date(currentYear, currentMonth + 1, 0);
+      const totalDays = lastDay.getDate();
+      const firstDayIndex = firstDay.getDay();
+      const lastDayIndex = lastDay.getDay();
+
+      const monthYearString = currentDate.toLocaleString('default', {month: 'long', year:'numeric'});
+      monthYearElement.textContent = monthYearString;
+
+      let datesHTML = '';
+
+      // trailing days from prev month
+      for(let i = firstDayIndex; i > 0; i--) {
+        const prevDate = new Date(currentYear, currentMonth, 0);
+        datesHTML += `<div class="date inactive">${prevDate.getDate() - i + 1}</div>`;
+      }
+      // days of current month
+      for(let i = 1; i <= totalDays; i++) {
+        const date = new Date(currentYear, currentMonth, i);
+        const today = new Date();
+        const isToday = date.getFullYear() === today.getFullYear() &&
+          date.getMonth() === today.getMonth() &&
+          date.getDate() === today.getDate();
+        const activeClass = isToday ? 'active' : '';
+        datesHTML += `<div class="date ${activeClass}">${i}</div>`;
+      }
+      // days leading into next month
+      const totalCells = firstDayIndex + totalDays;
+      let totalGridCells;
+      // need 5 or 6 rows
+      if (totalCells <= 35) {
+        totalGridCells = 35;
+      } else {
+        totalGridCells = 42;
+      }
+      const nextDays = totalGridCells - totalCells;
+      for(let i = 1; i <= nextDays; i++) {
+        datesHTML += `<div class="date inactive">${i}</div>`;
+      }
+      datesElement.innerHTML = datesHTML;
+    }
+
+    prevButtonElement.addEventListener('click', () => {
+      currentDate.setMonth(currentDate.getMonth() - 1);
+      updateCalendar();
+    })
+
+    nextButtonElement.addEventListener('click', () => {
+      currentDate.setMonth(currentDate.getMonth() + 1);
+      updateCalendar();
+    })
+
+    updateCalendar();
+
+
+  </script>
 </body>
 </html>
