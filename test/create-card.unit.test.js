@@ -1,6 +1,6 @@
 import { Card } from "../script/cardClass.js";
 import { saveJournalEntry } from "../script/promptSubmit.js";
-
+/* global describe, test, expect, global */
 describe("Create Card Page Tests", () => {
   // Mock the DOM structure
   document.body.innerHTML = `
@@ -65,6 +65,8 @@ describe("Create Card Page Tests", () => {
           response: "Test response",
         },
       });
+      expect(card.data.prompt).toBe("Test prompt");
+      expect(card.data.response).toBe("Test response");
 
       // Call the save method
       const entry = {

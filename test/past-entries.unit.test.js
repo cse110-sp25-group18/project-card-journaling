@@ -1,4 +1,5 @@
 import { Card } from "../script/cardClass.js";
+/* global describe, beforeEach, global, expect, jest, test */
 
 describe("Past Entries Page Tests", () => {
   // Mock the DOM structure
