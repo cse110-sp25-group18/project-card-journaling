@@ -1,4 +1,4 @@
-import { getRandomPrompt } from "../script/promptGen.js";
+import { getRandomPrompt } from "../../script/promptGen.js";
 import { test, expect } from "@jest/globals";
 
 test("getRandomPrompt returns a string", () => {
