@@ -29,15 +29,16 @@ document.addEventListener("DOMContentLoaded", () => {
         const cardContainer = document.createElement("div");
         cardContainer.style.width = "350px";
         cardContainer.style.margin = "20px";
-        cardContainer.id = `card-${index}`;
+        cardContainer.id = `card-${entry.id}`;
         entriesContainer.appendChild(cardContainer);
 
         // Create a flippable, non-editable card
         const card = new Card({
           flippable: true,
           editable: false,
-          containerSelector: `#card-${index}`,
+          containerSelector: `#card-${entry.id}`,
           data: {
+            id: entry.id,
             prompt: entry.prompt || "No prompt",
             response: entry.response || "No response",
             date: entry.date,

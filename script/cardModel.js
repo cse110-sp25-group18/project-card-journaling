@@ -1,6 +1,6 @@
 export class CardModel {
   constructor(data = {}) {
-    this._id = data.id || Date.now();
+    this._id = data.id || crypto.randomUUID();
     this._prompt = data.prompt || null;
     this._response = data.response || "";
     this._date = data.date ? new Date(data.date) : new Date();
