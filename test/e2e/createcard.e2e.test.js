@@ -49,4 +49,36 @@ describe("Test basic user flow from Create Card page", () => {
     expect(deleteBtn).not.toBe(null);
     expect(submitBtn).not.toBe(null);
   });
+
+  it("Test that submit saves to localStorage", async () => {
+    console.log("Testing that submit saves to localStorage...");
+
+    page.on("dialog", async (dialog) => {
+      await dialog.accept();
+    });
+
+    const cardFront = await page.$(".card-front");
+    const cardBack = await page.$(".card-back");
+
+    let flipped = await page.$(".flipped");
+
+    if (!flipped) {
+      await cardFront.click();
+      await page.waitForSelector(".flipped", { visible: true });
+    }
+    
+    await page.type("#response", "hello");
+
+    let submitBtn = await page.$("#submitBtn");
+    await submitBtn.click();
+
+    let local = await page.evaluate(() => {
+      return localStorage.getItem("journalEntries");
+    });
+
+    let localJSON = JSON.parse(local);
+    
+    expect(localJSON.length).toBe(1);
+    expect(localJSON[0].response).toBe("hello");
+  });
 });
