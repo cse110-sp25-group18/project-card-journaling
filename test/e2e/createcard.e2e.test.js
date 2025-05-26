@@ -66,7 +66,7 @@ describe("Test basic user flow from Create Card page", () => {
       await cardFront.click();
       await page.waitForSelector(".flipped", { visible: true });
     }
-    
+
     await page.type("#response", "hello");
 
     let submitBtn = await page.$("#submitBtn");
@@ -77,7 +77,7 @@ describe("Test basic user flow from Create Card page", () => {
     });
 
     let localJSON = JSON.parse(local);
-    
+
     expect(localJSON.length).toBe(1);
     expect(localJSON[0].response).toBe("hello");
   });
