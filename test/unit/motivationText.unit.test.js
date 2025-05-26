@@ -1,4 +1,4 @@
-import { getRandomMotivationText } from "../script/motivationText.js";
+import { getRandomMotivationText } from "../../script/motivationText.js";
 import { test, expect } from "@jest/globals";
 
 test("getRandomMotivationText returns a string", () => {
