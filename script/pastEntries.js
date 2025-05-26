@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       // Display each entry as a card
-      entries.forEach((entry, index) => {
+      entries.forEach((entry) => {
         // Create container for this card
         const cardContainer = document.createElement("div");
         cardContainer.style.width = "350px";
