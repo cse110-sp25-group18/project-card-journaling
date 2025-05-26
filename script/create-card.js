@@ -48,7 +48,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Add a cleanup function when leaving the page
     window.addEventListener("beforeunload", () => {
       journalCard.destroy();
-      observer.disconnect();
+      if (observer) {
+        observer.disconnect();
+      }
     });
 
     // Add reference to window for debugging purposes
