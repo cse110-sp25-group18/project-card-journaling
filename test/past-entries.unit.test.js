@@ -1,8 +1,8 @@
+/* global describe, beforeEach, global, expect, jest, test */
 /**
  * Simple tests for the past-entries.html page
  */
-// importing jest and mocking for test
-import { jest } from '@jest/globals';
+// mocking for test
 
 Object.defineProperty(global, 'crypto', {
   value: {

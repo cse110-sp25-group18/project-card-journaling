@@ -1,5 +1,6 @@
+
+/* global describe, test, expect, global */
 // Mock crypto.randomUUID for testing environment
-// Mocking for test
 Object.defineProperty(global, 'crypto', {
   value: {
     randomUUID: () => 'test-uuid-12345'
@@ -76,6 +77,9 @@ describe('Create Card Page Tests', () => {
           response: 'Test response'
         }
       });
+
+      expect(card.flippable).toBe(false);
+      expect(card.editable).toBe(true);
       
       // Call the save method (simplified for testing)
       const entry = {
