@@ -29,9 +29,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Initial update and listen for prompt changes
     updatePromptDisplay();
+    let observer = null;
     const promptBox = document.querySelector(".prompt-box");
     if (promptBox) {
-    const observer = new MutationObserver(updatePromptDisplay);
+    observer = new MutationObserver(updatePromptDisplay);
     observer.observe(document.querySelector(".prompt-box"), {
       characterData: true,
       childList: true,
