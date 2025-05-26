@@ -4,8 +4,6 @@
 name: Unit Tests
 
 on:
-  push:
-    branches: [ "daniel/unit-testing-cicd" ]
   pull_request:
     branches: [ "main" ]
 
