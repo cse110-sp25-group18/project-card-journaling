@@ -45,9 +45,18 @@ function populateEntries(html) {
             entry.date,
         ).toLocaleDateString();
         clone.querySelector(".date").setAttribute("datetime", entry.date);
-        clone.querySelector("img").src = entry.image;
-        clone.querySelector("img").alt = entry.alt;
-        clone.querySelector(".response").textContent = entry.response;
+        const front = clone.querySelector(".card-front");
+        const back = clone.querySelector(".card-back");
+        const card = clone.querySelector(".card");
+        front.addEventListener("click", () => {
+            card.classList.add("flipped");
+        });
+        back.addEventListener("click", (e) => {
+            if (!e.target.closest("textarea")) {
+            card.classList.remove("flipped");
+            }
+        });
+            clone.querySelector(".response").textContent = entry.response;
         cardContainer.appendChild(clone);
         entriesContainer.appendChild(cardContainer);
     });
