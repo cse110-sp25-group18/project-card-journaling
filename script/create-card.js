@@ -32,13 +32,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     let observer = null;
     const promptBox = document.querySelector(".prompt-box");
     if (promptBox) {
-    observer = new MutationObserver(updatePromptDisplay);
-    observer.observe(document.querySelector(".prompt-box"), {
-      characterData: true,
-      childList: true,
-      subtree: true,
-    });
-  }
+      observer = new MutationObserver(updatePromptDisplay);
+      observer.observe(document.querySelector(".prompt-box"), {
+        characterData: true,
+        childList: true,
+        subtree: true,
+      });
+    }
 
     // Connect to the new prompt button
     journalCard.connectNewPromptButton("newPromptBtn");
