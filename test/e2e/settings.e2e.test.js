@@ -9,18 +9,18 @@ describe("Test basic user flow from Settings page", () => {
 
   it("Test correct page load", async () => {
     // nav buttons
-    const navButtons = await page.$$eval("nav a", (buttons) => {
-      return buttons.map((button) => {
-        return button.textContent.trim();
+    const navButtons = await page.$$eval("nav a img", (imgs) => {
+      return imgs.map((img) => {
+        return img.getAttribute("src");
       });
     });
 
     expect(navButtons.length).toBe(5);
-    expect(navButtons.includes("Home")).toBe(true);
-    expect(navButtons.includes("Create Card")).toBe(true);
-    expect(navButtons.includes("Past Entries")).toBe(true);
-    expect(navButtons.includes("Shuffle Recap")).toBe(true);
-    expect(navButtons.includes("Settings")).toBe(true);
+    expect(navButtons.includes("../images/home-icon.svg")).toBe(true);
+    expect(navButtons.includes("../images/edit-icon.svg")).toBe(true);
+    expect(navButtons.includes("../images/calendar-icon.svg")).toBe(true);
+    expect(navButtons.includes("../images/shuffle-icon.svg")).toBe(true);
+    expect(navButtons.includes("../images/settings-icon.svg")).toBe(true);
 
     // Settings group
     const themeToggle = await page.$("#themeToggle"); // right now, this is the streak counter check box?
