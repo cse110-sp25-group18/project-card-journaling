@@ -27,7 +27,7 @@ main {
 prompt-box {
     display: flex;
     flex: 1;
-    max-height: 20%;
+    max-height: 100%;
     border: 1px dashed #aaa;
     width: 100%;
     height: 100%;
@@ -94,8 +94,23 @@ button {
     background-size: cover;
     background-repeat: no-repeat;
     cursor: pointer;
-    min-width: 20vw;
-    min-height: 10vh;
+    min-width: 6vw;
+    min-height: 9vh;
+}
+
+.button-row button {
+    padding: 0.5rem 1.2rem;
+    font-size: 1rem;
+    /* border: 1px solid #000;
+    border-radius: 6px; */
+    border:none;
+    background-image: url('../images/button-backgrounds.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    min-width: 8vw;
+    min-height: 9vh;
 }
 
 .app-name {
