@@ -4,6 +4,8 @@
 name: End-to-End Testing
 
 on:
+  push:
+    branches: ["daniel/local-e2e-testing"]
   pull_request:
     branches: [ "main" ]
 
