@@ -37,7 +37,7 @@ describe("Test basic user flow from Create Card page", () => {
     // Verify the response form is directly accessible (no flipping needed)
     const responseTextarea = await page.$("textarea#response");
     expect(responseTextarea).not.toBe(null);
-    
+
     // Verify card is not flippable
     const isNotFlippable = await page.evaluate(() => {
       const card = document.querySelector(".card");
