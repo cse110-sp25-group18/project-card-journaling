@@ -3,8 +3,7 @@ body {
 }
 
 main {
-    padding-left: 5%;
-    padding-right: 5%;
+    padding: 2%;
     min-height: 100vh;
     width: 100%;
     display: flex;
@@ -13,12 +12,32 @@ main {
 }
 
 .search-bar {
-    margin-top: 5%;
-    margin-bottom: 5%;
+    display: flex;
+    justify-content: left;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    width: 60vw;
+}
+
+#search-input {
+    width: 60%;
+    border-color: #f3d189;
+    background-color: #fff6e3;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 10px;
+    padding: 1em 1.2em;
+    font-size: 0.75rem;
+}
+
+#search-input:focus {
+    border-color: #f3d189;
+    background-color: #fff6e3;
+    outline: none;
 }
 
 .calendar {
-    background-color: #fff;
+    background-color: #fff6e3;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -27,21 +46,23 @@ main {
     flex-direction: column;
     padding: 10px;
     border-radius: 10px;
-    box-shadow: 0 0 10px black;
+    border-color:#f3d189;
+    border-style: solid;
+    border-width: 0.3ch;
 }
 
 header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding: 10px;
     width: 100%;
-    background-color: #fff;
 }
 
 .month-year {
     text-align: center;
-    font-weight: 600;
+    font-weight: 300;
+    font-size: 1.5rem;
     width: 150px;
 }
 
@@ -49,18 +70,20 @@ header button {
     display: flex;
     align-items: center;
     justify-content: center;
-    border: none;
+    border-style: solid;
+    border-width: 0.2ch;
+    border-color: #f3d189;
     border-radius: 50%;
-    background-color: white;
+    background-color: #fff6e3;
     cursor: pointer;
     width: 40px;
     height: 40px;
-    box-shadow: 0 0 4px black;
     font-size: x-large;
 }
 
 .cal-body {
     width: 90%;
+    margin-bottom: 2vh;
 }
 
 .days {
@@ -79,18 +102,12 @@ header button {
 .dates {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    /* gap: 5px; */
     width: 100%;
     margin-top: 5px;
-    border: 1px solid black;
+    border: 0.25px solid black;
 }
 
 .date {
-    /* display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center; */
-    /* padding: 10px; */
     aspect-ratio: 3/2;
     margin: 0;
     padding: 0;
@@ -99,10 +116,7 @@ header button {
     border: 1px solid black;
     border-radius: 0;
     box-sizing: border-box;
-    /* width: 40px;
-    height: 40px; */
     position: relative;
-    /* transition: 0.2s; */
 }
 
 .date::after {
@@ -115,14 +129,31 @@ header button {
 }
 
 .date.active {
-    background-color: yellow;
+    background-color: #ffee8c;
 }
 
 .date.inactive::after {
-    color: #d2d2d2;
+    color: #bcbcbc;
 }
 
-.date.inactive:hover {
-    color: #fff;
+#button-container {
+    margin: 3vh;
+    display: flex;
+    justify-content:space-around;
+    width: 60vh;
+    height: 10vh;
+}
+
+.card-buttons {
+    min-width: 10ch;
+    width: 30%;
+    height: 90%;
+    background-image: url('../images/button-backgrounds.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    border: none;
+    font-size: 1rem;
 }
 

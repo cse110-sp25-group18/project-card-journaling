@@ -26,43 +26,44 @@
         </a>        
     </nav>
     <main>
-      <h1>Past Entries</h1>
+      <!-- <h1>Past Entries</h1> -->
 
       <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="Search entries..." />
+        <input type="text" id="search-input" placeholder="Search for specific phrases or prompts here:" />
       </div>
+
+      <div class="calendar">
+      <header>
+        <!-- <button id="prev-button">&lsaquo;</button> -->
+        <div class="month-year" id="month-year"></div> 
+        <!-- <button id="next-button">&rsaquo;</button> -->
+      </header>
+      <div class="cal-body">
+        <div class="days">
+          <div class="day">Sun</div>
+          <div class="day">Mon</div>
+          <div class="day">Tues</div>
+          <div class="day">Wed</div>
+          <div class="day">Thurs</div>
+          <div class="day">Fri</div>
+          <div class="day">Sat</div>
+        </div>
+        <div class="dates" id="dates"></div>
+      </div>
+    </div>
+    <div id="button-container">
+      <button class="card-buttons">favorite</button>
+      <button class="card-buttons">delete</button>
     </div>
 
 
 
-    <!-- show past entry 1 -->
-    <!-- <div id="entriesContainer" class="entries-container"> -->
-      <!-- Sample entry -->
-      <!-- <div class="entry-card">
-        <p class="entry-text">Past entry 1</p>
-        <div class="entry-controls">
-          <button class="favorite-btn">Favorite</button>
-          <button class="delete-btn">Delete</button>
-        </div>
-      </div> -->
-
-      <!-- show past entry 2 -->
-      <!-- <div class="entry-card">
-        <p class="entry-text">Past entry 2</p>
-        <div class="entry-controls">
-          <button class="favorite-btn">Favorite</button>
-          <button class="delete-btn">Delete</button>
-        </div>
-      </div>
-    </div> -->
   </main>
 
   <!-- <script src="../script/past-entries.js"></script> -->
   <script>
     const monthYearElement = document.getElementById('month-year');
     const datesElement = document.getElementById('dates');
-    const prevButtonElement = document.getElementById('prev-button');
-    const nextButtonElement = document.getElementById('next-button');
 
     let currentDate = new Date();
 
@@ -111,18 +112,7 @@
       datesElement.innerHTML = datesHTML;
     }
 
-    prevButtonElement.addEventListener('click', () => {
-      currentDate.setMonth(currentDate.getMonth() - 1);
-      updateCalendar();
-    })
-
-    nextButtonElement.addEventListener('click', () => {
-      currentDate.setMonth(currentDate.getMonth() + 1);
-      updateCalendar();
-    })
-
     updateCalendar();
-
 
   </script>
 </body>
