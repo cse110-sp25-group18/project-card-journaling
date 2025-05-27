@@ -2,9 +2,7 @@
 
 describe("Test basic user flow from homepage", () => {
   beforeAll(async () => {
-    await page.goto(
-      "http://127.0.0.1:8080",
-    );
+    await page.goto("http://127.0.0.1:8080");
   });
 
   it("Check that buttons loaded", async () => {

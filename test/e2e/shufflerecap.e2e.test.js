@@ -2,9 +2,7 @@
 
 describe("Test basic user flow from Shuffle Recap page", () => {
   beforeAll(async () => {
-    await page.goto(
-      "http://127.0.0.1:8080/pages/recap.html",
-    );
+    await page.goto("http://127.0.0.1:8080/pages/recap.html");
   });
 
   it("Test correct page load", async () => {

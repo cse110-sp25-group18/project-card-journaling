@@ -2,9 +2,7 @@
 
 describe("Test basic user flow from Create Card page", () => {
   beforeAll(async () => {
-    await page.goto(
-      "http://127.0.0.1:8080/pages/create-card.html",
-    );
+    await page.goto("http://127.0.0.1:8080/pages/create-card.html");
 
     await page.waitForSelector(".card", { visible: true });
     await page.waitForSelector(".card-front", { visible: true });

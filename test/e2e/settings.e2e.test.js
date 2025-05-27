@@ -2,9 +2,7 @@
 
 describe("Test basic user flow from Settings page", () => {
   beforeAll(async () => {
-    await page.goto(
-      "http://127.0.0.1:8080/pages/settings.html",
-    );
+    await page.goto("http://127.0.0.1:8080/pages/settings.html");
   });
 
   it("Test correct page load", async () => {
