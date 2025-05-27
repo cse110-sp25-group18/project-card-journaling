@@ -1,28 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Past Entries</title>
-  <link rel="stylesheet" href="../style/general.css" />
-  <link rel="stylesheet" href="../style/past-entries.css" />
+<meta charset="UTF-8">
+    <title>Past Entries</title>
+    <link rel="stylesheet" href="../style/past-entries.css" />
+    <link rel="stylesheet" href="../style/general.css">
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" /> -->
 </head>
 <body>
-  <nav>
-    <a href="../index.html">Home</a>
-    <a href="create-card.html">Create Card</a>
-    <a href="past-entries.html" class="active">Past Entries</a>
-    <a href="recap.html">Shuffle Recap</a>
-    <a href="settings.html">Settings</a>
-  </nav>
+    <nav>
+        <a href="../index.html">
+            <img src="../images/home-icon.svg"></img>
+        </a>
+        <a href="create-card.html">
+            <img src="../images/edit-icon.svg"></img>
+        </a>
+        <a href="past-entries.html">
+            <img src="../images/calendar-icon.svg"></img>
+        </a>
+        <a href="recap.html">
+            <img src="../images/shuffle-icon.svg"></img>
+        </a>
+        <a href="settings.html">
+            <img src="../images/settings-icon.svg"></img>
+        </a>        
+    </nav>
+    <main>
+      <h1>Past Entries</h1>
 
-  <main>
-    <h1>Your Journal Entries</h1>
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search entries..." />
+      </div>
 
-    <div id="entriesContainer" class="entries-container">
-      <div class="loading">Loading your journal entries...</div>
-    </div>
-  </main>
+      <!-- show past entry 1 -->
+      <div id="entriesContainer" class="entries-container">
+        <!-- Sample entry -->
+        <div class="entry-card">
+          <p class="entry-text">Past entry 1</p>
+          <div class="entry-controls">
+            <button class="favorite-btn">Favorite</button>
+            <button class="delete-btn">Delete</button>
+          </div>
+        </div>
 
-  <script type="module" src="../script/pastEntries.js"></script>
+        <!-- show past entry 2 -->
+        <div class="entry-card">
+          <p class="entry-text">Past entry 2</p>
+          <div class="entry-controls">
+            <button class="favorite-btn">Favorite</button>
+            <button class="delete-btn">Delete</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  <script src="/script/past-entries.js"></script>
 </body>
 </html>
