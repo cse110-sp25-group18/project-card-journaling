@@ -1,5 +1,5 @@
-/* eslint-env jest */
-/* global beforeEach, afterEach, require, beforeAll, it, expect, jest, global */
+/* eslint-env node, jest */
+/* global beforeEach, afterEach, require, it, expect, jest, global */
 
 /**
  * @jest-environment jsdom
@@ -13,9 +13,12 @@ function waitForElement(selector, { timeout = 1000, interval = 10 } = {}) {
     const start = Date.now();
     (function check() {
       const el = document.querySelector(selector);
-      if (el) return resolve(el);
-      if (Date.now() - start > timeout)
+      if (el) {
+        return resolve(el);
+      }
+      if (Date.now() - start > timeout) {
         return reject(new Error(`Timeout: Element "${selector}" not found`));
+      }
       setTimeout(check, interval);
     })();
   });
@@ -68,7 +71,7 @@ beforeEach(() => {
       const front = card.querySelector(".card-front");
       const back = card.querySelector(".card-back");
 
-      front.addEventListener("click", (e) => {
+      front.addEventListener("click", () => {
         card.classList.add("flipped");
       });
 
@@ -106,12 +109,6 @@ it("inject the card with dynamic content from JS", async () => {
 });
 
 it("flips the card on front click and unflips on back click (not textarea)", async () => {
-  const mockCardData = {
-    prompt: "Dynamic prompt",
-    date: "2025-05-26",
-    image: "https://example.com/dynamic.jpg",
-    alt: "a dynamic image",
-  };
   document.dispatchEvent(new Event("DOMContentLoaded"));
 
   const card = await waitForElement(".card");
