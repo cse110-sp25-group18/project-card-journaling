@@ -40,8 +40,8 @@ describe("Test basic user flow from Create Card page", () => {
     
     // Verify card is not flippable
     const isNotFlippable = await page.evaluate(() => {
-
-      return true; 
+      const card = document.querySelector(".card");
+      return !card.classList.contains("flipped"); 
       
     });
 
