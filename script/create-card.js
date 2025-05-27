@@ -21,19 +21,19 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Add the prompt text to the form element for the non-flippable card
     const updatePromptDisplay = () => {
       const form = document.querySelector(".card-back form");
-      const promptText = document.querySelector(".prompt-box").textContent;
+      const promptText = document.querySelector("prompt-box").textContent;
       if (form && promptText) {
-        form.setAttribute("data-prompt", promptText);
+        form.setAttribute("data-prompt", promptText || "");
       }
     };
 
     // Initial update and listen for prompt changes
     updatePromptDisplay();
     let observer = null;
-    const promptBox = document.querySelector(".prompt-box");
+    const promptBox = document.querySelector("prompt-box");
     if (promptBox) {
       observer = new MutationObserver(updatePromptDisplay);
-      observer.observe(document.querySelector(".prompt-box"), {
+      observer.observe(promptBox, {
         characterData: true,
         childList: true,
         subtree: true,
