@@ -58,7 +58,6 @@ describe("Test basic user flow from Create Card page", () => {
     });
 
     const cardFront = await page.$(".card-front");
-    const cardBack = await page.$(".card-back");
 
     let flipped = await page.$(".flipped");
 
