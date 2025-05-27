@@ -8,7 +8,7 @@
 const fs = require("fs");
 const path = require("path");
 
-function waitForElement(selector, { timeout = 1000, interval = 10} = {}) {
+function waitForElement(selector, { timeout = 1000, interval = 10 } = {}) {
   return new Promise((resolve, reject) => {
     const start = Date.now();
     (function check() {
@@ -23,22 +23,25 @@ function waitForElement(selector, { timeout = 1000, interval = 10} = {}) {
 
 beforeEach(() => {
   document.body.innerHTML = '<div class="card-input"></div>';
-  const templatePath = path.resolve(__dirname, "../templates/card-template.html");
+  const templatePath = path.resolve(
+    __dirname,
+    "../templates/card-template.html",
+  );
   const templateHTML = fs.readFileSync(templatePath, "utf8");
 
   global.fetch = jest.fn(() =>
     Promise.resolve({
       text: () => Promise.resolve(templateHTML),
-    })
+    }),
   );
 
   const mockCardData = {
     prompt: "Dynamic prompt",
     date: "2025-05-26",
     image: "https://example.com/dynamic.jpg",
-    alt: "a dynamic image"
+    alt: "a dynamic image",
   };
-  
+
   jest.resetModules();
   jest.doMock("../script/create-card.js", () => {
     document.addEventListener("DOMContentLoaded", async () => {
@@ -50,7 +53,9 @@ beforeEach(() => {
 
       const clone = template.content.cloneNode(true);
       clone.querySelector(".prompt").textContent = mockCardData.prompt;
-      clone.querySelector(".date").textContent = new Date(mockCardData.date).toLocaleDateString();
+      clone.querySelector(".date").textContent = new Date(
+        mockCardData.date,
+      ).toLocaleDateString();
       clone.querySelector(".date").setAttribute("datetime", mockCardData.date);
       clone.querySelector("img").src = mockCardData.image;
       clone.querySelector("img").alt = mockCardData.alt;
@@ -87,16 +92,17 @@ it("inject the card with dynamic content from JS", async () => {
     prompt: "Dynamic prompt",
     date: "2025-05-26",
     image: "https://example.com/dynamic.jpg",
-    alt: "a dynamic image"
+    alt: "a dynamic image",
   };
   document.dispatchEvent(new Event("DOMContentLoaded"));
   const card = await waitForElement(".card");
   expect(card).toBeTruthy();
   expect(card.querySelector(".prompt").textContent).toBe(mockCardData.prompt);
-  expect(card.querySelector(".date").getAttribute("datetime")).toBe(mockCardData.date);
+  expect(card.querySelector(".date").getAttribute("datetime")).toBe(
+    mockCardData.date,
+  );
   expect(card.querySelector("img").alt).toBe(mockCardData.alt);
   expect(card.querySelector("img").src).toContain(mockCardData.image);
-
 });
 
 it("flips the card on front click and unflips on back click (not textarea)", async () => {
@@ -104,7 +110,7 @@ it("flips the card on front click and unflips on back click (not textarea)", asy
     prompt: "Dynamic prompt",
     date: "2025-05-26",
     image: "https://example.com/dynamic.jpg",
-    alt: "a dynamic image"
+    alt: "a dynamic image",
   };
   document.dispatchEvent(new Event("DOMContentLoaded"));
 
