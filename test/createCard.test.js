@@ -25,10 +25,7 @@ function waitForElement(selector, { timeout = 1000, interval = 10 } = {}) {
 
 beforeEach(() => {
   document.body.innerHTML = '<div class="card-input"></div>';
-  const templatePath = path.resolve(
-    __dirname,
-    "../templates/card-template.html",
-  );
+  const templatePath = require.resolve("../templates/card-template.html");
   const templateHTML = fs.readFileSync(templatePath, "utf8");
 
   global.fetch = jest.fn(() =>
