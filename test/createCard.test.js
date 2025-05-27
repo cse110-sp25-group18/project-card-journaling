@@ -5,7 +5,6 @@
 /* global beforeEach, afterEach, require, it, expect, jest, global */
 
 const fs = require("fs");
-const path = require("path");
 
 function waitForElement(selector, { timeout = 1000, interval = 10 } = {}) {
   return new Promise((resolve, reject) => {
