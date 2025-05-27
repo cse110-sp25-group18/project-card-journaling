@@ -41,8 +41,7 @@ describe("Test basic user flow from Create Card page", () => {
     // Verify card is not flippable
     const isNotFlippable = await page.evaluate(() => {
       const card = document.querySelector(".card");
-      return !card.classList.contains("flipped"); 
-      
+      return !card.classList.contains("flipped");
     });
 
     expect(isNotFlippable).toBe(true);
