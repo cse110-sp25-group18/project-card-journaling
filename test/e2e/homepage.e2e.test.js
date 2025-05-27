@@ -10,18 +10,19 @@ describe("Test basic user flow from homepage", () => {
   it("Check that buttons loaded", async () => {
     console.log("Checking that nav buttons loaded...");
 
-    const navButtons = await page.$$eval("nav a", (buttons) => {
-      return buttons.map((button) => {
-        return button.textContent.trim();
+    // nav buttons
+    const navButtons = await page.$$eval("nav a img", (imgs) => {
+      return imgs.map((img) => {
+        return img.getAttribute("src");
       });
     });
 
     expect(navButtons.length).toBe(5);
-    expect(navButtons.includes("Home")).toBe(true);
-    expect(navButtons.includes("Create Card")).toBe(true);
-    expect(navButtons.includes("Past Entries")).toBe(true);
-    expect(navButtons.includes("Shuffle Recap")).toBe(true);
-    expect(navButtons.includes("Settings")).toBe(true);
+    expect(navButtons.includes("../images/home-icon.svg")).toBe(true);
+    expect(navButtons.includes("../images/edit-icon.svg")).toBe(true);
+    expect(navButtons.includes("../images/calendar-icon.svg")).toBe(true);
+    expect(navButtons.includes("../images/shuffle-icon.svg")).toBe(true);
+    expect(navButtons.includes("../images/settings-icon.svg")).toBe(true);
 
     console.log("Checking that journal entry buttons loaded...");
 
