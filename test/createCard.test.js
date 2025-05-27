@@ -1,9 +1,8 @@
-/* eslint-env node, jest */
-/* global beforeEach, afterEach, require, it, expect, jest, global */
-
 /**
  * @jest-environment jsdom
- */
+*/
+/* eslint-env node, jest, jsdom */
+/* global beforeEach, afterEach, require, it, expect, jest, global */
 
 const fs = require("fs");
 const path = require("path");
