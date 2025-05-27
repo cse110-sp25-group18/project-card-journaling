@@ -1,6 +1,6 @@
 /**
  * @jest-environment jsdom
-*/
+ */
 /* eslint-env node, jest, jsdom */
 /* global beforeEach, afterEach, require, it, expect, jest, global */
 
