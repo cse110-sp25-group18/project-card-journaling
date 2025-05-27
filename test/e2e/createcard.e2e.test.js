@@ -3,7 +3,7 @@
 describe("Test basic user flow from Create Card page", () => {
   beforeAll(async () => {
     await page.goto(
-      "https://cse110-sp25-group18.github.io/project-card-journaling/pages/create-card.html",
+      "http://127.0.0.1:8080/pages/create-card.html",
     );
 
     await page.waitForSelector(".card", { visible: true });

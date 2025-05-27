@@ -3,7 +3,7 @@
 describe("Test basic user flow from Past Entries page", () => {
   beforeAll(async () => {
     await page.goto(
-      "https://cse110-sp25-group18.github.io/project-card-journaling/pages/past-entries.html",
+      "http://127.0.0.1:8080/pages/past-entries.html",
     );
   });
 
