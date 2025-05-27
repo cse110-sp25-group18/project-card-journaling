@@ -1,4 +1,3 @@
-
 /* global describe, test, expect, global */
 // Mock crypto.randomUUID for testing environment
 // Mocking for test
