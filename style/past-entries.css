@@ -4,7 +4,17 @@ body {
 
 main {
     padding-left: 5%;
+    padding-right: 5%;
     min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.search-bar {
+    margin-top: 5%;
+    margin-bottom: 5%;
 }
 
 .calendar {
@@ -69,30 +79,46 @@ header button {
 .dates {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
+    /* gap: 5px; */
+    width: 100%;
+    margin-top: 5px;
+    border: 1px solid black;
 }
 
 .date {
-    display: flex;
+    /* display: flex;
     align-items: center;
     justify-content: center;
-    text-align: center;
-    padding: 10px;
-    margin: auto;
+    text-align: center; */
+    /* padding: 10px; */
+    aspect-ratio: 3/2;
+    margin: 0;
+    padding: 0;
     cursor: pointer;
     font-weight: 600;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    transition: 0.2s;
+    border: 1px solid black;
+    border-radius: 0;
+    box-sizing: border-box;
+    /* width: 40px;
+    height: 40px; */
+    position: relative;
+    /* transition: 0.2s; */
+}
+
+.date::after {
+    content: attr(data-day);
+    position: absolute;
+    bottom: 4px;
+    right: 6px;
+    font-size: 0.5em;
+    color: black;
 }
 
 .date.active {
-    background-color: #ff5869;
-    color: white;
+    background-color: yellow;
 }
 
-.date.inactive {
+.date.inactive::after {
     color: #d2d2d2;
 }
 

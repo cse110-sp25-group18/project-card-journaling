@@ -31,6 +31,9 @@
       <div class="search-bar">
         <input type="text" id="searchInput" placeholder="Search entries..." />
       </div>
+    </div>
+
+
 
     <!-- show past entry 1 -->
     <!-- <div id="entriesContainer" class="entries-container"> -->
@@ -80,7 +83,7 @@
       // trailing days from prev month
       for(let i = firstDayIndex; i > 0; i--) {
         const prevDate = new Date(currentYear, currentMonth, 0);
-        datesHTML += `<div class="date inactive">${prevDate.getDate() - i + 1}</div>`;
+        datesHTML += `<div class="date inactive" data-day="${prevDate.getDate() - i + 1}"></div>`;
       }
       // days of current month
       for(let i = 1; i <= totalDays; i++) {
@@ -90,7 +93,7 @@
           date.getMonth() === today.getMonth() &&
           date.getDate() === today.getDate();
         const activeClass = isToday ? 'active' : '';
-        datesHTML += `<div class="date ${activeClass}">${i}</div>`;
+        datesHTML += `<div class="date ${activeClass}" data-day="${i}"></div>`;
       }
       // days leading into next month
       const totalCells = firstDayIndex + totalDays;
@@ -103,7 +106,7 @@
       }
       const nextDays = totalGridCells - totalCells;
       for(let i = 1; i <= nextDays; i++) {
-        datesHTML += `<div class="date inactive">${i}</div>`;
+        datesHTML += `<div class="date inactive" data-day="${i}"></div>`;
       }
       datesElement.innerHTML = datesHTML;
     }
