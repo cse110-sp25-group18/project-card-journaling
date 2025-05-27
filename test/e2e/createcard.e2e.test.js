@@ -15,7 +15,7 @@ describe("Test basic user flow from Create Card page", () => {
     // nav buttons
     const navButtons = await page.$$eval("nav a img", (imgs) => {
       return imgs.map((img) => {
-        return img.getAttribute('src');
+        return img.getAttribute("src");
       });
     });
 

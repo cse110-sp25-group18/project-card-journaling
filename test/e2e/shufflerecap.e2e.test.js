@@ -11,7 +11,7 @@ describe("Test basic user flow from Shuffle Recap page", () => {
     // nav buttons
     const navButtons = await page.$$eval("nav a img", (imgs) => {
       return imgs.map((img) => {
-        return img.getAttribute('src');
+        return img.getAttribute("src");
       });
     });
 
@@ -21,7 +21,7 @@ describe("Test basic user flow from Shuffle Recap page", () => {
     expect(navButtons.includes("../images/calendar-icon.svg")).toBe(true);
     expect(navButtons.includes("../images/shuffle-icon.svg")).toBe(true);
     expect(navButtons.includes("../images/settings-icon.svg")).toBe(true);
-    
+
     // recap controls
     const shuffleBtn = await page.$("#shuffleBtn");
 
