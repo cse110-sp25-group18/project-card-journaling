@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Past Entries</title>
-    <link rel="stylesheet" href="/style/general.css">
+    <link rel="stylesheet" href="../style/past-entries.css" />
+    <link rel="stylesheet" href="../style/general.css">
     <!-- <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" /> -->
 </head>
 <body>
@@ -25,7 +26,33 @@
         </a>        
     </nav>
     <main>
-        <h1>Past Entries</h1>
+      <h1>Past Entries</h1>
+
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search entries..." />
+      </div>
+
+      <!-- show past entry 1 -->
+      <div id="entriesContainer" class="entries-container">
+        <!-- Sample entry -->
+        <div class="entry-card">
+          <p class="entry-text">Past entry 1</p>
+          <div class="entry-controls">
+            <button class="favorite-btn">Favorite</button>
+            <button class="delete-btn">Delete</button>
+          </div>
+        </div>
+
+        <!-- show past entry 2 -->
+        <div class="entry-card">
+          <p class="entry-text">Past entry 2</p>
+          <div class="entry-controls">
+            <button class="favorite-btn">Favorite</button>
+            <button class="delete-btn">Delete</button>
+          </div>
+        </div>
+      </div>
     </main>
+  <script src="/script/past-entries.js"></script>
 </body>
-</html> 
+</html>

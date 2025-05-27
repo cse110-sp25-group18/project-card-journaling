@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Shuffle Recap</title>
-    <link rel="stylesheet" href="/style/general.css">
+    <link rel="stylesheet" href="../style/general.css" />
+    <link rel="stylesheet" href="../style/recap.css" />
     <!-- <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" /> -->
 </head>
 <body>
@@ -25,7 +26,32 @@
         </a>        
     </nav>
     <main>
-        <h1>Recap</h1>
+      <h1>Recap</h1>
+
+      <!-- card recap -->
+      <div id="cardRecap" class="card-recap">
+        <div id="cardContent" class="card-content">
+          <!-- placeholder for question mark image-->
+          </div id="questionImage" class="question-icon-placeholder"></div>
+          <!-- front of the card, containing prompt and date -->
+          <div id="cardFront" class="card-front">
+
+            <h3 id="cardPrompt" class="card-prompt">Sample Text! How was your day?</h3>
+          </div>
+          <!-- back of card, containing response -->
+          <div id="cardBack" class="card-back">
+            <p id="response" class="user-response">My day was quite reasonable!</p>
+          </div>
+        </div>
+      </div> 
+
+      <p id="cardDate" class="card-date">5/22/2025</p>
+      <!-- button to flip the card -->
+      <button id="shuffleBtn" class="shuffle-card">Shuffle</button>
+      <!-- button the reveal the card -->
+      <button id="revealBtn" class="reveal-card">Reveal</button>
+
     </main>
+    <script src="/script/recap.js"></script>
 </body>
-</html> 
+</html>

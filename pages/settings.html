@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Settings</title>
-    <link rel="stylesheet" href="/style/general.css">
+    <link rel="stylesheet" href="../style/general.css" />
+    <link rel="stylesheet" href="../style/settings.css" />
     <!-- <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" /> -->
 </head>
 <body>
@@ -24,8 +25,51 @@
             <img src="../images/settings-icon.svg"></img>
         </a>        
     </nav>
-    <main>
-        <h1>Settings</h1>
-    </main>
+
+  <main>
+    <h1>Settings</h1>
+
+    <section class="settings-group">
+      <h2>Prompt Styles</h2>
+      <label>
+        <input type="checkbox" id="promptStyle1" />
+        📔 Basic
+        <input type="checkbox" id="promptStyle2" />
+        🏃‍♂️ Fitness
+        <input type="checkbox" id="promptStyle3" />
+        💤 Dream journaling
+        <input type="checkbox" id="promptStyle4" />
+        🔄 Habit building/breaking
+        <input type="checkbox" id="promptStyle5" />
+        💜 Gratitude
+      </label>
+    </section>
+
+    <!-- Add option to show streak counter on right side -->
+    <section class="settings-group">
+      <h2>Streak</h2>
+      <label>
+        <input type="checkbox" id="themeToggle" />
+        Show Streak Counter
+      </label>
+    </section>
+
+    <section class="settings-group">
+      <h2>Motivation Text</h2>
+      <label>
+        <input type="checkbox" id="motivationTextToggle" />
+        Show Motivation Text
+      </label>
+    </section>
+
+    <!-- Add option to reset -->
+    <section class="settings-group">
+      <h2>Data</h2>
+      <button id="downloadDataBtn">Download Data</button>
+      <button id="resetBtn">Reset All Entries</button>
+    </section>
+  </main>
+
+  <script src="/script/settings.js"></script>
 </body>
 </html>
