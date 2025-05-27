@@ -6,7 +6,7 @@
  * Makes the prompt box editable when the edit button is clicked
  */
 function makePromptEditable() {
-  const promptBox = document.querySelector(".prompt-box");
+  const promptBox = document.querySelector("prompt-box");
   const editPromptBtn = document.getElementById("editPromptBtn");
 
   if (!promptBox || !editPromptBtn) {
