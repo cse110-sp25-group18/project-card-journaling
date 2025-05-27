@@ -1,4 +1,4 @@
-/* global describe, beforeAll, page, it, expect */
+/* global describe, beforeAll, page, it, expect, jest */
 
 jest.setTimeout(30000);
 
