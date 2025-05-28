@@ -1,30 +1,26 @@
+import { Card } from "./cardClass.js";
+
+let cards = []
+
 document.addEventListener("DOMContentLoaded", async () => {
     console.log("DOM ready, starting to load past entries...");
 
-    const response = await fetch("../templates/past-entries-template.html");
-    if(response){
-        console.log("Successfuly loaded template");
-    } else {
-        console.log("Failed to load template");
-    }
-    const html = await response.text();
-
-    // Load the HTML template
-    populateEntries(html, 5, 2025);
+    const date = new Date();
+    let month = date.getMonth()+1;
+    let year = date.getFullYear();
+    populatePage( month, year);
 
 });
 
 /**
  * Pulls information from local storage and populates past entry cards.
  * If no past entries exist, displays no entries to webpage.
- * @param {string} html - html tags in string form
  * @param {number} month - the month of the year in integer form
  * @param {number} year - the year in integer form
  * @returns
  */
-function populateEntries(html, month, year) {
+function populatePage(month, year) {
 
-    // update the updateCalendar method to pass in the month and year when its merged
     loadCalendar(month, year);
 
     // get container where cards will live
@@ -39,40 +35,37 @@ function populateEntries(html, month, year) {
     }    
     let filteredEntries = filterByDate(entries, month, year);
 
-    // Parse the HTML into a template element
-    const temp = document.createElement("div");
-    temp.innerHTML = html.trim();
-    const template = temp.querySelector("template");
-
     // Add each entry to the DOM
     filteredEntries.forEach(entry => {
-        // Create a container for the current element
-        const clone = template.content.cloneNode(true);
-        const cardContainer = document.createElement('div');
-        cardContainer.classList.add("card-container");
-        // Add data to template
-        clone.querySelector(".prompt").textContent = entry.prompt;
-        const front = clone.querySelector(".card-front");
-        const back = clone.querySelector(".card-back");
-        const card = clone.querySelector(".card");
-        front.addEventListener("click", () => {
-            card.classList.add("flipped");
-        });
-        back.addEventListener("click", (e) => {
-            if (!e.target.closest("textarea")) {
-            card.classList.remove("flipped");
-            }
-        });
-        clone.querySelector(".response").textContent = entry.response;
-        cardContainer.appendChild(clone);
+        // Create container for this card
+        const cardContainer = document.createElement("div");
+        cardContainer.id = `card-${entry.id}`;
+        
 
-        // extract day 
+        // Create a flippable, non-editable card
+        const card = new Card({
+          flippable: true,
+          editable: false,
+          containerSelector: `#card-${entry.id}`,
+          data: {
+            id: entry.id,
+            prompt: entry.prompt || "No prompt",
+            response: entry.response || "No response",
+            date: entry.date,
+            image: entry.image || "../Settings.png",
+          },
+          
+        });
         const date = new Date(entry.date);
-        let day = date.getDay()+25;
+        let day = date.getDate();
 
         // find element that is this day
         const dateContainer = document.querySelector(`div[data-day="${day}"]:not(.inactive)`);
         dateContainer.appendChild(cardContainer);
+
+        cards.push(card);
+
+        card.render();
     });
 }
 
@@ -109,7 +102,7 @@ function filterByDate(entries, targetMonth, targetYear){
 /**
  * Populates the DOM with the correct calendar
  * @param {number} month month of the calendar
- * @param {*} year year of the calendar
+ * @param {number} year year of the calendar
  */
 function loadCalendar(month, year){
     const monthYearElement = document.getElementById('month-year');
@@ -161,74 +154,4 @@ function loadCalendar(month, year){
     datesElement.innerHTML = datesHTML;
     console.log("Successfully loaded calendar");
 }
-
-export { populateEntries, getEntries }
-import { Card } from "./cardClass.js";
-
-document.addEventListener("DOMContentLoaded", () => {
-  const entriesContainer = document.getElementById("entriesContainer");
-  let cards = [];
-
-  //Load and display entries from localStorage
-
-  function loadEntries() {
-    // Clear container
-    entriesContainer.innerHTML = "";
-
-    try {
-      // Get entries from localStorage
-      const entries = JSON.parse(
-        localStorage.getItem("journalEntries") || "[]",
-      );
-      console.log(`Loaded ${entries.length} entries`);
-
-      if (entries.length === 0) {
-        entriesContainer.innerHTML =
-          "<p>No journal entries found. Create some on the Create Card page.</p>";
-        return;
-      }
-
-      // Display each entry as a card
-      entries.forEach((entry) => {
-        // Create container for this card
-        const cardContainer = document.createElement("div");
-        cardContainer.style.width = "350px";
-        cardContainer.style.margin = "20px";
-        cardContainer.id = `card-${entry.id}`;
-        entriesContainer.appendChild(cardContainer);
-
-        // Create a flippable, non-editable card
-        const card = new Card({
-          flippable: true,
-          editable: false,
-          containerSelector: `#card-${entry.id}`,
-          data: {
-            id: entry.id,
-            prompt: entry.prompt || "No prompt",
-            response: entry.response || "No response",
-            date: entry.date,
-            image: entry.image || "https://via.placeholder.com/300x100",
-          },
-        });
-
-        // Store reference for cleanup
-        cards.push(card);
-
-        // Render the card
-        card.render();
-      });
-    } catch (error) {
-      console.error("Error loading entries:", error);
-      entriesContainer.innerHTML =
-        "<p>Error loading entries. Check the console for details.</p>";
-    }
-  }
-
-  // Clean up event listeners when leaving the page
-  window.addEventListener("beforeunload", () => {
-    cards.forEach((card) => card.destroy());
-  });
-
-  // Load entries when page loads
-  loadEntries();
-});
+export { populatePage, getEntries }
