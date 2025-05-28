@@ -23,12 +23,12 @@
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
-    border: 1px solid #ccc;
+    border: 5px solid #f3d189;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     padding: 30px;
     box-sizing: border-box;
-    background: white;
+    background: #fff6e3;
 }
 
 .card-front {
@@ -95,4 +95,23 @@
 .card-back textarea {
     flex: 1;
     resize: none;
+}
+
+.non-flippable .card-back {
+    transform: none;
+    position: static;
+    backface-visibility: visible;
+}
+
+.non-flippable .card-front {
+    display: none;
+}
+
+.non-flippable .card-back form::before {
+    content: attr(data-prompt);
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 1.1em;
 }
