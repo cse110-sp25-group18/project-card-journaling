@@ -34,6 +34,7 @@ function populateEntries(html, month, year) {
     let entries = getEntries();
     if(!entries) {
         // if no entries, return
+        console.log("No entries");
         return;
     }    
     let filteredEntries = filterByDate(entries, month, year);
@@ -51,10 +52,6 @@ function populateEntries(html, month, year) {
         cardContainer.classList.add("card-container");
         // Add data to template
         clone.querySelector(".prompt").textContent = entry.prompt;
-        clone.querySelector(".date").textContent = new Date(
-            entry.date,
-        ).toLocaleDateString();
-        clone.querySelector(".date").setAttribute("datetime", entry.date);
         const front = clone.querySelector(".card-front");
         const back = clone.querySelector(".card-back");
         const card = clone.querySelector(".card");
@@ -66,21 +63,16 @@ function populateEntries(html, month, year) {
             card.classList.remove("flipped");
             }
         });
-            clone.querySelector(".response").textContent = entry.response;
+        clone.querySelector(".response").textContent = entry.response;
         cardContainer.appendChild(clone);
 
         // extract day 
         const date = new Date(entry.date);
-        let day = date.getDay();
+        let day = date.getDay()+25;
 
         // find element that is this day
-        const dateContainer = document.querySelector(`[data-day="${day}"]`);
-        if(dateContainer){
-            dateContainer.appendChild(clone);
-        } else {
-            console.log("Date doesn't exist");
-        }
-        
+        const dateContainer = document.querySelector(`div[data-day="${day}"]:not(.inactive)`);
+        dateContainer.appendChild(cardContainer);
     });
 }
 
@@ -114,7 +106,11 @@ function filterByDate(entries, targetMonth, targetYear){
     return month === targetMonth && year === targetYear;
   });
 }
-
+/**
+ * Populates the DOM with the correct calendar
+ * @param {number} month month of the calendar
+ * @param {*} year year of the calendar
+ */
 function loadCalendar(month, year){
     const monthYearElement = document.getElementById('month-year');
     const datesElement = document.getElementById('dates');
@@ -128,7 +124,6 @@ function loadCalendar(month, year){
     const lastDay = new Date(currentYear, currentMonth + 1, 0);
     const totalDays = lastDay.getDate();
     const firstDayIndex = firstDay.getDay();
-    const lastDayIndex = lastDay.getDay();
 
     const monthYearString = currentDate.toLocaleString('default', {month: 'long', year:'numeric'});
     monthYearElement.textContent = monthYearString;
@@ -137,18 +132,18 @@ function loadCalendar(month, year){
 
     // trailing days from prev month
     for(let i = firstDayIndex; i > 0; i--) {
-    const prevDate = new Date(currentYear, currentMonth, 0);
-    datesHTML += `<div class="date inactive" data-day="${prevDate.getDate() - i + 1}"></div>`;
+        const prevDate = new Date(currentYear, currentMonth, 0);
+        datesHTML += `<div class="date inactive" data-day="${prevDate.getDate() - i + 1}"></div>`;
     }
     const today = new Date();
     // days of current month
     for(let i = 1; i <= totalDays; i++) {
-    const date = new Date(currentYear, currentMonth, i);
-    const isToday = date.getFullYear() === today.getFullYear() &&
+        const date = new Date(currentYear, currentMonth, i);
+        const isToday = date.getFullYear() === today.getFullYear() &&
         date.getMonth() === today.getMonth() &&
         date.getDate() === today.getDate();
-    const activeClass = isToday ? 'active' : '';
-    datesHTML += `<div class="date ${activeClass}" data-day="${i}"></div>`;
+        const activeClass = isToday ? 'active' : '';
+        datesHTML += `<div class="date ${activeClass}" data-day="${i}"></div>`;
     }
     // days leading into next month
     const totalCells = firstDayIndex + totalDays;
@@ -164,6 +159,7 @@ function loadCalendar(month, year){
     datesHTML += `<div class="date inactive" data-day="${i}"></div>`;
     }
     datesElement.innerHTML = datesHTML;
+    console.log("Successfully loaded calendar");
 }
 
 export { populateEntries, getEntries }
