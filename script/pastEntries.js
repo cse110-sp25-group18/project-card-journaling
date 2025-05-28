@@ -2,10 +2,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.log("DOM ready, starting to load past entries...");
 
     const response = await fetch("../templates/past-entries-template.html");
+    if(response){
+        console.log("Successfuly loaded template");
+    } else {
+        console.log("Failed to load template");
+    }
     const html = await response.text();
 
     // Load the HTML template
-    populateEntries(html);
+    populateEntries(html, 5, 2025);
 
 });
 
@@ -13,20 +18,25 @@ document.addEventListener("DOMContentLoaded", async () => {
  * Pulls information from local storage and populates past entry cards.
  * If no past entries exist, displays no entries to webpage.
  * @param {string} html - html tags in string form
+ * @param {number} month - the month of the year in integer form
+ * @param {number} year - the year in integer form
  * @returns
  */
-function populateEntries(html) {
+function populateEntries(html, month, year) {
+
+    // update the updateCalendar method to pass in the month and year when its merged
+    loadCalendar(month, year);
+
     // get container where cards will live
     const entriesContainer = document.querySelector(".entries-container");
+    
+    // get entries and filter for the current displayed month + year
     let entries = getEntries();
-
     if(!entries) {
-        // if no entries, display no entries
-        const noEntries = document.createElement('h1');
-        noEntries.classList.add('no-entries');
-        entriesContainer.appendChild(noEntries);
+        // if no entries, return
         return;
     }    
+    let filteredEntries = filterByDate(entries, month, year);
 
     // Parse the HTML into a template element
     const temp = document.createElement("div");
@@ -34,7 +44,7 @@ function populateEntries(html) {
     const template = temp.querySelector("template");
 
     // Add each entry to the DOM
-    entries.forEach(entry => {
+    filteredEntries.forEach(entry => {
         // Create a container for the current element
         const clone = template.content.cloneNode(true);
         const cardContainer = document.createElement('div');
@@ -58,7 +68,19 @@ function populateEntries(html) {
         });
             clone.querySelector(".response").textContent = entry.response;
         cardContainer.appendChild(clone);
-        entriesContainer.appendChild(cardContainer);
+
+        // extract day 
+        const date = new Date(entry.date);
+        let day = date.getDay();
+
+        // find element that is this day
+        const dateContainer = document.querySelector(`[data-day="${day}"]`);
+        if(dateContainer){
+            dateContainer.appendChild(clone);
+        } else {
+            console.log("Date doesn't exist");
+        }
+        
     });
 }
 
@@ -76,6 +98,72 @@ function getEntries(){
         // if no entries, display no entries
         return null;
     }    
+}
+/**
+ * Filters all entries and returns those that fall within a given month + year
+ * @param {Array<Object>} entries - array of JSON entries 
+ * @param {number} targetMonth - target month
+ * @param {number} targetYear - target year
+ * @returns {Array<Object>} Filtered entries from that month
+ */
+function filterByDate(entries, targetMonth, targetYear){
+    return entries.filter(entry => {
+    const date = new Date(entry.date);
+    const month = date.getMonth() + 1; // getMonth() is 0-indexed
+    const year = date.getFullYear();
+    return month === targetMonth && year === targetYear;
+  });
+}
+
+function loadCalendar(month, year){
+    const monthYearElement = document.getElementById('month-year');
+    const datesElement = document.getElementById('dates');
+
+    // month is 0 indexed, so subtract 1
+    let currentDate = new Date(year, month-1);
+
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth();
+    const firstDay = new Date(currentYear, currentMonth, 1);
+    const lastDay = new Date(currentYear, currentMonth + 1, 0);
+    const totalDays = lastDay.getDate();
+    const firstDayIndex = firstDay.getDay();
+    const lastDayIndex = lastDay.getDay();
+
+    const monthYearString = currentDate.toLocaleString('default', {month: 'long', year:'numeric'});
+    monthYearElement.textContent = monthYearString;
+
+    let datesHTML = '';
+
+    // trailing days from prev month
+    for(let i = firstDayIndex; i > 0; i--) {
+    const prevDate = new Date(currentYear, currentMonth, 0);
+    datesHTML += `<div class="date inactive" data-day="${prevDate.getDate() - i + 1}"></div>`;
+    }
+    const today = new Date();
+    // days of current month
+    for(let i = 1; i <= totalDays; i++) {
+    const date = new Date(currentYear, currentMonth, i);
+    const isToday = date.getFullYear() === today.getFullYear() &&
+        date.getMonth() === today.getMonth() &&
+        date.getDate() === today.getDate();
+    const activeClass = isToday ? 'active' : '';
+    datesHTML += `<div class="date ${activeClass}" data-day="${i}"></div>`;
+    }
+    // days leading into next month
+    const totalCells = firstDayIndex + totalDays;
+    let totalGridCells;
+    // need 5 or 6 rows
+    if (totalCells <= 35) {
+    totalGridCells = 35;
+    } else {
+    totalGridCells = 42;
+    }
+    const nextDays = totalGridCells - totalCells;
+    for(let i = 1; i <= nextDays; i++) {
+    datesHTML += `<div class="date inactive" data-day="${i}"></div>`;
+    }
+    datesElement.innerHTML = datesHTML;
 }
 
 export { populateEntries, getEntries }
