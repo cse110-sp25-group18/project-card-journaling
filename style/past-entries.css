@@ -1,0 +1,159 @@
+body {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+main {
+    padding: 2%;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.search-bar {
+    display: flex;
+    justify-content: left;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    width: 60vw;
+}
+
+#search-input {
+    width: 60%;
+    border-color: #f3d189;
+    background-color: #fff6e3;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 10px;
+    padding: 1em 1.2em;
+    font-size: 0.75rem;
+}
+
+#search-input:focus {
+    border-color: #f3d189;
+    background-color: #fff6e3;
+    outline: none;
+}
+
+.calendar {
+    background-color: #fff6e3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60vw;
+    height: auto;
+    flex-direction: column;
+    padding: 10px;
+    border-radius: 10px;
+    border-color:#f3d189;
+    border-style: solid;
+    border-width: 0.3ch;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    width: 100%;
+}
+
+.month-year {
+    text-align: center;
+    font-weight: 300;
+    font-size: 1.5rem;
+    width: 150px;
+}
+
+header button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-style: solid;
+    border-width: 0.2ch;
+    border-color: #f3d189;
+    border-radius: 50%;
+    background-color: #fff6e3;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    font-size: x-large;
+}
+
+.cal-body {
+    width: 90%;
+    margin-bottom: 2vh;
+}
+
+.days {
+    display: grid;
+    grid-template-columns: repeat(7,1fr);
+    margin-top: 10px;
+}
+
+.day {
+    text-align: center;
+    padding: 5px;
+    color: black;
+    font-weight: 500;
+}
+
+.dates {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    width: 100%;
+    margin-top: 5px;
+    border: 0.25px solid black;
+}
+
+.date {
+    aspect-ratio: 3/2;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    font-weight: 600;
+    border: 1px solid black;
+    border-radius: 0;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.date::after {
+    content: attr(data-day);
+    position: absolute;
+    bottom: 4px;
+    right: 6px;
+    font-size: 0.5em;
+    color: black;
+}
+
+.date.active {
+    background-color: #ffee8c;
+}
+
+.date.inactive::after {
+    color: #bcbcbc;
+}
+
+#button-container {
+    margin: 3vh;
+    display: flex;
+    justify-content:space-around;
+    width: 60vh;
+    height: 10vh;
+}
+
+.card-buttons {
+    min-width: 10ch;
+    width: 30%;
+    height: 90%;
+    background-image: url('../images/button-backgrounds.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    border: none;
+    font-size: 1rem;
+}
+

@@ -2,31 +2,26 @@
 
 describe("Test basic user flow from Create Card page", () => {
   beforeAll(async () => {
-    await page.goto(
-      "https://cse110-sp25-group18.github.io/project-card-journaling/pages/create-card.html",
-    );
+    await page.goto("http://127.0.0.1:8080/pages/create-card.html");
 
     await page.waitForSelector(".card", { visible: true });
-    await page.waitForSelector(".card-front", { visible: true });
     await page.waitForSelector(".card-back", { visible: true });
   });
 
   it("Test correct page load", async () => {
-    console.log("Testing correct page load...");
-
     // nav buttons
-    const navButtons = await page.$$eval("nav a", (buttons) => {
-      return buttons.map((button) => {
-        return button.textContent.trim();
+    const navButtons = await page.$$eval("nav a img", (imgs) => {
+      return imgs.map((img) => {
+        return img.getAttribute("src");
       });
     });
 
     expect(navButtons.length).toBe(5);
-    expect(navButtons.includes("Home")).toBe(true);
-    expect(navButtons.includes("Create Card")).toBe(true);
-    expect(navButtons.includes("Past Entries")).toBe(true);
-    expect(navButtons.includes("Shuffle Recap")).toBe(true);
-    expect(navButtons.includes("Settings")).toBe(true);
+    expect(navButtons.includes("../images/home-icon.svg")).toBe(true);
+    expect(navButtons.includes("../images/edit-icon.svg")).toBe(true);
+    expect(navButtons.includes("../images/calendar-icon.svg")).toBe(true);
+    expect(navButtons.includes("../images/shuffle-icon.svg")).toBe(true);
+    expect(navButtons.includes("../images/settings-icon.svg")).toBe(true);
 
     // top bar
     const newPromptBtn = await page.$("#newPromptBtn");
@@ -36,12 +31,20 @@ describe("Test basic user flow from Create Card page", () => {
     expect(editPromptBtn).not.toBe(null);
 
     // card
-    const cardFront = await page.$(".card-front");
     const cardBack = await page.$(".card-back");
-
-    expect(cardFront).not.toBe(null);
     expect(cardBack).not.toBe(null);
 
+    // Verify the response form is directly accessible (no flipping needed)
+    const responseTextarea = await page.$("textarea#response");
+    expect(responseTextarea).not.toBe(null);
+
+    // Verify card is not flippable
+    const isNotFlippable = await page.evaluate(() => {
+      const card = document.querySelector(".card");
+      return !card.classList.contains("flipped");
+    });
+
+    expect(isNotFlippable).toBe(true);
     // button Row
     const deleteBtn = await page.$("#deleteBtn");
     const submitBtn = await page.$("#submitBtn");
@@ -56,16 +59,6 @@ describe("Test basic user flow from Create Card page", () => {
     page.on("dialog", async (dialog) => {
       await dialog.accept();
     });
-
-    const cardFront = await page.$(".card-front");
-
-    let flipped = await page.$(".flipped");
-
-    if (!flipped) {
-      await cardFront.click();
-      await page.waitForSelector(".flipped", { visible: true });
-    }
-
     await page.type("#response", "hello");
 
     let submitBtn = await page.$("#submitBtn");
