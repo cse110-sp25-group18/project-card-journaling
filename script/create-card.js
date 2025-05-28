@@ -1,47 +1,63 @@
+import { Card } from "./cardClass.js";
+
 document.addEventListener("DOMContentLoaded", async () => {
   console.log("DOM ready, starting to load card...");
 
-  // Load the HTML template
-  const response = await fetch("../templates/card-template.html");
-  const html = await response.text();
+  try {
+    const journalCard = new Card({
+      flippable: false,
+      editable: true,
+      containerSelector: ".card-input",
+      data: {
+        prompt: null,
+        response: "",
+        date: new Date().toISOString().split("T")[0],
+      },
+    });
 
-  // Parse the HTML into a template element
-  const tempDiv = document.createElement("div");
-  tempDiv.innerHTML = html.trim();
-  const template = tempDiv.querySelector("template");
+    // Render the card
+    await journalCard.render();
 
-  // Sample card data
-  const cardData = {
-    prompt: "What inspired you today?",
-    date: "2025-05-19",
-    image: "https://via.placeholder.com/300x100",
-    alt: "Placeholder image",
-  };
+    // Add the prompt text to the form element for the non-flippable card
+    const updatePromptDisplay = () => {
+      const form = document.querySelector(".card-back form");
+      const promptText = document.querySelector("prompt-box").textContent;
+      if (form && promptText) {
+        form.setAttribute("data-prompt", promptText || "");
+      }
+    };
 
-  // Clone and populate the template
-  const clone = template.content.cloneNode(true);
-  clone.querySelector(".prompt").textContent = cardData.prompt;
-  clone.querySelector(".date").textContent = new Date(
-    cardData.date,
-  ).toLocaleDateString();
-  clone.querySelector(".date").setAttribute("datetime", cardData.date);
-  clone.querySelector("img").src = cardData.image;
-  clone.querySelector("img").alt = cardData.alt;
-
-  // Add to the page
-  const container = document.querySelector(".card-input");
-  container.innerHTML = "";
-  container.appendChild(clone);
-  const card = container.querySelector(".card");
-  const front = card.querySelector(".card-front");
-  const back = card.querySelector(".card-back");
-  front.addEventListener("click", () => {
-    card.classList.add("flipped");
-  });
-  back.addEventListener("click", (e) => {
-    if (!e.target.closest("textarea")) {
-      card.classList.remove("flipped");
+    // Initial update and listen for prompt changes
+    updatePromptDisplay();
+    let observer = null;
+    const promptBox = document.querySelector("prompt-box");
+    if (promptBox) {
+      observer = new MutationObserver(updatePromptDisplay);
+      observer.observe(promptBox, {
+        characterData: true,
+        childList: true,
+        subtree: true,
+      });
     }
-  });
-  console.log("Card added!");
+
+    // Connect to the new prompt button
+    journalCard.connectNewPromptButton("newPromptBtn");
+
+    console.log("Card added and initialized!");
+
+    // Add a cleanup function when leaving the page
+    window.addEventListener("beforeunload", () => {
+      journalCard.destroy();
+      if (observer) {
+        observer.disconnect();
+      }
+    });
+
+    // Add reference to window for debugging purposes
+    window.journalCard = journalCard;
+  } catch (error) {
+    console.error("Error initializing cards:", error);
+    document.querySelector(".card-input").textContent =
+      "Error loading cards. Please refresh the page.";
+  }
 });
