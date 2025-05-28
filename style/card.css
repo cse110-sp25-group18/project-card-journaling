@@ -96,3 +96,22 @@
     flex: 1;
     resize: none;
 }
+
+.non-flippable .card-back {
+    transform: none;
+    position: static;
+    backface-visibility: visible;
+}
+
+.non-flippable .card-front {
+    display: none;
+}
+
+.non-flippable .card-back form::before {
+    content: attr(data-prompt);
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 1.1em;
+}
