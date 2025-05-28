@@ -9,6 +9,8 @@ body {
     flex-direction: row;
     margin: 0;
     font-family:Verdana, Tahoma, sans-serif;
+    background-image: url('../images/general-background.png');
+    background-position: center;
 }
 nav {
     display: flex;
@@ -17,10 +19,15 @@ nav {
     top: 0;
     left: 0;
     height: 100vh;           /* Full height */
-    width: 10%;              /* Set width */
-    min-width: 132px;
-    background-color: #f0f0f0;
+    width: 1%;              /* Set width */
+    min-width: 100px;            
+    background-color: #FFF3D7;
     padding: 1em;
+
+    border-color: #F8E3B7;
+    border-width: 2px;
+    border-style: solid;
+
 }
 
 nav a {
@@ -40,15 +47,15 @@ nav a {
     text-decoration: none;
     margin-bottom: 1rem;
     color: #333;
-    border-radius: 10px;
+    /* border-radius: 10px;
     border-color: black;
     border-width: 1px;
     border-style: solid;
-    padding: 2px
+    padding: 15px */
 }
 
 nav a:hover {
-    background-color: #e6e6e6;
+    background-color: #fff7e7;
 }
 
 footer {
