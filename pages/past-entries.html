@@ -10,49 +10,104 @@
 <body>
     <nav>
         <a href="../index.html">
-            <img src="../images/home-icon.svg"></img>
+            <img src="../images/home-icon.svg" alt="home">
         </a>
         <a href="create-card.html">
-            <img src="../images/edit-icon.svg"></img>
+            <img src="../images/edit-icon.svg" alt="edit">
         </a>
         <a href="past-entries.html">
-            <img src="../images/calendar-icon.svg"></img>
+            <img src="../images/calendar-icon.svg" alt="calendar">
         </a>
         <a href="recap.html">
-            <img src="../images/shuffle-icon.svg"></img>
+            <img src="../images/shuffle-icon.svg" alt="recap">
         </a>
         <a href="settings.html">
-            <img src="../images/settings-icon.svg"></img>
+            <img src="../images/settings-icon.svg" alt="settings">
         </a>        
     </nav>
     <main>
-      <h1>Past Entries</h1>
-
       <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="Search entries..." />
+        <input type="text" id="search-input" placeholder="Search for specific phrases or prompts here:" >
       </div>
 
-      <!-- show past entry 1 -->
-      <div id="entriesContainer" class="entries-container">
-        <!-- Sample entry -->
-        <div class="entry-card">
-          <p class="entry-text">Past entry 1</p>
-          <div class="entry-controls">
-            <button class="favorite-btn">Favorite</button>
-            <button class="delete-btn">Delete</button>
-          </div>
-        </div>
+      <div class="calendar">
+      <header>
+        <div class="month-year" id="month-year"></div> 
+      </header>
+      <div class="cal-body">
+        <div class="days">
+          <div class="day">Sun</div>
+          <div class="day">Mon</div>
+          <div class="day">Tues</div>
+          <div class="day">Wed</div>
+          <div class="day">Thurs</div>
+          <div class="day">Fri</div>
+          <div class="day">Sat</div>
+    </div>
+    <div id="button-container">
+      <button class="card-buttons">favorite</button>
+      <button class="card-buttons">delete</button>
+    </div>
 
-        <!-- show past entry 2 -->
-        <div class="entry-card">
-          <p class="entry-text">Past entry 2</p>
-          <div class="entry-controls">
-            <button class="favorite-btn">Favorite</button>
-            <button class="delete-btn">Delete</button>
-          </div>
-        </div>
-      </div>
-    </main>
-  <script src="/script/past-entries.js"></script>
+
+
+  </main>
+
+  <!-- <script src="../script/past-entries.js"></script> -->
+   <!-- Will move this to a separate file later, trying to avoid merge conflicts with thomas -->
+  <script>
+    const monthYearElement = document.getElementById('month-year');
+    const datesElement = document.getElementById('dates');
+
+    let currentDate = new Date();
+
+    const updateCalendar = () => {
+      const currentYear = currentDate.getFullYear();
+      const currentMonth = currentDate.getMonth();
+      const firstDay = new Date(currentYear, currentMonth, 1);
+      const lastDay = new Date(currentYear, currentMonth + 1, 0);
+      const totalDays = lastDay.getDate();
+      const firstDayIndex = firstDay.getDay();
+      const lastDayIndex = lastDay.getDay();
+
+      const monthYearString = currentDate.toLocaleString('default', {month: 'long', year:'numeric'});
+      monthYearElement.textContent = monthYearString;
+
+      let datesHTML = '';
+
+      // trailing days from prev month
+      for(let i = firstDayIndex; i > 0; i--) {
+        const prevDate = new Date(currentYear, currentMonth, 0);
+        datesHTML += `<div class="date inactive" data-day="${prevDate.getDate() - i + 1}"></div>`;
+      }
+      // days of current month
+      for(let i = 1; i <= totalDays; i++) {
+        const date = new Date(currentYear, currentMonth, i);
+        const today = new Date();
+        const isToday = date.getFullYear() === today.getFullYear() &&
+          date.getMonth() === today.getMonth() &&
+          date.getDate() === today.getDate();
+        const activeClass = isToday ? 'active' : '';
+        datesHTML += `<div class="date ${activeClass}" data-day="${i}"></div>`;
+      }
+      // days leading into next month
+      const totalCells = firstDayIndex + totalDays;
+      let totalGridCells;
+      // need 5 or 6 rows
+      if (totalCells <= 35) {
+        totalGridCells = 35;
+      } else {
+        totalGridCells = 42;
+      }
+      const nextDays = totalGridCells - totalCells;
+      for(let i = 1; i <= nextDays; i++) {
+        datesHTML += `<div class="date inactive" data-day="${i}"></div>`;
+      }
+      datesElement.innerHTML = datesHTML;
+    }
+
+    updateCalendar();
+
+  </script>
 </body>
 </html>
