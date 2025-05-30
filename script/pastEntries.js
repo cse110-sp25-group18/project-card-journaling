@@ -22,10 +22,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 function populatePage(month, year) {
 
     loadCalendar(month, year);
-
-    // get container where cards will live
-    const entriesContainer = document.querySelector(".entries-container");
     
+    // container that holds all cards
+    // all are hidden except the one that the user clicks
+    const displayedCardContainer = document.getElementById("displayed-card-container");
     // get entries and filter for the current displayed month + year
     let entries = getEntries();
     if(!entries) {
@@ -40,32 +40,46 @@ function populatePage(month, year) {
         // Create container for this card
         const cardContainer = document.createElement("div");
         cardContainer.id = `card-${entry.id}`;
-        
+        // hide cards by default
+        cardContainer.classList.add("card-container", "hidden");
 
         // Create a flippable, non-editable card
         const card = new Card({
           flippable: true,
           editable: false,
           containerSelector: `#card-${entry.id}`,
+          isEntry: true,
           data: {
             id: entry.id,
             prompt: entry.prompt || "No prompt",
             response: entry.response || "No response",
             date: entry.date,
-            image: entry.image || "../Settings.png",
+            image: entry.image || "",
           },
-          
         });
         const date = new Date(entry.date);
         let day = date.getDate();
 
         // find element that is this day
         const dateContainer = document.querySelector(`div[data-day="${day}"]:not(.inactive)`);
-        dateContainer.appendChild(cardContainer);
+    
+        // create placeholder card and add to DOM
+        // each one just displays the prompt and a card outline
+        const placeHolder = document.createElement("div");
+        placeHolder.classList.add("placeholder");
+        const placeHolderPrompt = document.createElement("p");
+        placeHolderPrompt.textContent = card.model.prompt;
+        placeHolder.appendChild(placeHolderPrompt);
+        dateContainer.appendChild(placeHolder);
 
-        cards.push(card);
+        // add hidden card to DOM
+        displayedCardContainer.appendChild(cardContainer);
 
+        // add event listener for when user clicks the calendar entry
+        dateContainer.addEventListener("click", () => renderCard(entry.id));
+    
         card.render();
+        cards.push(card);
     });
 }
 
@@ -153,5 +167,19 @@ function loadCalendar(month, year){
     }
     datesElement.innerHTML = datesHTML;
     console.log("Successfully loaded calendar");
+}
+/**
+ * Renders a single card
+ * @param {number} id - id of card to render
+ */
+function renderCard(id){
+    // hides all cards at the start and unflips
+    cards.forEach(card => {
+            const cardContainerElem = document.querySelector(`#card-${card.model.id}`);
+            cardContainerElem.classList.add("hidden");
+            cardContainerElem.querySelector(".card").classList.remove("flipped");
+        }
+    );
+    document.querySelector(`#card-${id}`).classList.remove("hidden");
 }
 export { populatePage, getEntries }

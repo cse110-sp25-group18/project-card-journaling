@@ -157,3 +157,28 @@ header button {
     font-size: 1rem;
 }
 
+#displayed-card-container {
+    aspect-ratio: 4 / 3;
+    width: 100%;            /* Start by filling container width */
+    max-width: 40rem;       /* Don't go above this */
+    max-height: 15rem;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    font-style: italic;
+
+}
+
+.placeholder {
+    top: 2%;
+    left: 2%;
+
+}
+
+.placeholder p {
+    font-size: 0.3em;
+}
+
+.hidden {
+    display: none;
+}
