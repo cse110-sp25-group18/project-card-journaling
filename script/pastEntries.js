@@ -182,4 +182,4 @@ function renderCard(id){
     );
     document.querySelector(`#card-${id}`).classList.remove("hidden");
 }
-export { populatePage, getEntries }
+export { populatePage, getEntries, renderCard, loadCalendar, filterByDate, cards}

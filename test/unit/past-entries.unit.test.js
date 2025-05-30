@@ -1,5 +1,9 @@
 /* eslint-env jest */
 import { test, expect } from "@jest/globals";
+import { populatePage, loadCalendar, getEntries, renderCard, filterByDate, cards } from "../../script/pastEntries";
+import { Card } from "../../script/cardClass";
+jest.mock('../../script/cardClass');
+
 
 function getCalendarData(currentDate) {
   const currentYear = currentDate.getFullYear();
@@ -143,4 +147,112 @@ test("should display correct month and year string in header", () => {
       }),
     );
   }
+});
+
+test('entries should be an array of JSON objects', () => {
+  let entries = getEntries();
+  if (entries) {
+    expect(Array.isArray(entries)).toBe(true);
+  } else {
+    expect(entries).toBe(null);
+  }
+});
+
+beforeEach(() => {
+  document.body.innerHTML = `
+    <div id="month-year"></div>
+    <div id="dates"></div>
+    <div id="displayed-card-container"></div>
+  `;
+  localStorage.clear();
+});
+
+describe('getEntries', () => {
+  test('returns parsed entries if they exist', () => {
+    const mockData = [{ id: 1, date: '2024-05-01' }];
+    localStorage.setItem('journalEntries', JSON.stringify(mockData));
+    expect(getEntries()).toEqual(mockData);
+  });
+
+  test('returns null if no entries exist', () => {
+    expect(getEntries()).toBeNull();
+  });
+});
+
+describe('filterByDate', () => {
+  test('filters entries by month and year', () => {
+    const entries = [
+      { date: '2024-05-01' },
+      { date: '2024-06-01' },
+    ];
+    // 4 hardcodes to May
+    const result = filterByDate(entries, 4, 2024);
+    expect(result).toHaveLength(1);
+    expect(result[0].date).toBe('2024-05-01');
+  });
+});
+
+describe('loadCalendar', () => {
+  test('renders correct number of day divs', () => {
+    loadCalendar(5, 2024);
+    const dates = document.getElementById('dates');
+    expect(dates.children.length).toBeGreaterThanOrEqual(35);
+  });
+});
+
+describe('populatePage', () => {
+  test('skips rendering if no entries', () => {
+    const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
+    populatePage(5, 2024);
+    expect(consoleSpy).toHaveBeenCalledWith('No entries');
+    consoleSpy.mockRestore();
+  });
+
+  test('renders cards and placeholders', () => {
+    const mockEntry = {
+      id: 'abc',
+      date: '2024-05-10',
+      prompt: 'Test Prompt',
+      response: 'Test Response',
+      image: ''
+    };
+
+    localStorage.setItem('journalEntries', JSON.stringify([mockEntry]));
+    loadCalendar(5, 2024);
+    document.querySelector(`div[data-day="10"]`).classList.remove('inactive');
+
+    Card.mockImplementation(() => ({
+      model: { id: 'abc', prompt: 'Test Prompt' },
+      render: jest.fn()
+    }));
+
+    populatePage(5, 2024);
+    expect(document.querySelector('.placeholder')).toBeTruthy();
+    expect(document.getElementById('card-abc')).toBeTruthy();
+  });
+});
+
+describe('renderCard', () => {
+  test('hides all cards and shows selected card', () => {
+    document.body.innerHTML += `
+      <div id="card-1" class="card-container">
+        <div class="card flipped"></div>
+      </div>
+      <div id="card-2" class="card-container">
+        <div class="card flipped"></div>
+      </div>
+    `;
+    const mockCard1 = {
+      model: { id: '1' }
+    };
+    const mockCard2 = {
+      model: { id: '2' }
+    };
+    cards.length = 0;
+    cards.push(mockCard1, mockCard2);
+    renderCard('2');
+
+    expect(document.getElementById('card-1').classList.contains('hidden')).toBe(true);
+    expect(document.getElementById('card-2').classList.contains('hidden')).toBe(false);
+  });
 });
