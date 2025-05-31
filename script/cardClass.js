@@ -200,7 +200,7 @@ export class Card {
       // Prepare container and load template
       const container = this.prepareContainer();
       const template = await this.loadTemplate();
-      
+
       // Add template to container
       container.appendChild(template);
 
