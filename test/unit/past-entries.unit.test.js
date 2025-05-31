@@ -1,7 +1,9 @@
 /* eslint-env jest */
 import { test, expect } from "@jest/globals";
-import { populatePage, loadCalendar, getEntries, renderCard, filterByDate, cards } from "../../script/pastEntries";
+import { populatePage, loadCalendar, getEntries, renderCard, filterByDate,
+   cards, handleNextButton, handlePreviousButton} from "../../script/pastEntries";
 import { Card } from "../../script/cardClass";
+
 jest.mock('../../script/cardClass');
 
 
@@ -31,6 +33,15 @@ function getCalendarData(currentDate) {
     nextDays,
   };
 }
+
+beforeEach(() => {
+  document.body.innerHTML = `
+    <div id="month-year"></div>
+    <div id="dates"></div>
+    <div id="displayed-card-container"></div>
+  `;
+  localStorage.clear();
+});
 
 test("should calculate correct number of days in month", () => {
   for (let month = 0; month < 12; month += 1) {
@@ -158,14 +169,6 @@ test('entries should be an array of JSON objects', () => {
   }
 });
 
-beforeEach(() => {
-  document.body.innerHTML = `
-    <div id="month-year"></div>
-    <div id="dates"></div>
-    <div id="displayed-card-container"></div>
-  `;
-  localStorage.clear();
-});
 
 describe('getEntries', () => {
   test('returns parsed entries if they exist', () => {
@@ -254,5 +257,45 @@ describe('renderCard', () => {
 
     expect(document.getElementById('card-1').classList.contains('hidden')).toBe(true);
     expect(document.getElementById('card-2').classList.contains('hidden')).toBe(false);
+  });
+});
+
+describe('handleNextButton', () => {
+  test('next month with no wrap', () => {
+    let month = 0;
+    let year = 2025;
+    populatePage(month, year);
+    const { retMonth, retYear } = handleNextButton(month, year);
+    expect(retMonth).toBe(1);
+    expect(retYear).toBe(2025);
+  });
+
+  test('next month with wrap', () => {
+    let month = 11;
+    let year = 2025;
+    populatePage(month, year);
+    const { retMonth, retYear } = handleNextButton(month, year);
+    expect(retMonth).toBe(0);
+    expect(retYear).toBe(2026);
+  });
+});
+
+describe('handlePreviousButton', () => {
+  test('previous month with no wrap', () => {
+    let month = 1;
+    let year = 2025;
+    populatePage(month, year);
+    const { retMonth, retYear } = handlePreviousButton(month, year);
+    expect(retMonth).toBe(0);
+    expect(retYear).toBe(2025);
+  });
+
+  test('previous month with wrap', () => {
+    let month = 0;
+    let year = 2025;
+    populatePage(month, year);
+    const { retMonth, retYear } = handlePreviousButton(month, year);
+    expect(retMonth).toBe(11);
+    expect(retYear).toBe(2024);
   });
 });

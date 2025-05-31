@@ -11,8 +11,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     // link button functions
     const prevButton = document.querySelector('#previous-button');
     const nextButton = document.querySelector('#next-button');
-    prevButton.addEventListener("click", handlePreviousButton);
-    nextButton.addEventListener("click", handleNextButton);
+    prevButton.addEventListener("click", () => {
+        const {retMonth, retYear} = handlePreviousButton(month, year);
+        month = retMonth;
+        year = retYear;
+    });
+    nextButton.addEventListener("click", () => {
+        const {retMonth, retYear} = handleNextButton(month, year);
+        month = retMonth;
+        year = retYear;
+    });
 
     // populate page with current month
     populatePage(month, year);
@@ -190,24 +198,35 @@ function renderCard(id){
     document.querySelector(`#card-${id}`).classList.remove("hidden");
 }
 
-function handleNextButton(){
-    if (month == 11){
-        month = 0;
-        year++;
+/**
+ * Loads next month's calendar
+ * @return {number, number} returns the new month and year
+ */
+function handleNextButton(retMonth, retYear){
+    if (retMonth === 11) {
+        retMonth = 0;
+        retYear++;
     } else {
-        month++;
+        retMonth++;
     }
-    populatePage(month, year);
+    populatePage(retMonth, retYear);
+    return { retMonth, retYear };
 }
 
-function handlePreviousButton(){
-    if (month == 0){
-        month = 11;
-        year--;
+/**
+ * Loads the previous month's calendar
+ * @return {number, number} returns the new month and year
+ */
+function handlePreviousButton(retMonth, retYear){
+    if (retMonth === 0) {
+        retMonth = 11;
+        retYear--;
     } else {
-        month --;
+        retMonth--;
     }
-    populatePage(month, year);
+    populatePage(retMonth, retYear);
+    return { retMonth, retYear };
 }
 
-export { populatePage, getEntries, renderCard, loadCalendar, filterByDate, cards}
+export { populatePage, getEntries, renderCard, loadCalendar, filterByDate, cards
+    , handleNextButton, handlePreviousButton}
