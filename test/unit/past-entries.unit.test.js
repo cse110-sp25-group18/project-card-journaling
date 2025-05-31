@@ -185,13 +185,13 @@ describe('getEntries', () => {
 describe('filterByDate', () => {
   test('filters entries by month and year', () => {
     const entries = [
-      { date: '2024-05-01' },
-      { date: '2024-06-01' },
+      { date: '2024-05-01T00:00:00' },
+      { date: '2024-06-01T00:00:00' },
     ];
     // 4 hardcodes to May
-    const result = filterByDate(entries, 4, 2024);
+    const result = filterByDate(entries, 5, 2024);
     expect(result).toHaveLength(1);
-    expect(result[0].date).toBe('2024-05-01');
+    expect(result[0].date).toBe('2024-05-01T00:00:00');
   });
 });
 

@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 /**
  * Pulls information from local storage and populates past entry cards.
  * If no past entries exist, displays no entries to webpage.
- * @param {number} month - the month of the year in integer form
+ * @param {number} month - the month of the year : 1-indexed
  * @param {number} year - the year in integer form
  * @returns
  */
