@@ -73,12 +73,12 @@ header button {
     border-style: solid;
     border-width: 0.2ch;
     border-color: #f3d189;
-    border-radius: 50%;
     background-color: #fff6e3;
     cursor: pointer;
-    width: 40px;
+    width: 20%;
     height: 40px;
     font-size: x-large;
+
 }
 
 .cal-body {

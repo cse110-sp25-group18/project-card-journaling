@@ -1,14 +1,21 @@
 import { Card } from "./cardClass.js";
 
 let cards = []
+const date = new Date();
+let month = date.getMonth()+1;
+let year = date.getFullYear();
 
 document.addEventListener("DOMContentLoaded", async () => {
     console.log("DOM ready, starting to load past entries...");
 
-    const date = new Date();
-    let month = date.getMonth()+1;
-    let year = date.getFullYear();
-    populatePage( month, year);
+    // link button functions
+    const prevButton = document.querySelector('#previous-button');
+    const nextButton = document.querySelector('#next-button');
+    prevButton.addEventListener("click", handlePreviousButton);
+    nextButton.addEventListener("click", handleNextButton);
+
+    // populate page with current month
+    populatePage(month, year);
 
 });
 
@@ -182,4 +189,25 @@ function renderCard(id){
     );
     document.querySelector(`#card-${id}`).classList.remove("hidden");
 }
+
+function handleNextButton(){
+    if (month == 11){
+        month = 0;
+        year++;
+    } else {
+        month++;
+    }
+    populatePage(month, year);
+}
+
+function handlePreviousButton(){
+    if (month == 0){
+        month = 11;
+        year--;
+    } else {
+        month --;
+    }
+    populatePage(month, year);
+}
+
 export { populatePage, getEntries, renderCard, loadCalendar, filterByDate, cards}
