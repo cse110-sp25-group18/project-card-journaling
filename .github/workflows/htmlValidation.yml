@@ -19,22 +19,32 @@ jobs:
       with:
         node-version: '14'    
 
-    - name: Install W3C HTML validator
-      run: npm install -g html-validator-cli
-
-    - name: Create validation directory
-      run: mkdir -p validation-results
-      
     - name: Validate HTML files with W3C
       run: |
+        echo "🔍 Starting HTML validation..."
+        has_errors=false
+        
         for file in $(find . -name "*.html"); do
-          echo "Validating $file..."
-          html-validator --file=$file --format=text --verbose > validation-results/$(basename $file).report.txt || true
+          echo "========================================================"
+          echo "📄 Validating $file..."
+          
+          # Run validator and output directly to terminal
+          output=$(html-validator --file=$file --format=text --verbose) || true
+          
+          # Display validation results in terminal
+          if echo "$output" | grep -q "The document validates according to"; then
+            echo "✅ $file is valid HTML"
+          else
+            echo "❌ $file has validation errors:"
+            echo "$output"
+            has_errors=true
+          fi
+          echo "========================================================"
         done
-    
-    - name: Upload validation results
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: w3c-html-validation-report
-        path: validation-results
+        
+        if [ "$has_errors" = true ]; then
+          echo "⚠️ Some HTML files have validation errors. Please fix them."
+          exit 1  # Optional: fail the workflow if there are HTML errors
+        else
+          echo "✅ All HTML files are valid!"
+        fi
