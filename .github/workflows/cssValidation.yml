@@ -14,14 +14,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
     
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14'    
-    
-    - name: Install W3C CSS validator
-      run: npm install -g w3c-css-validator
-    
     - name: Validate CSS files with W3C
       run: |
         echo "🔍 Starting CSS validation..."
@@ -31,7 +23,7 @@ jobs:
           echo "========================================================"
           echo "📄 Validating $file..."
           
-          output=$(npx w3c-css-validator "$file" --format text || true)
+          output=$(curl -s -F "file=@$file" -F "output=text" -F "profile=css3" https://jigsaw.w3.org/css-validator/validator)
           
           if echo "$output" | grep -q "Congratulations! No Error Found."; then
             echo "✅ $file is valid CSS"
