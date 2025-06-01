@@ -31,7 +31,7 @@ jobs:
           echo "========================================================"
           echo "📄 Validating $file..."
           
-          output=$(w3c-css-validator --file="$file") || true
+          output=$(npx w3c-css-validator "$file" --format text || true)
           
           if echo "$output" | grep -q "Congratulations! No Error Found."; then
             echo "✅ $file is valid CSS"
