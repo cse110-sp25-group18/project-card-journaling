@@ -1,0 +1,26 @@
+body {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+#button-container {
+    margin: 3vh;
+    display: flex;
+    justify-content:space-around;
+    width: 60vh;
+    height: 10vh;
+    position: bottom;
+    align-items: center;
+}
+
+.home-buttons {
+    min-width: 10ch;
+    width: 30%;
+    height: 90%;
+    background-image: url('../images/button-backgrounds.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    border: none;
+    font-size: 1rem;
+}
