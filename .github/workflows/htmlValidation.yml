@@ -31,7 +31,7 @@ jobs:
           echo "========================================================"
           echo "📄 Validating $file..."
 
-          output=$(html-validator --file=$file --format=text --verbose --validator=html --ignore="resource-references") || true
+          output=$(html-validator --file=$file --format=text --verbose --no-stream) || true
           
           if echo "$output" | grep -q "The document validates according to"; then
             echo "✅ $file is valid HTML"
