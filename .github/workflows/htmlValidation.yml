@@ -29,7 +29,7 @@ jobs:
       run: |
         for file in $(find . -name "*.html"); do
           echo "Validating $file..."
-          html-validator --file=$file --format=text > validation-results/$(basename $file).report.txt || true
+          html-validator --file=$file --format=text --verbose > validation-results/$(basename $file).report.txt || true
         done
     
     - name: Upload validation results
