@@ -37,6 +37,7 @@ jobs:
         
         if [ "$has_errors" = true ]; then
           echo "⚠️ Some CSS files have validation errors. Please fix them."
+          exit 1
         else
           echo "✅ All CSS files are valid!"
         fi
