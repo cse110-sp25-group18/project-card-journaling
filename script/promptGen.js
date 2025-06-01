@@ -39,7 +39,7 @@ function getRandomPrompt() {
  * Updates the prompt box with a randomly selected prompt
  */
 function updatePromptBox() {
-  const promptBox = document.querySelector(".prompt-box");
+  const promptBox = document.querySelector("prompt-box");
   if (promptBox) {
     // Don't update if currently in edit mode
     if (promptBox.getAttribute("contenteditable") === "true") {
