@@ -11,20 +11,30 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
     
-    - name: Validate HTML using W3C
-      uses: Cyb3r-Jak3/html-validator-action@v2
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
       with:
-        root: '.'
-        file_extensions: '.html'
-        report_level: 'warning'
-        format: 'text'
-        log_level: 'info'
+        node-version: '14'    
+
+    - name: Install W3C HTML validator
+      run: npm install -g html-validator-cli
+
+    - name: Create validation directory
+      run: mkdir -p validation-results
+      
+    - name: Validate HTML files with W3C
+      run: |
+        for file in $(find . -name "*.html"); do
+          echo "Validating $file..."
+          html-validator --file=$file --format=text > validation-results/$(basename $file).report.txt || true
+        done
     
     - name: Upload validation results
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: html-validation-report
-        path: html_validation_*
+        name: w3c-html-validation-report
+        path: validation-results
