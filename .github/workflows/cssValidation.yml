@@ -1,0 +1,51 @@
+name: CSS Validation
+
+on:
+  pull_request:
+    branches: [ "main" ]
+  push:
+    branches: [ "Max/automate-validator" ]
+
+jobs:
+  validate-css:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'    
+    
+    - name: Install W3C CSS validator
+      run: npm install -g w3c-css-validator
+    
+    - name: Validate CSS files with W3C
+      run: |
+        echo "🔍 Starting CSS validation..."
+        has_errors=false
+        
+        for file in $(find . -name "*.css"); do
+          echo "========================================================"
+          echo "📄 Validating $file..."
+          
+          content=$(cat "$file")
+          output=$(echo "$content" | w3c-css-validator --data="$content" --format=text) || true
+          
+          if echo "$output" | grep -q "Congratulations! No Error Found."; then
+            echo "✅ $file is valid CSS"
+          else
+            echo "❌ $file has validation errors:"
+            echo "$output"
+            has_errors=true
+          fi
+          echo "========================================================"
+        done
+        
+        if [ "$has_errors" = true ]; then
+          echo "⚠️ Some CSS files have validation errors. Please fix them."
+        else
+          echo "✅ All CSS files are valid!"
+        fi
