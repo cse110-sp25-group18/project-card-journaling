@@ -1,0 +1,30 @@
+name: HTML Validation
+
+on:
+  pull_request:
+    branches: [ "main" ]
+  push:
+    branches: [ "Max/automate-validator" ]
+
+jobs:
+  validate-html:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Validate HTML using W3C
+      uses: Cyb3r-Jak3/html-validator-action@v2
+      with:
+        root: '.'
+        file_extensions: '.html'
+        report_level: 'warning'
+        format: 'text'
+        log_level: 'info'
+    
+    - name: Upload validation results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: html-validation-report
+        path: html_validation_*
