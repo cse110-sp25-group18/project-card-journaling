@@ -19,6 +19,9 @@ jobs:
       with:
         node-version: '14'    
 
+    - name: Install HTML validator
+      run: npm install -g html-validator-cli
+
     - name: Validate HTML files with W3C
       run: |
         echo "🔍 Starting HTML validation..."
