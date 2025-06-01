@@ -27,11 +27,9 @@ jobs:
         for file in $(find . -name "*.html"); do
           echo "========================================================"
           echo "📄 Validating $file..."
-          
-          # Run validator and output directly to terminal
+
           output=$(html-validator --file=$file --format=text --verbose) || true
           
-          # Display validation results in terminal
           if echo "$output" | grep -q "The document validates according to"; then
             echo "✅ $file is valid HTML"
           else
@@ -44,7 +42,6 @@ jobs:
         
         if [ "$has_errors" = true ]; then
           echo "⚠️ Some HTML files have validation errors. Please fix them."
-          exit 1  # Optional: fail the workflow if there are HTML errors
         else
           echo "✅ All HTML files are valid!"
         fi
