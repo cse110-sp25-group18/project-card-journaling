@@ -151,7 +151,7 @@ export class Card {
       date: new Date().toISOString(),
       image: this.model.image,
       alt: this.model.alt,
-    };  
+    };
 
     this.saveEntry(entry);
   }
@@ -218,10 +218,10 @@ export class Card {
       }
 
       // Add favorite class if needed
-      if(this.model.favorite){
+      if (this.model.favorite) {
         card.classList.add("favorite");
       }
-      
+
       // Populate the card with content
       this.populateContent(card);
 
