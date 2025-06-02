@@ -28,16 +28,16 @@ export class SearchManager {
    * Setup references to DOM elements
    */
   setupDOMReferences() {
-    this.searchInput = document.getElementById('search-input');
-    this.calendarView = document.querySelector('.calendar');
-    
+    this.searchInput = document.getElementById("search-input");
+    this.calendarView = document.querySelector(".calendar");
+
     if (!this.searchInput) {
-      console.error('Search input not found');
+      console.error("Search input not found");
       return;
     }
-    
+
     if (!this.calendarView) {
-      console.error('Calendar view not found');
+      console.error("Calendar view not found");
       return;
     }
   }
@@ -46,13 +46,13 @@ export class SearchManager {
    * Create container for search results
    */
   createSearchResultsContainer() {
-    this.searchResultsContainer = document.createElement('div');
-    this.searchResultsContainer.id = 'search-results-container';
-    this.searchResultsContainer.className = 'search-results hidden';
-    
+    this.searchResultsContainer = document.createElement("div");
+    this.searchResultsContainer.id = "search-results-container";
+    this.searchResultsContainer.className = "search-results hidden";
+
     // Insert after the search bar
-    const searchBar = document.querySelector('.search-bar');
-    searchBar.insertAdjacentElement('afterend', this.searchResultsContainer);
+    const searchBar = document.querySelector(".search-bar");
+    searchBar.insertAdjacentElement("afterend", this.searchResultsContainer);
   }
 
   /**
@@ -62,13 +62,13 @@ export class SearchManager {
     if (!this.searchInput) return;
 
     // Real-time search on input
-    this.searchInput.addEventListener('input', (e) => {
+    this.searchInput.addEventListener("input", (e) => {
       this.handleSearch(e.target.value.trim());
     });
 
     // Clear search on escape key
-    this.searchInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
+    this.searchInput.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
         this.clearSearch();
       }
     });
@@ -86,7 +86,7 @@ export class SearchManager {
 
     this.isSearchActive = true;
     this.hideCalendarView();
-    
+
     const results = this.searchEntries(query);
     this.displaySearchResults(results, query);
   }
@@ -101,20 +101,22 @@ export class SearchManager {
     if (!entries) return [];
 
     const normalizedQuery = query.toLowerCase();
-    
+
     // Filter entries that match the query
-    const matchingEntries = entries.filter(entry => {
+    const matchingEntries = entries.filter((entry) => {
       const promptMatch = entry.prompt?.toLowerCase().includes(normalizedQuery);
-      const responseMatch = entry.response?.toLowerCase().includes(normalizedQuery);
+      const responseMatch = entry.response
+        ?.toLowerCase()
+        .includes(normalizedQuery);
       return promptMatch || responseMatch;
     });
 
     // Sort by relevance: exact matches first, then partial matches
     return matchingEntries.sort((a, b) => {
-      const aPrompt = a.prompt?.toLowerCase() || '';
-      const aResponse = a.response?.toLowerCase() || '';
-      const bPrompt = b.prompt?.toLowerCase() || '';
-      const bResponse = b.response?.toLowerCase() || '';
+      const aPrompt = a.prompt?.toLowerCase() || "";
+      const aResponse = a.response?.toLowerCase() || "";
+      const bPrompt = b.prompt?.toLowerCase() || "";
+      const bResponse = b.response?.toLowerCase() || "";
 
       // Check for exact matches in prompts (highest priority)
       const aExactPrompt = aPrompt === normalizedQuery;
@@ -155,17 +157,17 @@ export class SearchManager {
     this.showSearchResults();
 
     // Create search results header
-    const header = document.createElement('div');
-    header.className = 'search-results-header';
+    const header = document.createElement("div");
+    header.className = "search-results-header";
     header.innerHTML = `
       <h3>Search Results (${results.length})</h3>
-      <p>Found ${results.length} ${results.length === 1 ? 'entry' : 'entries'} matching "${query}"</p>
+      <p>Found ${results.length} ${results.length === 1 ? "entry" : "entries"} matching "${query}"</p>
     `;
     this.searchResultsContainer.appendChild(header);
 
     // Create results list
-    const resultsList = document.createElement('div');
-    resultsList.className = 'search-results-list';
+    const resultsList = document.createElement("div");
+    resultsList.className = "search-results-list";
 
     results.forEach((entry, index) => {
       const resultItem = this.createSearchResultItem(entry, query, index);
@@ -183,21 +185,27 @@ export class SearchManager {
    * @returns {HTMLElement} Result item element
    */
   createSearchResultItem(entry, query, index) {
-    const resultItem = document.createElement('div');
-    resultItem.className = 'search-result-item';
+    const resultItem = document.createElement("div");
+    resultItem.className = "search-result-item";
     resultItem.id = `search-result-${index}`;
 
     // Format date
     const date = new Date(entry.date);
-    const formattedDate = date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
+    const formattedDate = date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
 
     // Highlight matches in text
-    const highlightedPrompt = this.highlightMatches(entry.prompt || 'No prompt', query);
-    const highlightedResponse = this.highlightMatches(entry.response || 'No response', query);
+    const highlightedPrompt = this.highlightMatches(
+      entry.prompt || "No prompt",
+      query,
+    );
+    const highlightedResponse = this.highlightMatches(
+      entry.response || "No response",
+      query,
+    );
 
     resultItem.innerHTML = `
       <div class="search-result-content">
@@ -225,7 +233,7 @@ export class SearchManager {
   highlightMatches(text, query) {
     if (!text || !query) return text;
 
-    const regex = new RegExp(`(${this.escapeRegExp(query)})`, 'gi');
+    const regex = new RegExp(`(${this.escapeRegExp(query)})`, "gi");
     return text.replace(regex, '<mark class="search-highlight">$1</mark>');
   }
 
@@ -235,7 +243,7 @@ export class SearchManager {
    * @returns {string} Escaped string
    */
   escapeRegExp(string) {
-    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   }
 
   /**
@@ -255,7 +263,7 @@ export class SearchManager {
    * Clear search and return to calendar view
    */
   clearSearch() {
-    this.searchInput.value = '';
+    this.searchInput.value = "";
     this.isSearchActive = false;
     this.hideSearchResults();
     this.showCalendarView();
@@ -267,7 +275,7 @@ export class SearchManager {
    */
   clearSearchResults() {
     if (this.searchResultsContainer) {
-      this.searchResultsContainer.innerHTML = '';
+      this.searchResultsContainer.innerHTML = "";
     }
   }
 
@@ -276,7 +284,7 @@ export class SearchManager {
    */
   hideCalendarView() {
     if (this.calendarView) {
-      this.calendarView.classList.add('hidden');
+      this.calendarView.classList.add("hidden");
     }
   }
 
@@ -285,7 +293,7 @@ export class SearchManager {
    */
   showCalendarView() {
     if (this.calendarView) {
-      this.calendarView.classList.remove('hidden');
+      this.calendarView.classList.remove("hidden");
     }
   }
 
@@ -294,7 +302,7 @@ export class SearchManager {
    */
   hideSearchResults() {
     if (this.searchResultsContainer) {
-      this.searchResultsContainer.classList.add('hidden');
+      this.searchResultsContainer.classList.add("hidden");
     }
   }
 
@@ -303,7 +311,7 @@ export class SearchManager {
    */
   showSearchResults() {
     if (this.searchResultsContainer) {
-      this.searchResultsContainer.classList.remove('hidden');
+      this.searchResultsContainer.classList.remove("hidden");
     }
   }
 
@@ -320,6 +328,6 @@ export class SearchManager {
    * @returns {string} Current search query
    */
   getCurrentQuery() {
-    return this.searchInput ? this.searchInput.value.trim() : '';
+    return this.searchInput ? this.searchInput.value.trim() : "";
   }
 }

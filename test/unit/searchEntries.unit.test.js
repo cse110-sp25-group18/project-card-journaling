@@ -148,8 +148,13 @@ describe("SearchManager", () => {
   // Text highlighting functionality
   describe("highlightMatches()", () => {
     test("should highlight matches correctly", () => {
-      const result = searchManager.highlightMatches("I am grateful today", "grateful");
-      expect(result).toBe('I am <mark class="search-highlight">grateful</mark> today');
+      const result = searchManager.highlightMatches(
+        "I am grateful today",
+        "grateful",
+      );
+      expect(result).toBe(
+        'I am <mark class="search-highlight">grateful</mark> today',
+      );
     });
 
     test("should be case-insensitive", () => {
@@ -158,8 +163,13 @@ describe("SearchManager", () => {
     });
 
     test("should handle special regex characters", () => {
-      const result = searchManager.highlightMatches("test [brackets]", "[brackets]");
-      expect(result).toBe('test <mark class="search-highlight">[brackets]</mark>');
+      const result = searchManager.highlightMatches(
+        "test [brackets]",
+        "[brackets]",
+      );
+      expect(result).toBe(
+        'test <mark class="search-highlight">[brackets]</mark>',
+      );
     });
   });
 
@@ -179,9 +189,9 @@ describe("SearchManager", () => {
   test("should handle search workflow correctly", () => {
     searchManager.init(mockGetEntries);
     const hideCalendarSpy = jest.spyOn(searchManager, "hideCalendarView");
-    
+
     searchManager.handleSearch("grateful");
-    
+
     expect(searchManager.isSearchActive).toBe(true);
     expect(hideCalendarSpy).toHaveBeenCalled();
   });
@@ -191,9 +201,9 @@ describe("SearchManager", () => {
     searchManager.init(mockGetEntries);
     searchManager.isSearchActive = true;
     mockSearchInput.value = "test";
-    
+
     searchManager.clearSearch();
-    
+
     expect(searchManager.isSearchActive).toBe(false);
     expect(mockSearchInput.value).toBe("");
   });
