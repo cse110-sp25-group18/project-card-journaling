@@ -26,7 +26,7 @@
     height: 100%;
     backface-visibility: hidden;
     border: 5px solid #f3d189;
-    border-radius: 10;
+    border-radius: 10px;
     padding: 5px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     box-sizing: border-box;
