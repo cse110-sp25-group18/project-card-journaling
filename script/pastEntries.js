@@ -1,5 +1,6 @@
 import { Card } from "./cardClass.js";
 
+// initialzies month and day 
 let cards = [];
 const date = new Date();
 let month = date.getMonth() + 1;
@@ -11,6 +12,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // link button functions
   const prevButton = document.querySelector("#previous-button");
   const nextButton = document.querySelector("#next-button");
+  const deleteButton = document.querySelector("#delete-button");
   prevButton.addEventListener("click", () => {
     const { retMonth, retYear } = handlePreviousButton(month, year);
     month = retMonth;
@@ -21,6 +23,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     month = retMonth;
     year = retYear;
   });
+  deleteButton.addEventListener("click", () => {handleDeleteButton()});
 
   // populate page with current month
   populatePage(month, year);
@@ -36,11 +39,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 function populatePage(month, year) {
   loadCalendar(month, year);
 
-  // container that holds all cards
-  // all are hidden except the one that the user clicks
-  const displayedCardContainer = document.getElementById(
-    "displayed-card-container",
-  );
   // get entries and filter for the current displayed month + year
   let entries = getEntries();
   if (!entries) {
@@ -52,30 +50,10 @@ function populatePage(month, year) {
 
   // Add each entry to the DOM
   filteredEntries.forEach((entry) => {
-    // Create container for this card
-    const cardContainer = document.createElement("div");
-    cardContainer.id = `card-${entry.id}`;
-    // hide cards by default
-    cardContainer.classList.add("card-container", "hidden");
 
-    // Create a flippable, non-editable card
-    const card = new Card({
-      flippable: true,
-      editable: false,
-      containerSelector: `#card-${entry.id}`,
-      isEntry: true,
-      data: {
-        id: entry.id,
-        prompt: entry.prompt || "No prompt",
-        response: entry.response || "No response",
-        date: entry.date,
-        image: entry.image || "",
-      },
-    });
+    // find calendar date for this entry
     const date = new Date(entry.date);
     let day = date.getDate();
-
-    // find element that is this day
     const dateContainer = document.querySelector(
       `div[data-day="${day}"]:not(.inactive)`,
     );
@@ -85,17 +63,30 @@ function populatePage(month, year) {
     const placeHolder = document.createElement("div");
     placeHolder.classList.add("placeholder");
     const placeHolderPrompt = document.createElement("p");
-    placeHolderPrompt.textContent = card.model.prompt;
+    placeHolderPrompt.textContent = entry.prompt;
     placeHolder.appendChild(placeHolderPrompt);
     dateContainer.appendChild(placeHolder);
 
-    // add hidden card to DOM
-    displayedCardContainer.appendChild(cardContainer);
+    // Create a flippable, non-editable card
+    const card = new Card({
+      flippable: true,
+      editable: false,
+      containerSelector: `#card-${entry.id}`,
+      data: {
+        id: entry.id,
+        prompt: entry.prompt || "No prompt",
+        response: entry.response || "No response",
+        date: entry.date,
+        image: entry.image || "",
+      },
+    });
 
     // add event listener for when user clicks the calendar entry
-    dateContainer.addEventListener("click", () => renderCard(entry.id));
+    dateContainer.addEventListener("click", () => {
+        handleSelection(entry.id);
+    });
 
-    card.render();
+    // store reference to this card for rendering, favoriting, and deleting
     cards.push(card);
   });
 }
@@ -231,6 +222,40 @@ function handlePreviousButton(retMonth, retYear) {
   populatePage(retMonth, retYear);
   return { retMonth, retYear };
 }
+
+function handleSelection(id){
+    // get entries and filter for the current displayed month + year
+    let entries = getEntries();
+    if (!entries) {
+        // if no entries, return
+        console.log("No entries");
+        return;
+    }
+
+    // get reference to display container and clear it
+    const displayedCardContainer = document.getElementById(
+        "displayed-card-container"
+    );
+    displayedCardContainer.innerHTML = "";
+
+    // get the correct entry
+    let entry = entries.find(obj => obj.id == id);
+    
+    // Create container for this card
+    const cardContainer = document.createElement("div");
+    cardContainer.id = `card-${entry.id}`;
+    cardContainer.classList.add("card-container");
+    displayedCardContainer.appendChild(cardContainer);
+
+    // make correct card render
+    const card = cards.find(obj => obj.model.id == entry.id);
+    card.render();
+
+}
+function handleDeleteButton(){
+    console.log("Delete active");
+}
+
 
 export {
   populatePage,

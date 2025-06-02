@@ -17,6 +17,7 @@ export class Card {
           date: options.date || new Date().toISOString().split("T")[0],
           image: options.image || "https://via.placeholder.com/300x100",
           alt: options.alt || "Journal card image",
+          id: entry.id || null,
         },
       );
 
@@ -149,7 +150,7 @@ export class Card {
       date: new Date().toISOString(),
       image: this.model.image,
       alt: this.model.alt,
-    };
+    };  
 
     this.saveEntry(entry);
   }
