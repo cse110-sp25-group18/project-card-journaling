@@ -13,7 +13,7 @@ function saveJournalEntry(entryData) {
     const existingEntries = JSON.parse(
       localStorage.getItem("journalEntries") || "[]",
     );
-
+    console.log(entryData);
     // Add the new entry to the beginning of the array (most recent first)
     existingEntries.unshift(entryData);
 
@@ -63,6 +63,7 @@ function handleSubmitCard() {
       prompt: prompt,
       response: response,
       date: new Date().toISOString(),
+      favorite: false,
     };
 
     // Save to local storage

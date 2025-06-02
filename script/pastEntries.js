@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const prevButton = document.querySelector("#previous-button");
   const nextButton = document.querySelector("#next-button");
   const deleteButton = document.querySelector("#delete-button");
+  const favoriteButton = document.querySelector("#favorite-button");
   prevButton.addEventListener("click", () => {
     const { retMonth, retYear } = handlePreviousButton(month, year);
     month = retMonth;
@@ -24,6 +25,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     year = retYear;
   });
   deleteButton.addEventListener("click", () => {handleDeleteButton()});
+  favoriteButton.addEventListener("click", () => {handleFavoriteButton()});
 
   // populate page with current month
   populatePage(month, year);
@@ -78,6 +80,7 @@ function populatePage(month, year) {
         response: entry.response || "No response",
         date: entry.date,
         image: entry.image || "",
+        favorite: entry.favorite || false,
       },
     });
 
@@ -304,6 +307,48 @@ function handleDeleteButton(){
     }
 }
 
+function handleFavoriteButton(){
+    const displayedCardContainer = document.getElementById("displayed-card-container");
+    const selectedCard = displayedCardContainer.querySelector(".card-container");
+    if(selectedCard == null){
+        alert("You must select a card before attempting to favorite.");
+        return;
+    }
+
+    // Proceed with favorite
+    // get  reference to card id
+    const id = Number(selectedCard.id.split('-')[1]);
+
+    // delete from journalEntries/localStorage
+    let entries = getEntries();
+    let entry = entries.find(obj => obj.id == id);
+    const card = cards.find(obj => obj.model.id == id);
+
+    // get placeholder element in the calendar
+    const date = new Date(entry.date);
+    let day = date.getDate();
+    const dayContainer = document.querySelector(`div[data-day="${day}"]:not(.inactive)`);
+
+    // toggle favorite flag and re-render displayed card
+    if(entry.favorite){
+        entry.favorite = false;
+        card.model.favorite = false;
+        dayContainer.classList.remove("favorite");
+        card.render();
+        alert("Card unfavorited");
+    } else {
+        entry.favorite = true;
+        card.model.favorite = true;
+        dayContainer.classList.add("favorite");
+        card.render();
+        alert("Card favorited");
+    }
+
+    // update localStorage
+    localStorage.setItem("journalEntries", JSON.stringify(entries));
+    return; 
+}
+
 
 export {
   populatePage,
@@ -314,4 +359,7 @@ export {
   cards,
   handleNextButton,
   handlePreviousButton,
+  handleSelection, 
+  handleDeleteButton,
+  handleFavoriteButton,
 };
