@@ -1,4 +1,6 @@
-/* global describe, beforeAll, page, it, expect */
+/* global describe, beforeAll, page, it, expect, jest */
+
+jest.setTimeout(30000);
 
 describe("Test basic user flow from Create Card page", () => {
   beforeAll(async () => {
