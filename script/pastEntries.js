@@ -184,20 +184,6 @@ function loadCalendar(month, year) {
 }
 
 /**
- * Renders a single card
- * @param {number} id - id of card to render
- */
-function renderCard(id) {
-  // hides all cards at the start and unflips
-  cards.forEach((card) => {
-    const cardContainerElem = document.querySelector(`#card-${card.model.id}`);
-    cardContainerElem.classList.add("hidden");
-    cardContainerElem.querySelector(".card").classList.remove("flipped");
-  });
-  document.querySelector(`#card-${id}`).classList.remove("hidden");
-}
-
-/**
  * Loads next month's calendar
  * @return {number, number} returns the new month and year
  */
@@ -273,7 +259,7 @@ function handleDeleteButton(){
 
         // delete from journalEntries/localStorage
         let entries = getEntries();
-        const updatedEntries = entries.filter(obj => obj.id !== id);
+        const updatedEntries = entries.filter(obj => obj.id != id);
         const entry = entries.find(obj => obj.id == id);
         localStorage.setItem("journalEntries", JSON.stringify(updatedEntries));
 
@@ -287,7 +273,7 @@ function handleDeleteButton(){
         const dateContainer = document.querySelector(
             `div[data-day="${day}"]:not(.inactive)`,
         );
-        dateContainer.removeEventListener("click", renderCard); 
+        dateContainer.removeEventListener("click", handleSelection); 
 
         // destroy the card itself 
         let card = cards.find(obj => obj.model.id === entry.id);
@@ -353,7 +339,6 @@ function handleFavoriteButton(){
 export {
   populatePage,
   getEntries,
-  renderCard,
   loadCalendar,
   filterByDate,
   cards,

@@ -13,7 +13,6 @@ function saveJournalEntry(entryData) {
     const existingEntries = JSON.parse(
       localStorage.getItem("journalEntries") || "[]",
     );
-    console.log(entryData);
     // Add the new entry to the beginning of the array (most recent first)
     existingEntries.unshift(entryData);
 

@@ -1,14 +1,16 @@
 /* eslint-env jest */
-import { test, expect } from "@jest/globals";
+import { test, expect, afterAll } from "@jest/globals";
 import {
   populatePage,
   loadCalendar,
   getEntries,
-  renderCard,
   filterByDate,
   cards,
   handleNextButton,
   handlePreviousButton,
+  handleDeleteButton,
+  handleSelection,
+  handleFavoriteButton,
 } from "../../script/pastEntries";
 import { Card } from "../../script/cardClass";
 
@@ -240,35 +242,6 @@ describe("populatePage", () => {
   });
 });
 
-describe("renderCard", () => {
-  test("hides all cards and shows selected card", () => {
-    document.body.innerHTML += `
-      <div id="card-1" class="card-container">
-        <div class="card flipped"></div>
-      </div>
-      <div id="card-2" class="card-container">
-        <div class="card flipped"></div>
-      </div>
-    `;
-    const mockCard1 = {
-      model: { id: "1" },
-    };
-    const mockCard2 = {
-      model: { id: "2" },
-    };
-    cards.length = 0;
-    cards.push(mockCard1, mockCard2);
-    renderCard("2");
-
-    expect(document.getElementById("card-1").classList.contains("hidden")).toBe(
-      true,
-    );
-    expect(document.getElementById("card-2").classList.contains("hidden")).toBe(
-      false,
-    );
-  });
-});
-
 describe("handleNextButton", () => {
   test("next month with no wrap", () => {
     let month = 0;
@@ -306,5 +279,148 @@ describe("handlePreviousButton", () => {
     const { retMonth, retYear } = handlePreviousButton(month, year);
     expect(retMonth).toBe(11);
     expect(retYear).toBe(2024);
+  });
+});
+
+describe("handleSelection", () => {
+  test("selects correct card", () => {
+    document.body.innerHTML = `<div id="displayed-card-container"></div>`;
+    
+    const mockEntry = { id: 1, date: "2024-05-01", prompt: "test", response: "r", image: "" };
+    const mockCard = {
+      model: { id: 1 },
+      render: jest.fn()
+    };
+
+    // Mutate cards array directly
+    cards.length = 0;
+    cards.push(mockCard);
+
+    // Mock localStorage entry
+    localStorage.setItem("journalEntries", JSON.stringify([mockEntry]));
+
+    handleSelection(1);
+
+    const container = document.getElementById("displayed-card-container");
+    expect(container.childNodes.length).toBe(1);
+    expect(mockCard.render).toHaveBeenCalled();
+  });
+});
+
+describe("handleDeleteButton", () => {
+  let confirmSpy;
+  let alertSpy;
+  let mockCard;
+
+  const mockEntry = {
+    id: 1,
+    date: "2024-05-10",
+    prompt: "Test Prompt",
+    response: "Test Response",
+    image: ""
+  };
+
+  beforeEach(() => {
+    // Provide mock card with .destroy()
+    mockCard = {
+      model: { id: 1, date: new Date(2025, 4, 10)},
+      destroy: jest.fn()
+    };
+
+    document.body.innerHTML = `
+      <div id="displayed-card-container">
+        <div class="card-container" id="card-1"></div>
+      </div>
+      <div data-day="10" class="calendar-day"></div>
+    `;
+    // Mock confirm and alert
+    confirmSpy = jest.spyOn(window, "confirm").mockReturnValue(true);
+    alertSpy = jest.spyOn(window, "alert").mockImplementation(() => {});
+
+    // Set mock journal entries
+    localStorage.setItem("journalEntries", JSON.stringify([mockEntry]));
+
+    // Spy on getEntries
+    jest.spyOn(localStorage.__proto__, "getItem").mockImplementation(key => {
+      return JSON.stringify([mockEntry]);
+    });
+
+    cards.length = 0;
+    cards.push(mockCard);
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+    cards.length = 0;
+  });
+
+  test("shows alert if no card is selected", () => {
+    document.getElementById("displayed-card-container").innerHTML = "";
+    handleDeleteButton();
+    expect(alertSpy).toHaveBeenCalledWith("You must select a card before attempting to delete.");
+  });
+
+  test("does not delete if user cancels", () => {
+    confirmSpy.mockReturnValue(false); // cancel deletion
+    handleDeleteButton();
+
+    const updated = JSON.parse(localStorage.getItem("journalEntries"));
+    expect(updated).toHaveLength(1); // nothing removed
+    expect(mockCard.destroy).not.toHaveBeenCalled();
+  });
+});
+
+
+describe("handleFavoriteButton", () => {
+  let alertSpy;
+  let mockCard;
+  const mockEntry = {
+    id: 1,
+    date: "2025-05-10T05:25:46.271Z",
+    prompt: "Test",
+    response: "Hello",
+    image: "",
+    favorite: false
+  };
+
+  beforeEach(() => {
+    // DOM setup
+    document.body.innerHTML = `
+      <div id="displayed-card-container">
+        <div class="card-container" id="card-1"></div>
+      </div>
+      <div data-day="10" class="calendar-day"></div>
+    `;
+
+    // Spy on alert
+    alertSpy = jest.spyOn(window, "alert").mockImplementation(() => {});
+
+    // Mock localStorage
+    localStorage.setItem("journalEntries", JSON.stringify([mockEntry]));
+
+    // Mock getEntries
+    jest.spyOn(localStorage.__proto__, "getItem").mockImplementation(() => JSON.stringify([mockEntry]));
+
+    // Mock card in cards[]
+    mockCard = {
+      model: { id: 1, favorite: false },
+      render: jest.fn()
+    };
+
+    const dayContainer = document.querySelector(`div[data-day="10"]:not(.inactive)`);
+    console.log(dayContainer);
+    cards.length = 0;
+    cards.push(mockCard);
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+    cards.length = 0;
+  });
+
+  test("alerts if no card is selected", () => {
+    document.getElementById("displayed-card-container").innerHTML = ""; // remove selected card
+    handleFavoriteButton();
+    expect(alertSpy).toHaveBeenCalledWith("You must select a card before attempting to favorite.");
   });
 });
