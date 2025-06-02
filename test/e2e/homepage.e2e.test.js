@@ -31,8 +31,8 @@ describe("Test basic user flow from homepage", () => {
     });
 
     expect(homeButtons.length).toBe(2);
-    expect(homeButtons.includes("📝 Create a new journal entry?")).toBe(true);
-    expect(homeButtons.includes("📔 View past journal entries?")).toBe(true);
+    expect(homeButtons.includes("Create a new journal entry?")).toBe(true);
+    expect(homeButtons.includes("View past journal entries?")).toBe(true);
   });
 
   it.skip(`Testing 'new journal entry' button`, async () => {
