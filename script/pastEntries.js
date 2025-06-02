@@ -179,6 +179,7 @@ function loadCalendar(month, year) {
   datesElement.innerHTML = datesHTML;
   console.log("Successfully loaded calendar");
 }
+
 /**
  * Renders a single card
  * @param {number} id - id of card to render
@@ -253,7 +254,54 @@ function handleSelection(id){
 
 }
 function handleDeleteButton(){
-    console.log("Delete active");
+    // checks if a card is currently being displayed, hence it is "selected"
+    const displayedCardContainer = document.getElementById("displayed-card-container");
+    const selectedCard = displayedCardContainer.querySelector(".card-container");
+    if(selectedCard == null){
+        alert("You must select a card before attempting to delete.");
+        return;
+    }
+    const confirmed = confirm("Are you sure you want to delete this entry?");
+    if (confirmed) {
+        // Proceed with delete
+
+        // keep reference to card id
+        const id = Number(selectedCard.id.split('-')[1]);
+
+        // delete from journalEntries/localStorage
+        let entries = getEntries();
+        const updatedEntries = entries.filter(obj => obj.id !== id);
+        const entry = entries.find(obj => obj.id == id);
+        localStorage.setItem("journalEntries", JSON.stringify(updatedEntries));
+
+        // delete prompt placeholder
+        const date = new Date(entry.date);
+        let day = date.getDate();
+        const dayContainer = document.querySelector(`div[data-day="${day}"]:not(.inactive)`);
+        dayContainer.innerHTML = "";
+        
+        // remove event listener from calendar entry
+        const dateContainer = document.querySelector(
+            `div[data-day="${day}"]:not(.inactive)`,
+        );
+        dateContainer.removeEventListener("click", renderCard); 
+
+        // destroy the card itself 
+        let card = cards.find(obj => obj.model.id === entry.id);
+        card.destroy();
+        
+        // delete from card array
+        cards = cards.filter(obj => obj.model.date !== date);
+
+        // clear display container
+        displayedCardContainer.innerHTML = "";
+        return; 
+
+    } else {
+        // Delete was cancelled
+        console.log("Deletion canceled.");
+        return;
+    }
 }
 
 
