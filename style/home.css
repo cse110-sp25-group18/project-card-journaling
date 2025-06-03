@@ -14,7 +14,15 @@ main {
 }
 
 h1 {
-    display: none;
+    position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
 }
 
 h2 {
@@ -48,15 +56,6 @@ h3 {
     margin-bottom: min(1.5rem, 2.5vh);
     text-align: center;
     font-family: 'Times New Roman', Times, serif;
-}
-
-#button-container {
-    margin: 3vh auto;
-    display: flex;
-    justify-content: space-around;
-    width: min(60vh, 80vw);
-    height: auto;
-    align-items: center;
 }
 
 .button-container {
