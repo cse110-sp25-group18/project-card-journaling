@@ -73,12 +73,12 @@ header button {
     border-style: solid;
     border-width: 0.2ch;
     border-color: #f3d189;
-    border-radius: 50%;
     background-color: #fff6e3;
     cursor: pointer;
-    width: 40px;
+    width: 20%;
     height: 40px;
     font-size: x-large;
+
 }
 
 .cal-body {
@@ -157,3 +157,28 @@ header button {
     font-size: 1rem;
 }
 
+#displayed-card-container {
+    aspect-ratio: 4 / 3;
+    width: 100%;            /* Start by filling container width */
+    max-width: 40rem;       /* Don't go above this */
+    max-height: 15rem;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    font-style: italic;
+
+}
+
+.placeholder {
+    top: 2%;
+    left: 2%;
+
+}
+
+.placeholder p {
+    font-size: 0.3em;
+}
+
+.hidden {
+    display: none;
+}
