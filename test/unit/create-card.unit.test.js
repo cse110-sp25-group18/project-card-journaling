@@ -10,7 +10,6 @@ Object.defineProperty(global, "crypto", {
 import { Card } from "../../script/cardClass.js";
 
 describe("Create Card Page Tests", () => {
-
   // Simple test for non-flippable card
   test("Card should not be flippable", () => {
     // Create a card
