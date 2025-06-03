@@ -40,3 +40,5 @@ jobs:
         uses: creyD/prettier_action@v4.3
         with:
           prettier_options: "--write **/*.js"
+          commit_message: "style: prettified code with prettier"
+          commit_description: "commit by github action"

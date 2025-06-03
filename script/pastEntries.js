@@ -1,6 +1,8 @@
 import { Card } from "./cardClass.js";
+import { SearchManager } from "./searchEntries.js";
 
 let cards = [];
+let searchManager;
 const date = new Date();
 let month = date.getMonth() + 1;
 let year = date.getFullYear();
@@ -8,15 +10,27 @@ let year = date.getFullYear();
 document.addEventListener("DOMContentLoaded", async () => {
   console.log("DOM ready, starting to load past entries...");
 
+  // Initialize search functionality
+  searchManager = new SearchManager();
+  searchManager.init(getEntries);
+
   // link button functions
   const prevButton = document.querySelector("#previous-button");
   const nextButton = document.querySelector("#next-button");
   prevButton.addEventListener("click", () => {
+    // Clear search if active before navigating
+    if (searchManager.isActive()) {
+      searchManager.clearSearch();
+    }
     const { retMonth, retYear } = handlePreviousButton(month, year);
     month = retMonth;
     year = retYear;
   });
   nextButton.addEventListener("click", () => {
+    // Clear search if active before navigating
+    if (searchManager.isActive()) {
+      searchManager.clearSearch();
+    }
     const { retMonth, retYear } = handleNextButton(month, year);
     month = retMonth;
     year = retYear;
