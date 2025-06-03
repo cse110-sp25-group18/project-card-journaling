@@ -1,7 +1,7 @@
 import { Card } from "./cardClass.js";
 import { SearchManager } from "./searchEntries.js";
 
-// initialzies month and day 
+// initialzies month and day
 let cards = [];
 let searchManager;
 const date = new Date();
@@ -38,8 +38,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     month = retMonth;
     year = retYear;
   });
-  deleteButton.addEventListener("click", () => {handleDeleteButton()});
-  favoriteButton.addEventListener("click", () => {handleFavoriteButton()});
+  deleteButton.addEventListener("click", () => {
+    handleDeleteButton();
+  });
+  favoriteButton.addEventListener("click", () => {
+    handleFavoriteButton();
+  });
 
   // populate page with current month
   populatePage(month, year);
@@ -66,7 +70,6 @@ function populatePage(month, year) {
 
   // Add each entry to the DOM
   filteredEntries.forEach((entry) => {
-
     // find calendar date for this entry
     const date = new Date(entry.date);
     let day = date.getDate();
@@ -100,7 +103,7 @@ function populatePage(month, year) {
 
     // add event listener for when user clicks the calendar entry
     dateContainer.addEventListener("click", () => {
-        handleSelection(entry.id);
+      handleSelection(entry.id);
     });
 
     // store reference to this card for rendering, favoriting, and deleting
@@ -227,133 +230,136 @@ function handlePreviousButton(retMonth, retYear) {
   return { retMonth, retYear };
 }
 
-function handleSelection(id){
-    // get entries and filter for the current displayed month + year
-    let entries = getEntries();
-    if (!entries) {
-        // if no entries, return
-        console.log("No entries");
-        return;
-    }
+function handleSelection(id) {
+  // get entries and filter for the current displayed month + year
+  let entries = getEntries();
+  if (!entries) {
+    // if no entries, return
+    console.log("No entries");
+    return;
+  }
 
-    // get reference to display container and clear it
-    const displayedCardContainer = document.getElementById(
-        "displayed-card-container"
-    );
-    displayedCardContainer.innerHTML = "";
+  // get reference to display container and clear it
+  const displayedCardContainer = document.getElementById(
+    "displayed-card-container",
+  );
+  displayedCardContainer.innerHTML = "";
 
-    // get the correct entry
-    let entry = entries.find(obj => obj.id == id);
-    
-    // Create container for this card
-    const cardContainer = document.createElement("div");
-    cardContainer.id = `card-${entry.id}`;
-    cardContainer.classList.add("card-container");
-    displayedCardContainer.appendChild(cardContainer);
+  // get the correct entry
+  let entry = entries.find((obj) => obj.id == id);
 
-    // make correct card render
-    const card = cards.find(obj => obj.model.id == entry.id);
-    card.render();
+  // Create container for this card
+  const cardContainer = document.createElement("div");
+  cardContainer.id = `card-${entry.id}`;
+  cardContainer.classList.add("card-container");
+  displayedCardContainer.appendChild(cardContainer);
 
+  // make correct card render
+  const card = cards.find((obj) => obj.model.id == entry.id);
+  card.render();
 }
-function handleDeleteButton(){
-    // checks if a card is currently being displayed, hence it is "selected"
-    const displayedCardContainer = document.getElementById("displayed-card-container");
-    const selectedCard = displayedCardContainer.querySelector(".card-container");
-    if(selectedCard == null){
-        alert("You must select a card before attempting to delete.");
-        return;
-    }
-    const confirmed = confirm("Are you sure you want to delete this entry?");
-    if (confirmed) {
-        // Proceed with delete
+function handleDeleteButton() {
+  // checks if a card is currently being displayed, hence it is "selected"
+  const displayedCardContainer = document.getElementById(
+    "displayed-card-container",
+  );
+  const selectedCard = displayedCardContainer.querySelector(".card-container");
+  if (selectedCard == null) {
+    alert("You must select a card before attempting to delete.");
+    return;
+  }
+  const confirmed = confirm("Are you sure you want to delete this entry?");
+  if (confirmed) {
+    // Proceed with delete
 
-        // keep reference to card id
-        const id = Number(selectedCard.id.split('-')[1]);
-
-        // delete from journalEntries/localStorage
-        let entries = getEntries();
-        const updatedEntries = entries.filter(obj => obj.id != id);
-        const entry = entries.find(obj => obj.id == id);
-        localStorage.setItem("journalEntries", JSON.stringify(updatedEntries));
-
-        // delete prompt placeholder
-        const date = new Date(entry.date);
-        let day = date.getDate();
-        const dayContainer = document.querySelector(`div[data-day="${day}"]:not(.inactive)`);
-        dayContainer.innerHTML = "";
-        
-        // remove event listener from calendar entry
-        const dateContainer = document.querySelector(
-            `div[data-day="${day}"]:not(.inactive)`,
-        );
-        dateContainer.removeEventListener("click", handleSelection); 
-
-        // destroy the card itself 
-        let card = cards.find(obj => obj.model.id === entry.id);
-        card.destroy();
-        
-        // delete from card array
-        cards = cards.filter(obj => obj.model.date !== date);
-
-        // clear display container
-        displayedCardContainer.innerHTML = "";
-
-        //updates search query
-        let curQuery = searchManager.getCurrentQuery();
-        searchManager.handleSearch(curQuery);
-
-
-
-    } else {
-        // Delete was cancelled
-        console.log("Deletion canceled.");
-        return;
-    }
-}
-
-function handleFavoriteButton(){
-    const displayedCardContainer = document.getElementById("displayed-card-container");
-    const selectedCard = displayedCardContainer.querySelector(".card-container");
-    if(selectedCard == null){
-        alert("You must select a card before attempting to favorite.");
-        return;
-    }
-
-    // Proceed with favorite
-    // get  reference to card id
-    const id = Number(selectedCard.id.split('-')[1]);
+    // keep reference to card id
+    const id = Number(selectedCard.id.split("-")[1]);
 
     // delete from journalEntries/localStorage
     let entries = getEntries();
-    let entry = entries.find(obj => obj.id == id);
-    const card = cards.find(obj => obj.model.id == id);
+    const updatedEntries = entries.filter((obj) => obj.id != id);
+    const entry = entries.find((obj) => obj.id == id);
+    localStorage.setItem("journalEntries", JSON.stringify(updatedEntries));
 
-    // get placeholder element in the calendar
+    // delete prompt placeholder
     const date = new Date(entry.date);
     let day = date.getDate();
-    const dayContainer = document.querySelector(`div[data-day="${day}"]:not(.inactive)`);
+    const dayContainer = document.querySelector(
+      `div[data-day="${day}"]:not(.inactive)`,
+    );
+    dayContainer.innerHTML = "";
 
-    // toggle favorite flag and re-render displayed card
-    if(entry.favorite){
-        entry.favorite = false;
-        card.model.favorite = false;
-        dayContainer.classList.remove("favorite");
-        card.render();
-        alert("Card unfavorited");
-    } else {
-        entry.favorite = true;
-        card.model.favorite = true;
-        dayContainer.classList.add("favorite");
-        card.render();
-        alert("Card favorited");
-    }
+    // remove event listener from calendar entry
+    const dateContainer = document.querySelector(
+      `div[data-day="${day}"]:not(.inactive)`,
+    );
+    dateContainer.removeEventListener("click", handleSelection);
 
-    // update localStorage
-    localStorage.setItem("journalEntries", JSON.stringify(entries));
-    return; 
+    // destroy the card itself
+    let card = cards.find((obj) => obj.model.id === entry.id);
+    card.destroy();
+
+    // delete from card array
+    cards = cards.filter((obj) => obj.model.date !== date);
+
+    // clear display container
+    displayedCardContainer.innerHTML = "";
+
+    //updates search query
+    let curQuery = searchManager.getCurrentQuery();
+    searchManager.handleSearch(curQuery);
+  } else {
+    // Delete was cancelled
+    console.log("Deletion canceled.");
+    return;
+  }
 }
 
+function handleFavoriteButton() {
+  const displayedCardContainer = document.getElementById(
+    "displayed-card-container",
+  );
+  const selectedCard = displayedCardContainer.querySelector(".card-container");
+  if (selectedCard == null) {
+    alert("You must select a card before attempting to favorite.");
+    return;
+  }
+
+  // Proceed with favorite
+  // get  reference to card id
+  const id = Number(selectedCard.id.split("-")[1]);
+
+  // delete from journalEntries/localStorage
+  let entries = getEntries();
+  let entry = entries.find((obj) => obj.id == id);
+  const card = cards.find((obj) => obj.model.id == id);
+
+  // get placeholder element in the calendar
+  const date = new Date(entry.date);
+  let day = date.getDate();
+  const dayContainer = document.querySelector(
+    `div[data-day="${day}"]:not(.inactive)`,
+  );
+
+  // toggle favorite flag and re-render displayed card
+  if (entry.favorite) {
+    entry.favorite = false;
+    card.model.favorite = false;
+    dayContainer.classList.remove("favorite");
+    card.render();
+    alert("Card unfavorited");
+  } else {
+    entry.favorite = true;
+    card.model.favorite = true;
+    dayContainer.classList.add("favorite");
+    card.render();
+    alert("Card favorited");
+  }
+
+  // update localStorage
+  localStorage.setItem("journalEntries", JSON.stringify(entries));
+  return;
+}
 
 export {
   populatePage,
@@ -363,7 +369,7 @@ export {
   cards,
   handleNextButton,
   handlePreviousButton,
-  handleSelection, 
+  handleSelection,
   handleDeleteButton,
   handleFavoriteButton,
 };
