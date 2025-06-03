@@ -59,12 +59,18 @@ describe("SearchManager", () => {
     // Mock document methods
     global.document = {
       getElementById: jest.fn((id) => {
-        if (id === "search-input") return mockSearchInput;
+        if (id === "search-input") {
+          return mockSearchInput;
+        }
         return null;
       }),
       querySelector: jest.fn((selector) => {
-        if (selector === ".calendar") return mockCalendarView;
-        if (selector === ".search-bar") return mockSearchBar;
+        if (selector === ".calendar") {
+          return mockCalendarView;
+        }
+        if (selector === ".search-bar") {
+          return mockSearchBar;
+        }
         return null;
       }),
       createElement: jest.fn(() => ({

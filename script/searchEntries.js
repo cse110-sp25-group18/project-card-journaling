@@ -1,5 +1,3 @@
-import { Card } from "./cardClass.js";
-
 /**
  * Search functionality for past entries
  * Handles real-time search with highlighting and proper UI state management
@@ -59,7 +57,9 @@ export class SearchManager {
    * Attach event listeners for search functionality
    */
   attachEventListeners() {
-    if (!this.searchInput) return;
+    if (!this.searchInput) {
+      return;
+    }
 
     // Real-time search on input
     this.searchInput.addEventListener("input", (e) => {
@@ -98,7 +98,9 @@ export class SearchManager {
    */
   searchEntries(query) {
     const entries = this.getEntries();
-    if (!entries) return [];
+    if (!entries) {
+      return [];
+    }
 
     const normalizedQuery = query.toLowerCase();
 
@@ -121,20 +123,32 @@ export class SearchManager {
       // Check for exact matches in prompts (highest priority)
       const aExactPrompt = aPrompt === normalizedQuery;
       const bExactPrompt = bPrompt === normalizedQuery;
-      if (aExactPrompt && !bExactPrompt) return -1;
-      if (bExactPrompt && !aExactPrompt) return 1;
+      if (aExactPrompt && !bExactPrompt) {
+        return -1;
+      }
+      if (bExactPrompt && !aExactPrompt) {
+        return 1;
+      }
 
       // Check for exact matches in responses
       const aExactResponse = aResponse === normalizedQuery;
       const bExactResponse = bResponse === normalizedQuery;
-      if (aExactResponse && !bExactResponse) return -1;
-      if (bExactResponse && !aExactResponse) return 1;
+      if (aExactResponse && !bExactResponse) {
+        return -1;
+      }
+      if (bExactResponse && !aExactResponse) {
+        return 1;
+      }
 
       // Check if query appears at the beginning of prompt/response
       const aStartsWithPrompt = aPrompt.startsWith(normalizedQuery);
       const bStartsWithPrompt = bPrompt.startsWith(normalizedQuery);
-      if (aStartsWithPrompt && !bStartsWithPrompt) return -1;
-      if (bStartsWithPrompt && !aStartsWithPrompt) return 1;
+      if (aStartsWithPrompt && !bStartsWithPrompt) {
+        return -1;
+      }
+      if (bStartsWithPrompt && !aStartsWithPrompt) {
+        return 1;
+      }
 
       // Sort by date (newest first) for entries with similar relevance
       return new Date(b.date) - new Date(a.date);
@@ -198,30 +212,34 @@ export class SearchManager {
     });
 
     // Highlight matches in text
-    const highlightedPrompt = this.highlightMatches(
-      entry.prompt || "No prompt",
-      query,
-    );
-    const highlightedResponse = this.highlightMatches(
-      entry.response || "No response",
-      query,
-    );
+    const highlightedPrompt = this.highlightMatches(entry.prompt || "", query);
+    const highlightedResponse = this.highlightMatches(entry.response || "", query);
 
     resultItem.innerHTML = `
-      <div class="search-result-content">
-        <div class="search-result-date">${formattedDate}</div>
-        <div class="search-result-prompt">
-          <strong>Prompt:</strong> ${highlightedPrompt}
-        </div>
-        <div class="search-result-response">
-          <strong>Response:</strong> ${highlightedResponse}
-        </div>
+      <div class="search-result-date">${formattedDate}</div>
+      <div class="search-result-prompt">
+        <strong>Prompt:</strong> ${highlightedPrompt}
+      </div>
+      <div class="search-result-response">
+        <strong>Response:</strong> ${highlightedResponse}
       </div>
     `;
 
-    // No click handler added - search results are not clickable
+    // Add click handler to view full entry
+    resultItem.addEventListener("click", () => {
+      this.viewFullEntry(entry);
+    });
 
     return resultItem;
+  }
+
+  /**
+   * View full entry (placeholder for future implementation)
+   * @param {Object} entry - Journal entry to view
+   */
+  viewFullEntry(entry) {
+    // This could navigate to a detailed view or show a modal
+    console.log("Viewing entry:", entry);
   }
 
   /**
@@ -231,7 +249,9 @@ export class SearchManager {
    * @returns {string} Text with highlighted matches
    */
   highlightMatches(text, query) {
-    if (!text || !query) return text;
+    if (!text || !query) {
+      return text;
+    }
 
     const regex = new RegExp(`(${this.escapeRegExp(query)})`, "gi");
     return text.replace(regex, '<mark class="search-highlight">$1</mark>');
