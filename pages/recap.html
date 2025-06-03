@@ -1,57 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Shuffle Recap</title>
-    <link rel="stylesheet" href="../style/general.css" />
-    <link rel="stylesheet" href="../style/recap.css" />
-    <!-- <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" /> -->
+  <meta charset="UTF-8">
+  <title>Shuffle Recap</title>
+  <link rel="stylesheet" href="../style/general.css"/>
+  <link rel="stylesheet" href="../style/recap.css"/>
+  <!-- <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" /> -->
 </head>
 <body>
-    <nav>
-        <a href="../index.html">
-            <img src="../images/home-icon.svg" alt="home page button"/>
-        </a>
-        <a href="create-card.html">
-            <img src="../images/edit-icon.svg" alt="create card button"/>
-        </a>
-        <a href="past-entries.html">
-            <img src="../images/calendar-icon.svg" alt="past entries button"/>
-        </a>
-        <a href="recap.html">
-            <img src="../images/shuffle-icon.svg" alt="recap button"/>
-        </a>
-        <a href="settings.html">
-            <img src="../images/settings-icon.svg" alt="settings button"/>
-        </a>        
-    </nav>
-    <main>
-      <h1>Recap</h1>
+  <nav>
+    <a href="../index.html">
+      <img src="../images/home-icon.svg" alt="home page button"/>
+    </a>
+    <a href="create-card.html">
+      <img src="../images/edit-icon.svg" alt="create card button"/>
+    </a>
+    <a href="past-entries.html">
+      <img src="../images/calendar-icon.svg" alt="past entries button"/>
+    </a>
+    <a href="recap.html">
+      <img src="../images/shuffle-icon.svg" alt="recap button"/>
+    </a>
+    <a href="settings.html">
+      <img src="../images/settings-icon.svg" alt="settings button"/>
+    </a>        
+  </nav>
 
-      <!-- card recap -->
-      <div id="cardRecap" class="card-recap">
-        <div id="cardContent" class="card-content">
-          <!-- placeholder for question mark image-->
-          <div id="questionImage" class="question-icon-placeholder"></div>
-          <!-- front of the card, containing prompt and date -->
-          <div id="cardFront" class="card-front">
+  <main>
+    <h1>Recap</h1>
 
-            <h3 id="cardPrompt" class="card-prompt">Sample Text! How was your day?</h3>
-          </div>
-          <!-- back of card, containing response -->
-          <div id="cardBack" class="card-back">
-            <p id="response" class="user-response">My day was quite reasonable!</p>
-          </div>
+    <div class="search-bar">
+      <input type="text" id="search-input" placeholder="Search entries..."/>
+    </div>
+
+    <!-- implementation of card recap -->
+    <div id="cardRecap" class="card-recap">
+      <div id="cardContent" class="card-content">
+        <!-- Placeholder for question mark or image -->
+        <div id="questionImage" class="question-icon-placeholder"></div>
+
+        <!-- front of card -->
+        <div id="cardFront" class="card-front">
+          <h3 id="cardPrompt" class="card-prompt">Sample prompt</h3>
         </div>
-      </div> 
 
-      <p id="cardDate" class="card-date">5/22/2025</p>
-      <!-- button to flip the card -->
-      <button id="shuffleBtn" class="shuffle-card">Shuffle</button>
-      <!-- button the reveal the card -->
-      <button id="revealBtn" class="reveal-card">Reveal</button>
+        <!-- back side of card -->
+        <div id="cardBack" class="card-back">
+          <p id="response" class="user-response">Sample user response</p>
+        </div>
+      </div>
+    </div>
 
-    </main>
-    <script src="/script/recap.js"></script>
+    <!-- date and buttons -->
+    <p id="cardDate" class="card-date">5/22/2025</p>
+    <button id="shuffleBtn" class="shuffle-card">Shuffle</button>
+    <button id="revealBtn" class="reveal-card">Reveal</button>
+  </main>
+
+  <script type="module" src="./main.js"></script>
 </body>
 </html>
