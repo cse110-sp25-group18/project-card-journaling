@@ -24,7 +24,7 @@ describe("Test basic user flow from homepage", () => {
 
     console.log("Checking that journal entry buttons loaded...");
 
-    const homeButtons = await page.$$eval(".home-buttons button", (buttons) => {
+    const homeButtons = await page.$$eval(".home-buttons", (buttons) => {
       return buttons.map((button) => {
         return button.textContent.trim();
       });
