@@ -25,38 +25,23 @@
       <img src="../images/settings-icon.svg" alt="settings button"/>
     </a>        
   </nav>
-
-  <main>
-    <h1>Recap</h1>
-
-    <div class="search-bar">
-      <input type="text" id="search-input" placeholder="Search entries..."/>
-    </div>
-
-    <!-- implementation of card recap -->
-    <div id="cardRecap" class="card-recap">
-      <div id="cardContent" class="card-content">
-        <!-- Placeholder for question mark or image -->
-        <div id="questionImage" class="question-icon-placeholder"></div>
-
-        <!-- front of card -->
-        <div id="cardFront" class="card-front">
-          <h3 id="cardPrompt" class="card-prompt">Sample prompt</h3>
+      <!-- card recap container: aria-live for placeholder image-->
+      <div id="card-container" class="card-recap">
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Search for specific phrases or prompts here:" >
         </div>
 
-        <!-- back side of card -->
-        <div id="cardBack" class="card-back">
-          <p id="response" class="user-response">Sample user response</p>
+        <!-- container for actual card -->
+        <div id="cardContent" class="card-content"></div>
+
+        <div class="button-container">
+            <button id="shuffle-button" class="card-buttons">Shuffle</button>
+            <button id="reveal-button" class="card-buttons">Reveal</button>
         </div>
-      </div>
-    </div>
 
-    <!-- date and buttons -->
-    <p id="cardDate" class="card-date">5/22/2025</p>
-    <button id="shuffleBtn" class="shuffle-card">Shuffle</button>
-    <button id="revealBtn" class="reveal-card">Reveal</button>
-  </main>
+     </div>
 
-  <script type="module" src="./main.js"></script>
+    </main>
+    <script src="../script/recap.js"></script>
 </body>
 </html>
