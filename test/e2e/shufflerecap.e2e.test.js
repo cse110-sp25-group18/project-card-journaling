@@ -21,7 +21,7 @@ describe("Test basic user flow from Shuffle Recap page", () => {
     expect(navButtons.includes("../images/settings-icon.svg")).toBe(true);
 
     // recap controls
-    const shuffleBtn = await page.$("#shuffleBtn");
+    const shuffleBtn = await page.$("#shuffle-button");
 
     expect(shuffleBtn).not.toBe(null);
   });

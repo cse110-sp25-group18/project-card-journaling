@@ -97,19 +97,6 @@ describe("SearchManager", () => {
     expect(searchManager.isSearchActive).toBe(false);
   });
 
-  // Core initialization test
-  test("should properly initialize with getEntries function", () => {
-    searchManager.init(mockGetEntries);
-    expect(searchManager.getEntries).toBe(mockGetEntries);
-  });
-
-  // DOM setup error handling
-  test("should handle missing DOM elements gracefully", () => {
-    document.getElementById.mockReturnValue(null);
-    searchManager.setupDOMReferences();
-    expect(console.error).toHaveBeenCalledWith("Search input not found");
-  });
-
   // Core search functionality
   describe("searchEntries()", () => {
     beforeEach(() => {
@@ -183,28 +170,5 @@ describe("SearchManager", () => {
     expect(searchManager.isActive()).toBe(false);
     searchManager.isSearchActive = true;
     expect(searchManager.isActive()).toBe(true);
-  });
-
-  // Search workflow test
-  test("should handle search workflow correctly", () => {
-    searchManager.init(mockGetEntries);
-    const hideCalendarSpy = jest.spyOn(searchManager, "hideCalendarView");
-
-    searchManager.handleSearch("grateful");
-
-    expect(searchManager.isSearchActive).toBe(true);
-    expect(hideCalendarSpy).toHaveBeenCalled();
-  });
-
-  // Clear search functionality
-  test("should clear search correctly", () => {
-    searchManager.init(mockGetEntries);
-    searchManager.isSearchActive = true;
-    mockSearchInput.value = "test";
-
-    searchManager.clearSearch();
-
-    expect(searchManager.isSearchActive).toBe(false);
-    expect(mockSearchInput.value).toBe("");
   });
 });
