@@ -298,7 +298,12 @@ function handleDeleteButton(){
 
         // clear display container
         displayedCardContainer.innerHTML = "";
-        return; 
+
+        //updates search query
+        let curQuery = searchManager.getCurrentQuery();
+        searchManager.handleSearch(curQuery);
+
+
 
     } else {
         // Delete was cancelled
