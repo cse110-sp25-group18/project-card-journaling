@@ -14,8 +14,10 @@ function saveJournalEntry(entryData) {
       localStorage.getItem("journalEntries") || "[]",
     );
     const date = new Date(entryData.date).getDate();
-    const conflictingEntry = existingEntries.find(entry => entry.date = date);
-    if (conflictingEntry){
+    const conflictingEntry = existingEntries.find(
+      (entry) => (entry.date = date),
+    );
+    if (conflictingEntry) {
       alert("You've already submitted an entry for today, come back tomorrow!");
       return false;
     }
