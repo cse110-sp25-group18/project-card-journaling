@@ -103,21 +103,41 @@ header button {
 .dates {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    width: 100%;
+    max-width: 100%;
     margin-top: 5px;
     border: 0.25px solid black;
 }
 
 .date {
-    aspect-ratio: 3/2;
+    width: 100%;
+    height: 6vw;
+    max-height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    overflow: hidden;
     margin: 0;
-    padding: 0;
+    padding: 4px;
     cursor: pointer;
     font-weight: 600;
     border: 1px solid black;
     border-radius: 0;
     box-sizing: border-box;
     position: relative;
+}
+
+.date.filled {
+  background-color: #76BA99;
+}
+
+.date.favorite::before {
+  content: "★";
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  font-size: 0.6em;
+  color: #FFD700;
 }
 
 .date::after {
@@ -171,8 +191,7 @@ header button {
 }
 
 .placeholder {
-    top: 2%;
-    left: 2%;
+    margin: 2%;
 
 }
 
