@@ -63,7 +63,7 @@ header {
     text-align: center;
     font-weight: 300;
     font-size: 1.5rem;
-    width: 150px;
+    width: 300px;
 }
 
 header button {
@@ -72,12 +72,13 @@ header button {
     justify-content: center;
     border-style: solid;
     border-width: 0.2ch;
+    border-radius: 10%;
     border-color: #f3d189;
     background-color: #fff6e3;
     cursor: pointer;
-    width: 20%;
-    height: 40px;
-    font-size: x-large;
+    width: 30px;
+    height: 30px;
+    font-size: large;
 
 }
 
