@@ -190,16 +190,16 @@ describe("getEntries", () => {
   });
 });
 
-describe('filterByDate', () => {
-  test('filters entries by month and year', () => {
+describe("filterByDate", () => {
+  test("filters entries by month and year", () => {
     const entries = [
-      { date: '2024-05-01T00:00:00' },
-      { date: '2024-06-01T00:00:00' },
+      { date: "2024-05-01T00:00:00" },
+      { date: "2024-06-01T00:00:00" },
     ];
     // 4 hardcodes to May
     const result = filterByDate(entries, 5, 2024);
     expect(result).toHaveLength(1);
-    expect(result[0].date).toBe('2024-05-01T00:00:00');
+    expect(result[0].date).toBe("2024-05-01T00:00:00");
   });
 });
 
@@ -285,11 +285,17 @@ describe("handlePreviousButton", () => {
 describe("handleSelection", () => {
   test("selects correct card", () => {
     document.body.innerHTML = `<div id="displayed-card-container"></div>`;
-    
-    const mockEntry = { id: 1, date: "2024-05-01", prompt: "test", response: "r", image: "" };
+
+    const mockEntry = {
+      id: 1,
+      date: "2024-05-01",
+      prompt: "test",
+      response: "r",
+      image: "",
+    };
     const mockCard = {
       model: { id: 1 },
-      render: jest.fn()
+      render: jest.fn(),
     };
 
     // Mutate cards array directly
@@ -317,14 +323,14 @@ describe("handleDeleteButton", () => {
     date: "2024-05-10",
     prompt: "Test Prompt",
     response: "Test Response",
-    image: ""
+    image: "",
   };
 
   beforeEach(() => {
     // Provide mock card with .destroy()
     mockCard = {
-      model: { id: 1, date: new Date(2025, 4, 10)},
-      destroy: jest.fn()
+      model: { id: 1, date: new Date(2025, 4, 10) },
+      destroy: jest.fn(),
     };
 
     document.body.innerHTML = `
@@ -341,7 +347,7 @@ describe("handleDeleteButton", () => {
     localStorage.setItem("journalEntries", JSON.stringify([mockEntry]));
 
     // Spy on getEntries
-    jest.spyOn(localStorage.__proto__, "getItem").mockImplementation(key => {
+    jest.spyOn(localStorage.__proto__, "getItem").mockImplementation((key) => {
       return JSON.stringify([mockEntry]);
     });
 
@@ -357,7 +363,9 @@ describe("handleDeleteButton", () => {
   test("shows alert if no card is selected", () => {
     document.getElementById("displayed-card-container").innerHTML = "";
     handleDeleteButton();
-    expect(alertSpy).toHaveBeenCalledWith("You must select a card before attempting to delete.");
+    expect(alertSpy).toHaveBeenCalledWith(
+      "You must select a card before attempting to delete.",
+    );
   });
 
   test("does not delete if user cancels", () => {
@@ -370,7 +378,6 @@ describe("handleDeleteButton", () => {
   });
 });
 
-
 describe("handleFavoriteButton", () => {
   let alertSpy;
   let mockCard;
@@ -380,7 +387,7 @@ describe("handleFavoriteButton", () => {
     prompt: "Test",
     response: "Hello",
     image: "",
-    favorite: false
+    favorite: false,
   };
 
   beforeEach(() => {
@@ -399,15 +406,19 @@ describe("handleFavoriteButton", () => {
     localStorage.setItem("journalEntries", JSON.stringify([mockEntry]));
 
     // Mock getEntries
-    jest.spyOn(localStorage.__proto__, "getItem").mockImplementation(() => JSON.stringify([mockEntry]));
+    jest
+      .spyOn(localStorage.__proto__, "getItem")
+      .mockImplementation(() => JSON.stringify([mockEntry]));
 
     // Mock card in cards[]
     mockCard = {
       model: { id: 1, favorite: false },
-      render: jest.fn()
+      render: jest.fn(),
     };
 
-    const dayContainer = document.querySelector(`div[data-day="10"]:not(.inactive)`);
+    const dayContainer = document.querySelector(
+      `div[data-day="10"]:not(.inactive)`,
+    );
     console.log(dayContainer);
     cards.length = 0;
     cards.push(mockCard);
@@ -421,6 +432,8 @@ describe("handleFavoriteButton", () => {
   test("alerts if no card is selected", () => {
     document.getElementById("displayed-card-container").innerHTML = ""; // remove selected card
     handleFavoriteButton();
-    expect(alertSpy).toHaveBeenCalledWith("You must select a card before attempting to favorite.");
+    expect(alertSpy).toHaveBeenCalledWith(
+      "You must select a card before attempting to favorite.",
+    );
   });
 });
