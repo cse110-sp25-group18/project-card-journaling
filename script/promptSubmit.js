@@ -13,7 +13,12 @@ function saveJournalEntry(entryData) {
     const existingEntries = JSON.parse(
       localStorage.getItem("journalEntries") || "[]",
     );
-
+    const date = new Date(entryData.date).getDate();
+    const conflictingEntry = existingEntries.find(entry => entry.date = date);
+    if (conflictingEntry){
+      alert("You've already submitted an entry for today, come back tomorrow!");
+      return false;
+    }
     // Add the new entry to the beginning of the array (most recent first)
     existingEntries.unshift(entryData);
 
