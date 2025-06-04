@@ -244,8 +244,10 @@ export class SearchManager {
    * @returns {string} Text with highlighted matches
    */
   highlightMatches(text, query) {
-    if (!text || !query) return text;
-
+    if (!text || !query) {
+      return text;
+    }
+    
     const regex = new RegExp(`(${this.escapeRegExp(query)})`, "gi");
     return text.replace(regex, '<mark class="search-highlight">$1</mark>');
   }

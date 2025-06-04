@@ -1,6 +1,6 @@
-/* global describe, beforeEach, afterEach, global, expect, jest, test */
+/* global describe, beforeEach, afterEach, jest */
 /* eslint-env jest */
-import { test, expect, afterAll } from "@jest/globals";
+import { test, expect } from "@jest/globals";
 import {
   populatePage,
   loadCalendar,
@@ -348,7 +348,7 @@ describe("handleDeleteButton", () => {
     localStorage.setItem("journalEntries", JSON.stringify([mockEntry]));
 
     // Spy on getEntries
-    jest.spyOn(localStorage.__proto__, "getItem").mockImplementation((key) => {
+    jest.spyOn(localStorage.__proto__, "getItem").mockImplementation(() => {
       return JSON.stringify([mockEntry]);
     });
 
