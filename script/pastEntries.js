@@ -73,6 +73,8 @@ function populatePage(month, year) {
     // find calendar date for this entry
     const date = new Date(entry.date);
     let day = date.getDate();
+    console.log(date);
+    console.log(day);
     const dateContainer = document.querySelector(
       `div[data-day="${day}"]:not(.inactive)`,
     );

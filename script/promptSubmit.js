@@ -13,10 +13,11 @@ function saveJournalEntry(entryData) {
     const existingEntries = JSON.parse(
       localStorage.getItem("journalEntries") || "[]",
     );
-    const date = new Date(entryData.date).getDate();
-    const conflictingEntry = existingEntries.find(
-      (entry) => (entry.date = date),
-    );
+    const { year, month, day } = getLocalYMD(entryData.date);
+    const conflictingEntry = existingEntries.find(entry => {
+      const e = getLocalYMD(entry.date);
+      return e.year === year && e.month === month && e.day === day;
+    });
     if (conflictingEntry) {
       alert("You've already submitted an entry for today, come back tomorrow!");
       return false;
@@ -33,6 +34,20 @@ function saveJournalEntry(entryData) {
     console.error("Error saving journal entry:", error);
     return false;
   }
+}
+
+/**
+ * Returns the year, month, and day of a date string in local time
+ * @param {string} dateStr 
+ * @returns year, month, and day
+ */
+function getLocalYMD(dateStr) {
+  const d = new Date(dateStr);
+  return {
+    year: d.getFullYear(),
+    month: d.getMonth(),
+    day: d.getDate()
+  };
 }
 
 // Export functions for potential use in other scripts
