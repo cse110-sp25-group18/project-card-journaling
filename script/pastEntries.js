@@ -231,6 +231,12 @@ function handlePreviousButton(retMonth, retYear) {
   return { retMonth, retYear };
 }
 
+/**
+ * Handles user selecting a calendar entry. Loads that calendar
+ * entry's card based on the card's id into the display container. 
+ * @param {number} id - id of the selected card 
+ * @returns 
+ */
 function handleSelection(id) {
   // get entries and filter for the current displayed month + year
   let entries = getEntries();
@@ -259,6 +265,13 @@ function handleSelection(id) {
   const card = cards.find((obj) => obj.model.id == entry.id);
   card.render();
 }
+
+/**
+ * Deletes the current selected card. Removes card from DOM,
+ * localStorage, calendar entries, search query, and all associated
+ * styling. 
+ * @returns 
+ */
 function handleDeleteButton() {
   // checks if a card is currently being displayed, hence it is "selected"
   const displayedCardContainer = document.getElementById(
@@ -316,7 +329,9 @@ function handleDeleteButton() {
     return;
   }
 }
-
+/**
+ * Favorites the current selected card
+ */
 function handleFavoriteButton() {
   const displayedCardContainer = document.getElementById(
     "displayed-card-container",
