@@ -247,7 +247,7 @@ export class SearchManager {
     if (!text || !query) {
       return text;
     }
-    
+
     const regex = new RegExp(`(${this.escapeRegExp(query)})`, "gi");
     return text.replace(regex, '<mark class="search-highlight">$1</mark>');
   }
