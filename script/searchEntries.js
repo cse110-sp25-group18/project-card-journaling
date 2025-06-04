@@ -59,8 +59,9 @@ export class SearchManager {
    * Attach event listeners for search functionality
    */
   attachEventListeners() {
-    if (!this.searchInput) return;
-
+    if (!this.searchInput) {
+      return;
+    }
     // Real-time search on input
     this.searchInput.addEventListener("input", (e) => {
       this.handleSearch(e.target.value.trim());
@@ -98,8 +99,9 @@ export class SearchManager {
    */
   searchEntries(query) {
     const entries = this.getEntries();
-    if (!entries) return [];
-
+    if (!entries) {
+      return [];
+    }
     const normalizedQuery = query.toLowerCase();
 
     // Filter entries that match the query
@@ -121,21 +123,32 @@ export class SearchManager {
       // Check for exact matches in prompts (highest priority)
       const aExactPrompt = aPrompt === normalizedQuery;
       const bExactPrompt = bPrompt === normalizedQuery;
-      if (aExactPrompt && !bExactPrompt) return -1;
-      if (bExactPrompt && !aExactPrompt) return 1;
+      if (aExactPrompt && !bExactPrompt) {
+        return -1;
+      }
+      if (bExactPrompt && !aExactPrompt) {
+        return 1;
+      }
 
       // Check for exact matches in responses
       const aExactResponse = aResponse === normalizedQuery;
       const bExactResponse = bResponse === normalizedQuery;
-      if (aExactResponse && !bExactResponse) return -1;
-      if (bExactResponse && !aExactResponse) return 1;
+      if (aExactResponse && !bExactResponse) {
+        return -1;
+      }
+      if (bExactResponse && !aExactResponse) {
+        return 1;
+      }
 
       // Check if query appears at the beginning of prompt/response
       const aStartsWithPrompt = aPrompt.startsWith(normalizedQuery);
       const bStartsWithPrompt = bPrompt.startsWith(normalizedQuery);
-      if (aStartsWithPrompt && !bStartsWithPrompt) return -1;
-      if (bStartsWithPrompt && !aStartsWithPrompt) return 1;
-
+      if (aStartsWithPrompt && !bStartsWithPrompt) {
+        return -1;
+      }
+      if (bStartsWithPrompt && !aStartsWithPrompt) {
+        return 1;
+      }
       // Sort by date (newest first) for entries with similar relevance
       return new Date(b.date) - new Date(a.date);
     });
