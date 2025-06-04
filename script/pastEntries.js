@@ -282,18 +282,20 @@ function handleDeleteButton() {
     const entry = entries.find((obj) => obj.id == id);
     localStorage.setItem("journalEntries", JSON.stringify(updatedEntries));
 
-        // delete prompt placeholder
-        const date = new Date(entry.date);
-        let day = date.getDate();
-        const dayContainer = document.querySelector(`div[data-day="${day}"]:not(.inactive)`);
-        dayContainer.innerHTML = "";
-        
-        // remove event listener from calendar entry
-        const dateContainer = document.querySelector(
-            `div[data-day="${day}"]:not(.inactive)`,
-        );
-        dateContainer.removeEventListener("click", handleSelection); 
-        dateContainer.classList.remove("favorite", "filled");
+    // delete prompt placeholder
+    const date = new Date(entry.date);
+    let day = date.getDate();
+    const dayContainer = document.querySelector(
+      `div[data-day="${day}"]:not(.inactive)`,
+    );
+    dayContainer.innerHTML = "";
+
+    // remove event listener from calendar entry
+    const dateContainer = document.querySelector(
+      `div[data-day="${day}"]:not(.inactive)`,
+    );
+    dateContainer.removeEventListener("click", handleSelection);
+    dateContainer.classList.remove("favorite", "filled");
 
     // destroy the card itself
     let card = cards.find((obj) => obj.model.id === entry.id);
