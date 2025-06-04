@@ -233,9 +233,9 @@ function handlePreviousButton(retMonth, retYear) {
 
 /**
  * Handles user selecting a calendar entry. Loads that calendar
- * entry's card based on the card's id into the display container. 
- * @param {number} id - id of the selected card 
- * @returns 
+ * entry's card based on the card's id into the display container.
+ * @param {number} id - id of the selected card
+ * @returns
  */
 function handleSelection(id) {
   // get entries and filter for the current displayed month + year
@@ -269,8 +269,8 @@ function handleSelection(id) {
 /**
  * Deletes the current selected card. Removes card from DOM,
  * localStorage, calendar entries, search query, and all associated
- * styling. 
- * @returns 
+ * styling.
+ * @returns
  */
 function handleDeleteButton() {
   // checks if a card is currently being displayed, hence it is "selected"
