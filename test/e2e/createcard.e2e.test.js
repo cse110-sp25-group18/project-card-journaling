@@ -114,5 +114,5 @@ describe("Test basic user flow from Create Card page", () => {
     // Test that the value is correct
     let value = await page.$eval(".card-back #response", (el) => el.value);
     expect(value).toBe("hello");
-    });
+  });
 });
