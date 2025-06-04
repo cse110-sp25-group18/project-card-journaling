@@ -73,6 +73,7 @@ function populatePage(month, year) {
     const dateContainer = document.querySelector(
       `div[data-day="${day}"]:not(.inactive)`,
     );
+    dateContainer.classList.add("filled");
 
     // create placeholder card and add to DOM
     // each one just displays the prompt and a card outline
@@ -288,6 +289,7 @@ function handleDeleteButton(){
             `div[data-day="${day}"]:not(.inactive)`,
         );
         dateContainer.removeEventListener("click", handleSelection); 
+        dateContainer.classList.remove("favorite", "filled");
 
         // destroy the card itself 
         let card = cards.find(obj => obj.model.id === entry.id);
