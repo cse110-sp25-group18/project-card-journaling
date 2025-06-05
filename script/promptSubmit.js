@@ -14,7 +14,7 @@ function saveJournalEntry(entryData) {
       localStorage.getItem("journalEntries") || "[]",
     );
     const { year, month, day } = getLocalYMD(entryData.date);
-    const conflictingEntry = existingEntries.find(entry => {
+    const conflictingEntry = existingEntries.find((entry) => {
       const e = getLocalYMD(entry.date);
       return e.year === year && e.month === month && e.day === day;
     });
@@ -38,7 +38,7 @@ function saveJournalEntry(entryData) {
 
 /**
  * Returns the year, month, and day of a date string in local time
- * @param {string} dateStr 
+ * @param {string} dateStr
  * @returns year, month, and day
  */
 function getLocalYMD(dateStr) {
@@ -46,7 +46,7 @@ function getLocalYMD(dateStr) {
   return {
     year: d.getFullYear(),
     month: d.getMonth(),
-    day: d.getDate()
+    day: d.getDate(),
   };
 }
 
