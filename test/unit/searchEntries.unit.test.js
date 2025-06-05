@@ -69,7 +69,7 @@ describe("SearchManager", () => {
         return mockCalendarView;
       } 
       if (selector === ".search-bar") {
-         return mockSearchBar;
+        return mockSearchBar;
       }
       return null;
     });
