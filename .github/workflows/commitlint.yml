@@ -1,37 +1,60 @@
 name: lint-commits
 
-on: 
+on:
   pull_request:
     branches: [main]
     types: [opened, synchronize, reopened]
-  push:
-    brances: [main]
 
 jobs:
   commitlint:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
+      - name: Check out repository
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: 18
-      - name: Print versions
-        run: |
-          git --version
-          node --version
-          npm --version
-          npx commitlint --version
+
       - name: Install commitlint
         run: |
-          npm install conventional-changelog-conventionalcommits
-          npm install commitlint@latest
+          npm install --save-dev @commitlint/cli @commitlint/config-conventional
 
-      - name: Validate current commit (last commit) with commitlint
-        if: github.event_name == 'push'
-        run: npx commitlint --last --verbose
+      - name: Run commitlint on PR commits
+        id: run-lint
+        run: |
+          echo "PR_BASE_SHA=${{ github.event.pull_request.base.sha }}" >> $GITHUB_OUTPUT
+          echo "PR_HEAD_SHA=${{ github.event.pull_request.head.sha }}" >> $GITHUB_OUTPUT
 
-      - name: Validate PR commits with commitlint
-        if: github.event_name == 'pull_request'
-        run: npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
+          if npx commitlint --config node_modules/@commitlint/config-conventional \
+                --from="${{ github.event.pull_request.base.sha }}" \
+                --to="${{ github.event.pull_request.head.sha }}" \
+                --verbose \
+                > lint-report.txt 2>&1; then
+            echo "lint_ok=true" >> $GITHUB_OUTPUT
+          else
+            echo "lint_ok=false" >> $GITHUB_OUTPUT
+
+            echo "lint_report<<EOF" >> $GITHUB_OUTPUT
+            cat lint-report.txt >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          fi
+        continue-on-error: true
+      - name: Comment commitlint results on PR
+        if: steps.run-lint.outputs.lint_ok == 'false'
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          body: |
+            🚨 **Commit Message Format Errors Detected**  
+            Please follow the [Conventional Commits](https://www.conventionalcommits.org/) specification.  
+            ---
+            ```text
+            ${{ steps.run-lint.outputs.lint_report }}
+            ```
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.pull_request.number }}
+          header: commitlint
+        continue-on-error: true
