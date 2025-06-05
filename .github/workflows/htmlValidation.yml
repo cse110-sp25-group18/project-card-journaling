@@ -3,8 +3,6 @@ name: HTML Validation
 on:
   pull_request:
     branches: [ "main" ]
-  push:
-    branches: [ "Max/automate-validator" ]
 
 jobs:
   validate-html:
