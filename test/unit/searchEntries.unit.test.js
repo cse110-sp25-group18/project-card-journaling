@@ -58,18 +58,18 @@ describe("SearchManager", () => {
 
     // Mock document methods
     jest.spyOn(document, "getElementById").mockImplementation((id) => {
-      if (id === "search-input"){
+      if (id === "search-input") {
         return mockSearchInput;
-      } 
+      }
       return null;
     });
 
     jest.spyOn(document, "querySelector").mockImplementation((selector) => {
       if (selector === ".calendar") {
         return mockCalendarView;
-      } 
+      }
       if (selector === ".search-bar") {
-         return mockSearchBar;
+        return mockSearchBar;
       }
       return null;
     });
