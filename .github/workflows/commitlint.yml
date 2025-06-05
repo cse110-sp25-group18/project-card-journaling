@@ -46,14 +46,35 @@ jobs:
           fi
         continue-on-error: true
 
-      - name: Comment commitlint results on PR
-        if: steps.run-lint.outputs.lint_ok == 'false'
-        uses: peter-evans/create-or-update-comment@v4
+      - name: Find existing commitlint comment
+        id: find-comment
+        uses: peter-evans/find-comment@v1
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body-includes: "<!-- commitlint-comment -->"
+
+      - name: Update existing comment (if found)
+        if: steps.find-comment.outputs.comment-id != ''
+        uses: peter-evans/edit-comment@v2
+        with:
+          comment-id: ${{ steps.find-comment.outputs.comment-id }}
+          body: |
+            <!-- commitlint-comment -->
+            **Commit Message Format Errors Detected**  
+            Please follow the [Conventional Commits](https://www.conventionalcommits.org/) specification.  
+            ---
+            ```text
+            ${{ steps.run-lint.outputs.lint_report }}
+            ```
+
+      - name: Create new commitlint comment (if none exists)
+        if: steps.find-comment.outputs.comment-id == ''
+        uses: peter-evans/create-comment@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.pull_request.number }}
-          identifier: commitlint
           body: |
+            <!-- commitlint-comment -->
             **Commit Message Format Errors Detected**  
             Please follow the [Conventional Commits](https://www.conventionalcommits.org/) specification.  
             ---
