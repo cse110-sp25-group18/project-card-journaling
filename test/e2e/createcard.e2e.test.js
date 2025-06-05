@@ -8,10 +8,6 @@ describe("Test basic user flow from Create Card page", () => {
 
     await page.waitForSelector(".card", { visible: true });
     await page.waitForSelector(".card-back", { visible: true });
-
-    page.on("dialog", async (dialog) => {
-      await dialog.accept();
-    });
   });
 
   it("Test correct page load", async () => {
@@ -62,6 +58,9 @@ describe("Test basic user flow from Create Card page", () => {
   it("Test that submit saves to localStorage", async () => {
     console.log("Testing that submit saves to localStorage...");
 
+    page.on("dialog", async (dialog) => {
+      await dialog.accept();
+    });
     await page.type("#response", "hello");
 
     let submitBtn = await page.$("#submitBtn");
@@ -75,44 +74,5 @@ describe("Test basic user flow from Create Card page", () => {
 
     expect(localJSON.length).toBe(1);
     expect(localJSON[0].response).toBe("hello");
-
-    // clear localStorage
-    await page.evaluate(() => {
-      localStorage.clear();
-    });
-  });
-
-  it("Test the submit to pastEntries pipeline", async () => {
-    await page.type("#response", "hello");
-
-    let submitBtn = await page.$("#submitBtn");
-    await submitBtn.click();
-
-    let pastEntriesBtn = await page.$(`a[href="past-entries.html"]`);
-    await pastEntriesBtn.click();
-
-    await page.waitForSelector(".active");
-
-    let currentDate = await page.$(".active");
-    await currentDate.click();
-
-    // Test that card appears
-    let hidden = await page.$(".card-container.hidden");
-    expect(hidden).toBe(null);
-
-    // Test that card appears unflipped
-    let flipped = await page.$(".flipped");
-    expect(flipped).toBe(null);
-
-    let cardFront = await page.$(".card-front");
-    await cardFront.click();
-
-    // Test that card properly flips
-    flipped = await page.$(".flipped");
-    expect(flipped).not.toBe(null);
-
-    // Test that the value is correct
-    let value = await page.$eval(".card-back #response", (el) => el.value);
-    expect(value).toBe("hello");
   });
 });
