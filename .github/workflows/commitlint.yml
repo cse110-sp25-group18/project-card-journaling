@@ -31,9 +31,6 @@ jobs:
       - name: Run commitlint on PR commits
         id: run-lint
         run: |
-          echo "PR_BASE_SHA=${{ github.event.pull_request.base.sha }}" >> $GITHUB_OUTPUT
-          echo "PR_HEAD_SHA=${{ github.event.pull_request.head.sha }}" >> $GITHUB_OUTPUT
-
           if npx commitlint \
                 --from="${{ github.event.pull_request.base.sha }}" \
                 --to="${{ github.event.pull_request.head.sha }}" \
