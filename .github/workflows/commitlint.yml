@@ -57,7 +57,7 @@ jobs:
           issue-number: ${{ github.event.pull_request.number }}
           identifier: commitlint
           body: |
-            🚨 **Commit Message Format Errors Detected**  
+            **Commit Message Format Errors Detected**  
             Please follow the [Conventional Commits](https://www.conventionalcommits.org/) specification.  
             ---
             ```text
