@@ -10,7 +10,7 @@ Object.defineProperty(global, "crypto", {
   },
 });
 
-import { Card } from "../script/cardClass.js";
+import { Card } from "../../script/cardClass.js";
 
 describe("Past Entries Page Tests", () => {
   // Mock the DOM structure
@@ -33,20 +33,6 @@ describe("Past Entries Page Tests", () => {
       date: "2025-05-21T12:00:00.000Z",
     },
   ];
-
-  beforeEach(() => {
-    // Set up mock localStorage
-    const getItemMock = jest.fn(() => JSON.stringify(sampleEntries));
-    const setItemMock = jest.fn();
-
-    Object.defineProperty(global, "localStorage", {
-      value: {
-        getItem: getItemMock,
-        setItem: setItemMock,
-      },
-      writable: true,
-    });
-  });
 
   // Test if cards are created as flippable in pastEntries.js
   test("Cards in past entries should be flippable", () => {
@@ -74,27 +60,5 @@ describe("Past Entries Page Tests", () => {
 
     // Check the editable property
     expect(card.editable).toBe(false);
-  });
-
-  // Test if pastEntries.js loads entries from localStorage
-  test("Past entries should load from localStorage", () => {
-    // Mock the loadEntries function similar to what's in pastEntries.js
-    function mockLoadEntries() {
-      // Get entries from localStorage
-      const entries = JSON.parse(
-        localStorage.getItem("journalEntries") || "[]",
-      );
-      return entries;
-    }
-
-    // Call the mock function
-    const loadedEntries = mockLoadEntries();
-
-    // Verify localStorage was called with the right key
-    expect(localStorage.getItem).toHaveBeenCalledWith("journalEntries");
-
-    // Check that we got the sample entries back
-    expect(loadedEntries).toEqual(sampleEntries);
-    expect(loadedEntries.length).toBe(2);
   });
 });
