@@ -13,17 +13,18 @@ permissions:
 jobs:
   commitlint:
     runs-on: ubuntu-22.04
-
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      - name: Install commitlint dependencies
+      - name: Install commitlint
         run: |
           npm install --save-dev @commitlint/cli @commitlint/config-conventional
 
@@ -41,38 +42,25 @@ jobs:
             echo "lint_ok=true" >> $GITHUB_OUTPUT
           else
             echo "lint_ok=false" >> $GITHUB_OUTPUT
+
             echo "lint_report<<EOF" >> $GITHUB_OUTPUT
             cat lint-report.txt >> $GITHUB_OUTPUT
             echo "EOF" >> $GITHUB_OUTPUT
           fi
         continue-on-error: true
 
-      - name: Find existing commitlint comment
-        id: find-old
-        uses: peter-evans/find-comment@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          issue-number: ${{ github.event.pull_request.number }}
-          body-includes: "<!-- commitlint-comment -->"
-
-      - name: Delete old commitlint comment (if any)
-        if: steps.find-old.outputs.comment-id != ''
-        uses: peter-evans/delete-comment@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          comment-id: ${{ steps.find-old.outputs.comment-id }}
-
-      - name: Create new commitlint failure comment
+      - name: Comment commitlint results on PR
         if: steps.run-lint.outputs.lint_ok == 'false'
-        uses: peter-evans/create-comment@v3
+        uses: peter-evans/create-or-update-comment@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.pull_request.number }}
+          identifier: commitlint
           body: |
-            <!-- commitlint-comment -->
-            ⚠️ **Commit Message Format Errors Detected**  
+            🚨 **Commit Message Format Errors Detected**  
             Please follow the [Conventional Commits](https://www.conventionalcommits.org/) specification.  
             ---
             ```text
             ${{ steps.run-lint.outputs.lint_report }}
             ```
+        continue-on-error: true
