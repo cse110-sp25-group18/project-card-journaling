@@ -16,23 +16,23 @@ describe("Test basic user flow from homepage", () => {
     });
 
     expect(navButtons.length).toBe(5);
-    expect(navButtons.includes("/images/home-icon.svg")).toBe(true);
-    expect(navButtons.includes("/images/edit-icon.svg")).toBe(true);
-    expect(navButtons.includes("/images/calendar-icon.svg")).toBe(true);
-    expect(navButtons.includes("/images/shuffle-icon.svg")).toBe(true);
-    expect(navButtons.includes("/images/settings-icon.svg")).toBe(true);
+    expect(navButtons.includes("./images/home-icon.svg")).toBe(true);
+    expect(navButtons.includes("./images/edit-icon.svg")).toBe(true);
+    expect(navButtons.includes("./images/calendar-icon.svg")).toBe(true);
+    expect(navButtons.includes("./images/shuffle-icon.svg")).toBe(true);
+    expect(navButtons.includes("./images/settings-icon.svg")).toBe(true);
 
     console.log("Checking that journal entry buttons loaded...");
 
-    const homeButtons = await page.$$eval(".home-buttons button", (buttons) => {
+    const homeButtons = await page.$$eval(".home-buttons", (buttons) => {
       return buttons.map((button) => {
         return button.textContent.trim();
       });
     });
 
     expect(homeButtons.length).toBe(2);
-    expect(homeButtons.includes("📝 Create a new journal entry?")).toBe(true);
-    expect(homeButtons.includes("📔 View past journal entries?")).toBe(true);
+    expect(homeButtons.includes("Create a new journal entry?")).toBe(true);
+    expect(homeButtons.includes("View past journal entries?")).toBe(true);
   });
 
   it.skip(`Testing 'new journal entry' button`, async () => {
