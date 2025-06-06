@@ -17,6 +17,8 @@ export class Card {
           date: options.date || new Date().toISOString().split("T")[0],
           image: options.image || "https://via.placeholder.com/300x100",
           alt: options.alt || "Journal card image",
+          id: options.id || null,
+          favorite: options.favorite || false,
         },
       );
 
@@ -213,6 +215,11 @@ export class Card {
       // Add non-flippable class if needed
       if (!this.flippable) {
         card.classList.add("non-flippable");
+      }
+
+      // Add favorite class if needed
+      if (this.model.favorite) {
+        card.classList.add("favorite");
       }
 
       // Populate the card with content

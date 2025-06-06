@@ -1,6 +1,7 @@
 import { Card } from "./cardClass.js";
 import { SearchManager } from "./searchEntries.js";
 
+// initialzies month and day
 let cards = [];
 let searchManager;
 const date = new Date();
@@ -17,6 +18,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   // link button functions
   const prevButton = document.querySelector("#previous-button");
   const nextButton = document.querySelector("#next-button");
+  const deleteButton = document.querySelector("#delete-button");
+  const favoriteButton = document.querySelector("#favorite-button");
   prevButton.addEventListener("click", () => {
     // Clear search if active before navigating
     if (searchManager.isActive()) {
@@ -35,6 +38,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     month = retMonth;
     year = retYear;
   });
+  deleteButton.addEventListener("click", () => {
+    handleDeleteButton();
+  });
+  favoriteButton.addEventListener("click", () => {
+    handleFavoriteButton();
+  });
 
   // populate page with current month
   populatePage(month, year);
@@ -50,11 +59,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 function populatePage(month, year) {
   loadCalendar(month, year);
 
-  // container that holds all cards
-  // all are hidden except the one that the user clicks
-  const displayedCardContainer = document.getElementById(
-    "displayed-card-container",
-  );
   // get entries and filter for the current displayed month + year
   let entries = getEntries();
   if (!entries) {
@@ -66,50 +70,46 @@ function populatePage(month, year) {
 
   // Add each entry to the DOM
   filteredEntries.forEach((entry) => {
-    // Create container for this card
-    const cardContainer = document.createElement("div");
-    cardContainer.id = `card-${entry.id}`;
-    // hide cards by default
-    cardContainer.classList.add("card-container", "hidden");
-
-    // Create a flippable, non-editable card
-    const card = new Card({
-      flippable: true,
-      editable: false,
-      containerSelector: `#card-${entry.id}`,
-      isEntry: true,
-      data: {
-        id: entry.id,
-        prompt: entry.prompt || "No prompt",
-        response: entry.response || "No response",
-        date: entry.date,
-        image: entry.image || "",
-      },
-    });
+    // find calendar date for this entry
     const date = new Date(entry.date);
     let day = date.getDate();
-
-    // find element that is this day
+    console.log(date);
+    console.log(day);
     const dateContainer = document.querySelector(
       `div[data-day="${day}"]:not(.inactive)`,
     );
+    dateContainer.classList.add("filled");
 
     // create placeholder card and add to DOM
     // each one just displays the prompt and a card outline
     const placeHolder = document.createElement("div");
     placeHolder.classList.add("placeholder");
     const placeHolderPrompt = document.createElement("p");
-    placeHolderPrompt.textContent = card.model.prompt;
+    placeHolderPrompt.textContent = entry.prompt;
     placeHolder.appendChild(placeHolderPrompt);
     dateContainer.appendChild(placeHolder);
 
-    // add hidden card to DOM
-    displayedCardContainer.appendChild(cardContainer);
+    // Create a flippable, non-editable card
+    const card = new Card({
+      flippable: true,
+      editable: false,
+      containerSelector: `#card-${entry.id}`,
+      data: {
+        id: entry.id,
+        prompt: entry.prompt || "No prompt",
+        response: entry.response || "No response",
+        date: entry.date,
+        image: entry.image || "",
+        favorite: entry.favorite || false,
+      },
+    });
 
     // add event listener for when user clicks the calendar entry
-    dateContainer.addEventListener("click", () => renderCard(entry.id));
+    dateContainer.addEventListener("click", () => {
+      handleSelection(entry.id);
+    });
 
-    card.render();
+    // store reference to this card for rendering, favoriting, and deleting
     cards.push(card);
   });
 }
@@ -202,19 +202,6 @@ function loadCalendar(month, year) {
   datesElement.innerHTML = datesHTML;
   console.log("Successfully loaded calendar");
 }
-/**
- * Renders a single card
- * @param {number} id - id of card to render
- */
-function renderCard(id) {
-  // hides all cards at the start and unflips
-  cards.forEach((card) => {
-    const cardContainerElem = document.querySelector(`#card-${card.model.id}`);
-    cardContainerElem.classList.add("hidden");
-    cardContainerElem.querySelector(".card").classList.remove("flipped");
-  });
-  document.querySelector(`#card-${id}`).classList.remove("hidden");
-}
 
 /**
  * Loads next month's calendar
@@ -246,13 +233,162 @@ function handlePreviousButton(retMonth, retYear) {
   return { retMonth, retYear };
 }
 
+/**
+ * Handles user selecting a calendar entry. Loads that calendar
+ * entry's card based on the card's id into the display container.
+ * @param {number} id - id of the selected card
+ * @returns
+ */
+function handleSelection(id) {
+  // get entries and filter for the current displayed month + year
+  let entries = getEntries();
+  if (!entries) {
+    // if no entries, return
+    console.log("No entries");
+    return;
+  }
+
+  // get reference to display container and clear it
+  const displayedCardContainer = document.getElementById(
+    "displayed-card-container",
+  );
+  displayedCardContainer.innerHTML = "";
+
+  // get the correct entry
+  let entry = entries.find((obj) => obj.id == id);
+
+  // Create container for this card
+  const cardContainer = document.createElement("div");
+  cardContainer.id = `card-${entry.id}`;
+  cardContainer.classList.add("card-container");
+  displayedCardContainer.appendChild(cardContainer);
+
+  // make correct card render
+  const card = cards.find((obj) => obj.model.id == entry.id);
+  card.render();
+}
+
+/**
+ * Deletes the current selected card. Removes card from DOM,
+ * localStorage, calendar entries, search query, and all associated
+ * styling.
+ * @returns
+ */
+function handleDeleteButton() {
+  // checks if a card is currently being displayed, hence it is "selected"
+  const displayedCardContainer = document.getElementById(
+    "displayed-card-container",
+  );
+  const selectedCard = displayedCardContainer.querySelector(".card-container");
+  if (selectedCard == null) {
+    alert("You must select a card before attempting to delete.");
+    return;
+  }
+  const confirmed = confirm("Are you sure you want to delete this entry?");
+  if (confirmed) {
+    // Proceed with delete
+
+    // keep reference to card id
+    const id = Number(selectedCard.id.split("-")[1]);
+
+    // delete from journalEntries/localStorage
+    let entries = getEntries();
+    const updatedEntries = entries.filter((obj) => obj.id != id);
+    const entry = entries.find((obj) => obj.id == id);
+    localStorage.setItem("journalEntries", JSON.stringify(updatedEntries));
+
+    // delete prompt placeholder
+    const date = new Date(entry.date);
+    let day = date.getDate();
+    const dayContainer = document.querySelector(
+      `div[data-day="${day}"]:not(.inactive)`,
+    );
+    dayContainer.innerHTML = "";
+
+    // remove event listener from calendar entry
+    const dateContainer = document.querySelector(
+      `div[data-day="${day}"]:not(.inactive)`,
+    );
+    dateContainer.removeEventListener("click", handleSelection);
+    dateContainer.classList.remove("favorite", "filled");
+
+    // destroy the card itself
+    let card = cards.find((obj) => obj.model.id === entry.id);
+    card.destroy();
+
+    // delete from card array
+    cards = cards.filter((obj) => obj.model.date !== date);
+
+    // clear display container
+    displayedCardContainer.innerHTML = "";
+
+    //updates search query
+    let curQuery = searchManager.getCurrentQuery();
+    searchManager.handleSearch(curQuery);
+  } else {
+    // Delete was cancelled
+    console.log("Deletion canceled.");
+    return;
+  }
+}
+/**
+ * Favorites the current selected card
+ */
+function handleFavoriteButton() {
+  const displayedCardContainer = document.getElementById(
+    "displayed-card-container",
+  );
+  const selectedCard = displayedCardContainer.querySelector(".card-container");
+  if (selectedCard == null) {
+    alert("You must select a card before attempting to favorite.");
+    return;
+  }
+
+  // Proceed with favorite
+  // get  reference to card id
+  const id = Number(selectedCard.id.split("-")[1]);
+
+  // delete from journalEntries/localStorage
+  let entries = getEntries();
+  let entry = entries.find((obj) => obj.id == id);
+  const card = cards.find((obj) => obj.model.id == id);
+
+  // get placeholder element in the calendar
+  const date = new Date(entry.date);
+  let day = date.getDate();
+  const dayContainer = document.querySelector(
+    `div[data-day="${day}"]:not(.inactive)`,
+  );
+
+  // toggle favorite flag and re-render displayed card
+  if (entry.favorite) {
+    entry.favorite = false;
+    card.model.favorite = false;
+    dayContainer.classList.remove("favorite");
+    card.render();
+    alert("Card unfavorited");
+  } else {
+    entry.favorite = true;
+    card.model.favorite = true;
+    dayContainer.classList.add("favorite");
+    card.render();
+    alert("Card favorited");
+  }
+
+  // update localStorage
+  localStorage.setItem("journalEntries", JSON.stringify(entries));
+  return;
+}
+
 export {
   populatePage,
   getEntries,
-  renderCard,
   loadCalendar,
   filterByDate,
   cards,
   handleNextButton,
   handlePreviousButton,
+  handleSelection,
+  handleDeleteButton,
+  handleFavoriteButton,
 };

@@ -57,25 +57,31 @@ describe("SearchManager", () => {
     };
 
     // Mock document methods
-    global.document = {
-      getElementById: jest.fn((id) => {
-        if (id === "search-input") return mockSearchInput;
-        return null;
-      }),
-      querySelector: jest.fn((selector) => {
-        if (selector === ".calendar") return mockCalendarView;
-        if (selector === ".search-bar") return mockSearchBar;
-        return null;
-      }),
-      createElement: jest.fn(() => ({
-        id: "",
-        className: "",
-        innerHTML: "",
-        classList: { add: jest.fn(), remove: jest.fn() },
-        appendChild: jest.fn(),
-        insertAdjacentElement: jest.fn(),
-      })),
-    };
+    jest.spyOn(document, "getElementById").mockImplementation((id) => {
+      if (id === "search-input") {
+        return mockSearchInput;
+      }
+      return null;
+    });
+
+    jest.spyOn(document, "querySelector").mockImplementation((selector) => {
+      if (selector === ".calendar") {
+        return mockCalendarView;
+      }
+      if (selector === ".search-bar") {
+        return mockSearchBar;
+      }
+      return null;
+    });
+
+    jest.spyOn(document, "createElement").mockImplementation(() => ({
+      id: "",
+      className: "",
+      innerHTML: "",
+      classList: { add: jest.fn(), remove: jest.fn() },
+      appendChild: jest.fn(),
+      insertAdjacentElement: jest.fn(),
+    }));
 
     global.console = {
       error: jest.fn(),
