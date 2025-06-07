@@ -38,7 +38,9 @@ describe("Test basic user flow from homepage", () => {
   it(`Testing 'new journal entry' button`, async () => {
     console.log(`Testing 'new journal entry' button`);
 
-    let newButton = await page.$(`.home-buttons[onclick="location.href='./pages/create-card.html'"]`);
+    let newButton = await page.$(
+      `.home-buttons[onclick="location.href='./pages/create-card.html'"]`,
+    );
     await newButton.click();
 
     await page.waitForSelector(".card-input");
@@ -53,7 +55,9 @@ describe("Test basic user flow from homepage", () => {
   it(`Testing 'past journal entry' button`, async () => {
     console.log(`Testing 'past journal entry' button`);
 
-    let pastButton = await page.$(`.home-buttons[onclick="location.href='./pages/past-entries.html'"]`);
+    let pastButton = await page.$(
+      `.home-buttons[onclick="location.href='./pages/past-entries.html'"]`,
+    );
     await pastButton.click();
 
     await page.waitForSelector(".calendar");
