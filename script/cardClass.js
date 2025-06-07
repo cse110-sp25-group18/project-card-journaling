@@ -153,8 +153,10 @@ export class Card {
       alt: this.model.alt,
     };
 
-    if(this.dailyLimitMet(new Date(entry.date))){
-      alert("You have already submitted an entry for today, come back tomorrow!");
+    if (this.dailyLimitMet(new Date(entry.date))) {
+      alert(
+        "You have already submitted an entry for today, come back tomorrow!",
+      );
       return;
     }
 
@@ -190,25 +192,25 @@ export class Card {
     }
   }
   /**
-  * Checks if an entry has already been submitted for this date
-  * @param {Date} date - date to check
-  * @return {boolean} true if an entry for this date already exists, false otherwise
-  */
+   * Checks if an entry has already been submitted for this date
+   * @param {Date} date - date to check
+   * @return {boolean} true if an entry for this date already exists, false otherwise
+   */
   dailyLimitMet(date) {
     const entries = localStorage.getItem("journalEntries");
-    if(entries){
+    if (entries) {
       const parsed = JSON.parse(entries);
       for (const element of parsed) {
         let curDate = new Date(element.date);
         if (
-            curDate.getDate() == date.getDate() &&
-            curDate.getMonth() == date.getMonth() && 
-            curDate.getFullYear() == date.getFullYear()
-          ) {
-              return true;
+          curDate.getDate() == date.getDate() &&
+          curDate.getMonth() == date.getMonth() &&
+          curDate.getFullYear() == date.getFullYear()
+        ) {
+          return true;
         }
-      };
-    } 
+      }
+    }
     return false;
   }
 

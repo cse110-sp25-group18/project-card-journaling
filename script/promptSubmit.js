@@ -83,6 +83,5 @@ function handleSubmitCard() {
   });
 }
 
-
 // Export functions for potential use in other scripts
-export {  handleSubmitCard, saveJournalEntry };
+export { handleSubmitCard, saveJournalEntry };
