@@ -1,0 +1,41 @@
+name: CSS Validation
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  validate-css:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Validate CSS files with W3C
+      run: |
+        echo "🔍 Starting CSS validation..."
+        has_errors=false
+        
+        for file in $(find . -name "*.css"); do
+          echo "========================================================"
+          echo "📄 Validating $file..."
+          
+          output=$(curl -s -F "file=@$file" -F "output=text" -F "profile=css3" https://jigsaw.w3.org/css-validator/validator)
+          
+          if echo "$output" | grep -q "Congratulations! No Error Found."; then
+            echo "✅ $file is valid CSS"
+          else
+            echo "❌ $file has validation errors:"
+            echo "$output"
+            has_errors=true
+          fi
+          echo "========================================================"
+        done
+        
+        if [ "$has_errors" = true ]; then
+          echo "⚠️ Some CSS files have validation errors. Please fix them."
+          exit 1
+        else
+          echo "✅ All CSS files are valid!"
+        fi

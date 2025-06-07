@@ -1,0 +1,50 @@
+name: HTML Validation
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  validate-html:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'    
+
+    - name: Install HTML validator
+      run: npm install -g html-validator-cli
+
+    - name: Validate HTML files with W3C
+      run: |
+        echo "🔍 Starting HTML validation..."
+        has_errors=false
+        
+        for file in $(find . -name "*.html"); do
+          echo "========================================================"
+          echo "📄 Validating $file..."
+
+          content=$(cat "$file")
+          output=$(echo "$content" | html-validator --data="$content" --format=text --verbose) || true
+          
+          if echo "$output" | grep -q "The document validates according to"; then
+            echo "✅ $file is valid HTML"
+          else
+            echo "❌ $file has validation errors:"
+            echo "$output"
+            has_errors=true
+          fi
+          echo "========================================================"
+        done
+        
+        if [ "$has_errors" = true ]; then
+          echo "⚠️ Some HTML files have validation errors. Please fix them."
+          exit 1
+        else
+          echo "✅ All HTML files are valid!"
+        fi
