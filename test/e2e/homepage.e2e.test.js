@@ -35,16 +35,34 @@ describe("Test basic user flow from homepage", () => {
     expect(homeButtons.includes("View past journal entries?")).toBe(true);
   });
 
-  it.skip(`Testing 'new journal entry' button`, async () => {
+  it(`Testing 'new journal entry' button`, async () => {
     console.log(`Testing 'new journal entry' button`);
 
-    // TODO: test that 'new journal entry' button takes user to correct page
+    let newButton = await page.$(`.home-buttons[onclick="location.href='./pages/create-card.html'"]`);
+    await newButton.click();
+
+    await page.waitForSelector(".card-input");
+
+    let card = await page.$(".card-input");
+
+    expect(card).not.toBe(null);
+
+    await page.goto("http://127.0.0.1:8080");
   });
 
-  it.skip(`Testing 'past journal entry' button`, async () => {
+  it(`Testing 'past journal entry' button`, async () => {
     console.log(`Testing 'past journal entry' button`);
 
-    // TODO: test that 'past journal entry' button takes user to correct page
+    let pastButton = await page.$(`.home-buttons[onclick="location.href='./pages/past-entries.html'"]`);
+    await pastButton.click();
+
+    await page.waitForSelector(".calendar");
+
+    let calendar = await page.$(".calendar");
+
+    expect(calendar).not.toBe(null);
+
+    await page.goto("http://127.0.0.1:8080");
   });
 
   it.skip(`Testing 'Home' button`, async () => {
