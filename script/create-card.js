@@ -18,6 +18,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Render the card
     await journalCard.render();
 
+    // Force sync between prompts upon page load
+    let initPromptBox = document.querySelector("prompt-box");
+    if (initPromptBox) {
+      initPromptBox.textContent = journalCard.model.prompt;
+    }
+
     // Add the prompt text to the form element for the non-flippable card
     const updatePromptDisplay = () => {
       const form = document.querySelector(".card-back form");
