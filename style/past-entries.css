@@ -84,7 +84,7 @@ header button {
     padding: 0.5em;
     border-radius: 0.5em;
     color: #666;
-    font: 500 0.8em 'Lucida Sans', sans-serif;
+    font: 500 0.8em sans-serif;
 }
 
 .cal-body {
@@ -128,9 +128,8 @@ header button {
     box-sizing: border-box;
     position: relative;
     overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-size: 1em;
+    overflow-wrap: break-word;
+    font-size: 2vw;
 }
 
 .date::after {
