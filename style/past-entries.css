@@ -27,7 +27,7 @@ main {
     border-width: 0.3ch;
     border-radius: 1em;
     padding: 1em 1.2em;
-    font-size: 0.75rem;
+    font-size: 1rem;
 }
 
 #search-input:focus {
@@ -169,7 +169,8 @@ header button {
     background-repeat: no-repeat;
     cursor: pointer;
     border: none;
-    font-size: 1rem;
+    font-size: 1.2rem;
+    text-align: center;
     font-weight: 500;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
