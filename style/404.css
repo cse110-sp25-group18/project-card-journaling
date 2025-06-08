@@ -23,7 +23,7 @@ body {
 
 h1 {
     font-size: 5rem;
-    color: #0000;
+    color: #333;
 }
 
 p {
@@ -35,7 +35,7 @@ p {
 a {
     text-decoration: none;
     background-color: #F8E3B7;
-    color: #fff;
+    color: #333;
     padding: 10px 20px;
     border-radius: 3px;
     font-weight: bold;
