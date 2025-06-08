@@ -15,19 +15,40 @@ function makePromptEditable() {
 
   // Toggle between edit and save modes
   editPromptBtn.addEventListener("click", () => {
-    if (promptBox.getAttribute("contenteditable") === "true") {
-      // Save mode - make not editable
+    const isEditing = promptBox.getAttribute("contenteditable") === "true";
+
+    if (isEditing) {
+      // SAVE MODE
       promptBox.setAttribute("contenteditable", "false");
       promptBox.classList.remove("editing");
       editPromptBtn.textContent = "Edit Prompt";
+
+      // Get the updated prompt
+      const newPrompt = promptBox.textContent.trim();
+
+      // Update model and card
+      if (window.journalCard) {
+        window.journalCard.model.prompt = newPrompt;
+
+        const cardPromptEl = window.journalCard.elements.card?.querySelector(".prompt");
+        if (cardPromptEl) {
+          cardPromptEl.textContent = newPrompt;
+        }
+
+        const form = document.querySelector(".card-back form");
+        if (form) {
+          form.setAttribute("data-prompt", newPrompt);
+        }
+      }
     } else {
-      // Edit mode - make editable
+      // EDIT MODE
       promptBox.setAttribute("contenteditable", "true");
       promptBox.classList.add("editing");
       promptBox.focus();
       editPromptBtn.textContent = "Save Prompt";
     }
   });
+
 }
 
 /**

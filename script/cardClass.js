@@ -296,6 +296,11 @@ export class Card {
         if (promptBox) {
           promptBox.textContent = newPrompt;
         }
+
+        const form = document.querySelector(".card-back form");
+        if (form) {
+          form.setAttribute("data-prompt", newPrompt);
+        }
       } catch (error) {
         console.error("Error generating new prompt:", error);
       }
