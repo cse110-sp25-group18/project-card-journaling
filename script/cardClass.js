@@ -34,7 +34,7 @@ export class Card {
   }
   /**
    * Returns an HTML template for a card
-   * @returns {DocumentFragment} A cloned template content fragment 
+   * @returns {DocumentFragment} A cloned template content fragment
    */
   async loadTemplate() {
     try {
@@ -114,7 +114,7 @@ export class Card {
 
   /**
    * Handles event unflipping
-   * @param {Event} e 
+   * @param {Event} e
    */
   handleUnflip(e) {
     if (!e.target.closest("textarea")) {
@@ -140,7 +140,7 @@ export class Card {
 
   /**
    * Connects submit button if needed
-   * @param {string} buttonId 
+   * @param {string} buttonId
    */
   connectSubmitButton(buttonId = "submitBtn") {
     if (!this.editable) {
@@ -193,7 +193,7 @@ export class Card {
 
   /**
    * Saves an entry to localStorage
-   * @param {Object} entry 
+   * @param {Object} entry
    */
   async saveEntry(entry) {
     try {
@@ -247,7 +247,7 @@ export class Card {
   }
 
   /**
-   * Renders a card to the DOM 
+   * Renders a card to the DOM
    */
   async render() {
     try {
