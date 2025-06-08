@@ -32,7 +32,10 @@ export class Card {
       submit: this.handleSubmit.bind(this),
     };
   }
-
+  /**
+   * Returns an HTML template for a card
+   * @returns {DocumentFragment} A cloned template content fragment 
+   */
   async loadTemplate() {
     try {
       const response = await fetch("../templates/card-template.html");
@@ -50,6 +53,10 @@ export class Card {
     }
   }
 
+  /**
+   * Clears container where the card will live if it exists
+   * @returns {HTMLElement} reference to container
+   */
   prepareContainer() {
     const container = document.querySelector(this.containerSelector);
     if (!container) {
@@ -59,6 +66,10 @@ export class Card {
     return container;
   }
 
+  /**
+   * Populates the card template with relevant information
+   * @param {Card} card - Card object with information
+   */
   populateContent(card) {
     // Set the prompt text
     const promptEl = card.querySelector(".prompt");
@@ -94,16 +105,26 @@ export class Card {
     this.elements.textarea = textarea;
   }
 
+  /**
+   * Handles flip animation
+   */
   handleFlip() {
     this.elements.card.classList.add("flipped");
   }
 
+  /**
+   * Handles event unflipping
+   * @param {Event} e 
+   */
   handleUnflip(e) {
     if (!e.target.closest("textarea")) {
       this.elements.card.classList.remove("flipped");
     }
   }
 
+  /**
+   * Attaches all event listeners for the page
+   */
   attachEventListeners() {
     // Add flip functionality if the card is flippable
     if (this.flippable && this.elements.front && this.elements.back) {
@@ -117,6 +138,10 @@ export class Card {
     }
   }
 
+  /**
+   * Connects submit button if needed
+   * @param {string} buttonId 
+   */
   connectSubmitButton(buttonId = "submitBtn") {
     if (!this.editable) {
       return;
@@ -129,6 +154,9 @@ export class Card {
     }
   }
 
+  /**
+   * Handles the submission of a card
+   */
   handleSubmit() {
     const textarea = this.elements.textarea;
     if (!textarea) {
@@ -156,6 +184,10 @@ export class Card {
     this.saveEntry(entry);
   }
 
+  /**
+   * Saves an entry to localStorage
+   * @param {Object} entry 
+   */
   async saveEntry(entry) {
     try {
       // Use promptSubmit module to save the entry
@@ -185,6 +217,9 @@ export class Card {
     }
   }
 
+  /**
+   * Renders a card to the DOM 
+   */
   async render() {
     try {
       // If prompt is not set, try to get one from promptGen
@@ -241,6 +276,10 @@ export class Card {
     }
   }
 
+  /**
+   * Connects the new prompt button functionality
+   * @param {string} buttonId - id to connect
+   */
   connectNewPromptButton(buttonId = "newPromptBtn") {
     const newPromptBtn = document.getElementById(buttonId);
     if (!newPromptBtn) {
@@ -276,6 +315,9 @@ export class Card {
     newPromptBtn.addEventListener("click", this.eventHandlers.newPrompt);
   }
 
+  /**
+   * Destroys this card
+   */
   destroy() {
     // Remove flip handlers
     if (this.flippable && this.elements.front && this.elements.back) {
