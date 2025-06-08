@@ -79,6 +79,9 @@ function populatePage(month, year) {
       `div[data-day="${day}"]:not(.inactive)`,
     );
     dateContainer.classList.add("filled");
+    if (entry.favorite) {
+      dateContainer.classList.add("favorite");
+    }
 
     // create placeholder card and add to DOM
     // each one just displays the prompt and a card outline

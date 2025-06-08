@@ -149,14 +149,14 @@ header button {
 }
 
 .date.filled {
-  background-color: #76BA99;
+  background-color: #abebcc;
 }
 
 .date.favorite::before {
   content: "★";
   position: absolute;
-  top: 4px;
-  left: 4px;
+  top: 1px;
+  right: 1px;
   font-size: 0.6em;
   color: #FFD700;
 }
@@ -176,7 +176,7 @@ header button {
 }
 
 .date.active {
-    background-color: #ffee8c;
+    background-color: #faefb3;
 }
 
 .date.inactive::after {
@@ -228,12 +228,16 @@ header button {
     font-size: 0.3em;
 }
 
-/* 
-placeholder for calendar entries when favorited 
-.placeholder .favorite {
-    
+ /* placeholder for calendar entries when favorited */
+.card.favorite::before {
+  content: "★";
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  font-size: 0.6em;
+  color: #FFD700;
 }
-*/
+
 
 /* Search Results Styling */
 .search-results {
