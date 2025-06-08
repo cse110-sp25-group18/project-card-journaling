@@ -17,6 +17,8 @@ export class Card {
           date: options.date || new Date().toISOString().split("T")[0],
           image: options.image || "https://via.placeholder.com/300x100",
           alt: options.alt || "Journal card image",
+          id: options.id || null,
+          favorite: options.favorite || false,
         },
       );
 
@@ -151,6 +153,13 @@ export class Card {
       alt: this.model.alt,
     };
 
+    if (this.dailyLimitMet(new Date(entry.date))) {
+      alert(
+        "You have already submitted an entry for today, come back tomorrow!",
+      );
+      return;
+    }
+
     this.saveEntry(entry);
   }
 
@@ -181,6 +190,28 @@ export class Card {
       console.error("Error using promptSubmit module:", error);
       alert("An error occurred while saving your entry.");
     }
+  }
+  /**
+   * Checks if an entry has already been submitted for this date
+   * @param {Date} date - date to check
+   * @return {boolean} true if an entry for this date already exists, false otherwise
+   */
+  dailyLimitMet(date) {
+    const entries = localStorage.getItem("journalEntries");
+    if (entries) {
+      const parsed = JSON.parse(entries);
+      for (const element of parsed) {
+        let curDate = new Date(element.date);
+        if (
+          curDate.getDate() == date.getDate() &&
+          curDate.getMonth() == date.getMonth() &&
+          curDate.getFullYear() == date.getFullYear()
+        ) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   async render() {
@@ -213,6 +244,11 @@ export class Card {
       // Add non-flippable class if needed
       if (!this.flippable) {
         card.classList.add("non-flippable");
+      }
+
+      // Add favorite class if needed
+      if (this.model.favorite) {
+        card.classList.add("favorite");
       }
 
       // Populate the card with content

@@ -13,7 +13,6 @@ function saveJournalEntry(entryData) {
     const existingEntries = JSON.parse(
       localStorage.getItem("journalEntries") || "[]",
     );
-
     // Add the new entry to the beginning of the array (most recent first)
     existingEntries.unshift(entryData);
 
@@ -84,16 +83,5 @@ function handleSubmitCard() {
   });
 }
 
-/**
- * Initialize the submission functionality
- */
-function initSubmitHandler() {
-  // Initialize the submit handler
-  handleSubmitCard();
-}
-
-// Initialize when the DOM is fully loaded
-document.addEventListener("DOMContentLoaded", initSubmitHandler);
-
 // Export functions for potential use in other scripts
-export { initSubmitHandler, handleSubmitCard, saveJournalEntry };
+export { handleSubmitCard, saveJournalEntry };
