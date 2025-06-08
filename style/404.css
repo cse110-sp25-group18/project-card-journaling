@@ -23,7 +23,7 @@ body {
 
 h1 {
     font-size: 5rem;
-    color: #ff5733;
+    color: #0000;
 }
 
 p {
@@ -34,7 +34,7 @@ p {
 
 a {
     text-decoration: none;
-    background-color: #ff5733;
+    background-color: #F8E3B7;
     color: #fff;
     padding: 10px 20px;
     border-radius: 3px;
@@ -43,5 +43,5 @@ a {
 }
 
 a:hover {
-    background-color: #e6482e;
+    background-color: #F8E3B7;
 }
