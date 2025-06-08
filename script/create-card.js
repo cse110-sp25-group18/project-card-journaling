@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         prompt: null,
         response: "",
         date: new Date().toISOString().split("T")[0],
-        id: new Date().getTime()
+        id: new Date().getTime(),
       },
     });
 
