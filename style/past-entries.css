@@ -41,6 +41,7 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 60vw;
     height: auto;
     flex-direction: column;
     padding: 1em; 
@@ -56,6 +57,7 @@ header {
     align-items: center;
     width: 80%;
     height: 4vh;
+    margin: 1vh;
 }
 
 .month-year {
@@ -91,12 +93,11 @@ header button {
 .days {
     display: grid;
     grid-template-columns: repeat(7,1fr);
-    margin: 0.5vh 0;
+    margin: 1vh;
 }
 
 .day {
     text-align: center;
-    padding: 0.5em 0;
     color: black;
     font-weight: 550;
 }
@@ -105,8 +106,8 @@ header button {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     width: 100%;
-    margin-top: 1vh;
-    margin-bottom: 1vh;
+    margin: 1vh;
+    padding: 0.5vh;
     gap: 0.2vh;
     box-sizing: border-box;
     border: 0.2vh solid black;
