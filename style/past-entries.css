@@ -179,9 +179,12 @@ header button {
     font-size: 0.3em;
 }
 
-.hidden {
-    display: none;
+/* 
+placeholder for calendar entries when favorited 
+.placeholder .favorite {
+    
 }
+*/
 
 /* Search Results Styling */
 .search-results {

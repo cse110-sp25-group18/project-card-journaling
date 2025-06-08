@@ -67,6 +67,11 @@ describe("Test basic user flow from Create Card page", () => {
     let submitBtn = await page.$("#submitBtn");
     await submitBtn.click();
 
+    await page.waitForFunction(() => {
+      const data = localStorage.getItem("journalEntries");
+      return data && JSON.parse(data).length === 1;
+    });
+
     let local = await page.evaluate(() => {
       return localStorage.getItem("journalEntries");
     });
@@ -91,9 +96,9 @@ describe("Test basic user flow from Create Card page", () => {
     let pastEntriesBtn = await page.$(`a[href="past-entries.html"]`);
     await pastEntriesBtn.click();
 
-    await page.waitForSelector(".active");
+    await page.waitForSelector(".filled");
 
-    let currentDate = await page.$(".active");
+    let currentDate = await page.$(".filled");
     await currentDate.click();
 
     // Test that card appears
@@ -103,6 +108,8 @@ describe("Test basic user flow from Create Card page", () => {
     // Test that card appears unflipped
     let flipped = await page.$(".flipped");
     expect(flipped).toBe(null);
+
+    await page.waitForSelector(".card-front");
 
     let cardFront = await page.$(".card-front");
     await cardFront.click();
