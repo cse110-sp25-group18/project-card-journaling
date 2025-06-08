@@ -133,7 +133,7 @@ function getEntries() {
  * @param {Array<Object>} entries - array of JSON entries
  * @param {number} targetMonth - target month
  * @param {number} targetYear - target year
- * @returns {Array<Object>} Filtered entries from that month
+ * @returns {Array<Object>} Filtered entries from target month and year
  */
 function filterByDate(entries, targetMonth, targetYear) {
   return entries.filter((entry) => {
