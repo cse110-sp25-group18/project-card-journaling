@@ -292,9 +292,14 @@ export class Card {
         }
 
         // Update the prompt box if it exists
-        const promptBox = document.querySelector(".prompt-box");
+        const promptBox = document.querySelector("prompt-box");
         if (promptBox) {
           promptBox.textContent = newPrompt;
+        }
+
+        const form = document.querySelector(".card-back form");
+        if (form) {
+          form.setAttribute("data-prompt", newPrompt);
         }
       } catch (error) {
         console.error("Error generating new prompt:", error);
