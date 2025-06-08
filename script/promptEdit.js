@@ -30,7 +30,8 @@ function makePromptEditable() {
       if (window.journalCard) {
         window.journalCard.model.prompt = newPrompt;
 
-        const cardPromptEl = window.journalCard.elements.card?.querySelector(".prompt");
+        const cardPromptEl =
+          window.journalCard.elements.card?.querySelector(".prompt");
         if (cardPromptEl) {
           cardPromptEl.textContent = newPrompt;
         }
@@ -48,7 +49,6 @@ function makePromptEditable() {
       editPromptBtn.textContent = "Save Prompt";
     }
   });
-
 }
 
 /**

@@ -27,7 +27,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Add the prompt text to the form element for the non-flippable card
     const updatePromptDisplay = () => {
       const form = document.querySelector(".card-back form");
-      journalCard.model.prompt = document.querySelector("prompt-box").textContent.trim();
+      journalCard.model.prompt = document
+        .querySelector("prompt-box")
+        .textContent.trim();
       const promptText = journalCard.model.prompt;
       if (form && promptText) {
         form.setAttribute("data-prompt", promptText || "");
