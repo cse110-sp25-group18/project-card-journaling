@@ -83,6 +83,8 @@ header button {
     font-size: 0.8em;
     padding: 0.5em;
     border-radius: 0.5em;
+    color: #666;
+    font: 500 0.8em 'Lucida Sans', sans-serif;
 }
 
 .cal-body {
