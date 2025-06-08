@@ -15,12 +15,10 @@ describe("Test basic user flow from homepage", () => {
       });
     });
 
-    expect(navButtons.length).toBe(5);
-    expect(navButtons.includes("./images/home-icon.svg")).toBe(true);
-    expect(navButtons.includes("./images/edit-icon.svg")).toBe(true);
-    expect(navButtons.includes("./images/calendar-icon.svg")).toBe(true);
-    expect(navButtons.includes("./images/shuffle-icon.svg")).toBe(true);
-    expect(navButtons.includes("./images/settings-icon.svg")).toBe(true);
+    expect(navButtons.length).toBe(3);
+    expect(navButtons.includes("../images/home-icon.svg")).toBe(true);
+    expect(navButtons.includes("../images/edit-icon.svg")).toBe(true);
+    expect(navButtons.includes("../images/calendar-icon.svg")).toBe(true);
 
     console.log("Checking that journal entry buttons loaded...");
 
