@@ -72,7 +72,8 @@ header button {
     align-items: center;
     justify-content: center;
     border-style: solid;
-    border-width: 0.2vh;
+    border-width: 0.2ch;
+    border-radius: 10%;
     border-color: #f3d189;
     background-color: #fff6e3;
     cursor: pointer;
@@ -114,10 +115,15 @@ header button {
 
 .date {
     width: 100%;
-    height: 100%;
-    aspect-ratio: 3/2;
-    margin: 0.2vh;
-    padding: 0.2em 0.2em;
+    height: 6vw;
+    max-height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    overflow: hidden;
+    margin: 0;
+    padding: 4px;
     cursor: pointer;
     font-weight: 600;
     border: 0.1ch solid #f3d189;
@@ -127,6 +133,32 @@ header button {
     overflow: hidden;
     overflow-wrap: break-word;
     font-size: 2vw;
+}
+
+.date.filled {
+  background-color: #76BA99;
+}
+
+.date.favorite::before {
+  content: "★";
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  font-size: 0.6em;
+  color: #FFD700;
+}
+
+.date.filled {
+  background-color: #abebcc;
+}
+
+.date.favorite::before {
+  content: "★";
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  font-size: 0.6em;
+  color: #FFD700;
 }
 
 .date::after {
@@ -144,7 +176,7 @@ header button {
 }
 
 .date.active {
-    background-color: #ffee8c;
+    background-color: #faefb3;
 }
 
 .date.inactive::after {
@@ -188,8 +220,7 @@ header button {
 }
 
 .placeholder {
-    top: 2%;
-    left: 2%;
+    margin: 2%;
 
 }
 
@@ -197,12 +228,16 @@ header button {
     font-size: 0.3em;
 }
 
-/* 
-placeholder for calendar entries when favorited 
-.placeholder .favorite {
-    
+ /* placeholder for calendar entries when favorited */
+.card.favorite::before {
+  content: "★";
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  font-size: 0.6em;
+  color: #FFD700;
 }
-*/
+
 
 /* Search Results Styling */
 .search-results {
