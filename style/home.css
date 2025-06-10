@@ -33,7 +33,7 @@ h2 {
     margin-top: min(2.5rem, 4vh);
     margin-bottom: min(0.5rem, 1vh);
     text-align: center;
-    font-family: 'Times New Roman', Times, serif;
+    /*font-family: 'Times New Roman', Times, serif;*/
     letter-spacing: 1px;
 }
 
